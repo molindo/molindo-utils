@@ -80,8 +80,6 @@ import java.util.TreeSet;
  * </ul>
  * <p>
  * 
- * $LastChangedRevision: 5082 $
- * 
  * @see System#getProperties()
  * 
  * @author Stefan Fussenegger
