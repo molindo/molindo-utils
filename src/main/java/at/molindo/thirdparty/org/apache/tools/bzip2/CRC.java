@@ -22,7 +22,7 @@
  * great code.
  */
 
-package org.apache.tools.bzip2;
+package at.molindo.thirdparty.org.apache.tools.bzip2;
 
 /**
  * A simple class the hold and calculate the CRC for sanity checking of the

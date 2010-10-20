@@ -22,7 +22,7 @@
  * great code.
  */
 
-package org.apache.tools.bzip2;
+package at.molindo.thirdparty.org.apache.tools.bzip2;
 
 /**
  * Base class for both the compress and decompress classes. Holds common arrays,

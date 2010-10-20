@@ -22,9 +22,10 @@ import java.io.OutputStream;
 import java.util.Arrays;
 import java.util.zip.GZIPInputStream;
 
-import org.apache.tools.bzip2.CBZip2InputStream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import at.molindo.thirdparty.org.apache.tools.bzip2.CBZip2InputStream;
 
 public class StreamUtils {
 

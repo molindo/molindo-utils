@@ -21,7 +21,7 @@
  * <keiron@aftexsw.com> to whom the Ant project is very grateful for his
  * great code.
  */
-package org.apache.tools.bzip2;
+package at.molindo.thirdparty.org.apache.tools.bzip2;
 
 import java.io.IOException;
 import java.io.InputStream;
