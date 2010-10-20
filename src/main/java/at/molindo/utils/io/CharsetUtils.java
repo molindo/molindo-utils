@@ -16,7 +16,6 @@
 
 package at.molindo.utils.io;
 
-import java.nio.ByteBuffer;
 import java.nio.CharBuffer;
 import java.nio.charset.CharacterCodingException;
 import java.nio.charset.Charset;
@@ -41,9 +40,9 @@ public final class CharsetUtils {
 	public static boolean is(final String str, Charset charset) {
 	    try {
 			ThreadLocalCoders.encoderFor(charset)
-			.onMalformedInput(CodingErrorAction.REPORT)
-			.onUnmappableCharacter(CodingErrorAction.REPORT)
-			.encode(CharBuffer.wrap(str));
+				.onMalformedInput(CodingErrorAction.REPORT)
+				.onUnmappableCharacter(CodingErrorAction.REPORT)
+				.encode(CharBuffer.wrap(str));
 			return true;
 	    } catch (UnmappableCharacterException e) {
 			return false;
