@@ -19,8 +19,10 @@ package at.molindo.utils.io;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 
 public class FileUtils {
 
@@ -38,14 +40,20 @@ public class FileUtils {
 				.substring(fileName.lastIndexOf("."), fileName.length()).toLowerCase();
 	}
 
-	public static InputStream newInputStream(final File file, Compression compression) throws FileNotFoundException, IOException {
+	public static InputStream in(final File file, Compression compression) throws FileNotFoundException, IOException {
 		if (Compression.AUTO == compression) {
 			compression = compression(file.getName());
 		}
-
-		return StreamUtils.compress(new FileInputStream(file), compression) ;	
+		return StreamUtils.decompress(new FileInputStream(file), compression) ;	
 	}
 
+	public static OutputStream out(final File file, Compression compression) throws FileNotFoundException, IOException {
+		if (Compression.AUTO == compression) {
+			compression = compression(file.getName());
+		}
+		return StreamUtils.compress(new FileOutputStream(file), compression) ;	
+	}
+	
 	/**
 	 * @param name name of a file
 	 * @return never <code>null</code>, never {@link Compression#AUTO}

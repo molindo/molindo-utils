@@ -21,11 +21,13 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Arrays;
 import java.util.zip.GZIPInputStream;
+import java.util.zip.GZIPOutputStream;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import at.molindo.thirdparty.org.apache.tools.bzip2.CBZip2InputStream;
+import at.molindo.thirdparty.org.apache.tools.bzip2.CBZip2OutputStream;
 
 public class StreamUtils {
 
@@ -60,7 +62,7 @@ public class StreamUtils {
 	 * @throws IOException
 	 * @throws IllegalArgumentException if compression none of {@link Compression#BZIP2}, {@link Compression#GZIP}, {@link Compression#NONE}
 	 */
-	public static InputStream compress(InputStream in, Compression compression) throws IOException {
+	public static InputStream decompress(InputStream in, Compression compression) throws IOException {
 		switch (compression) {
 		case BZIP2:
 			return newBz2InputStream(in);
@@ -68,6 +70,21 @@ public class StreamUtils {
 			return new GZIPInputStream(in);
 		case NONE:
 			return in;
+		case AUTO:
+			throw new IllegalArgumentException("can't guess compression from InputStream");
+		default:
+			throw new IllegalArgumentException("compression not implemented: " + compression);
+		}
+	}
+	
+	public static OutputStream compress(OutputStream out, Compression compression) throws IOException {
+		switch (compression) {
+		case BZIP2:
+			return newBz2OutputStream(out);
+		case GZIP:
+			return new GZIPOutputStream(out);
+		case NONE:
+			return out;
 		case AUTO:
 			throw new IllegalArgumentException("can't guess compression from InputStream");
 		default:
@@ -105,5 +122,10 @@ public class StreamUtils {
 
 		in = new CBZip2InputStream(in);
 		return in;
+	}
+	
+	private static OutputStream newBz2OutputStream(OutputStream out) throws IOException {
+		// TODO linux compatibility?
+		return new CBZip2OutputStream(out);
 	}
 }

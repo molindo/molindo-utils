@@ -36,11 +36,11 @@ public class DirectoryUtils {
 		Map<File, InputStream> map = new HashMap<File, InputStream>();
 		
 		if (!directory.isDirectory()) {
-			map.put(directory, FileUtils.newInputStream(directory, compression));
+			map.put(directory, FileUtils.in(directory, compression));
 		} else {
 			for (File f : directory.listFiles()) {
 				if (!f.isDirectory()) {
-					map.put(f, FileUtils.newInputStream(directory, compression));
+					map.put(f, FileUtils.in(directory, compression));
 				} else if (recursive) {
 					open(f, compression, true);
 				}
