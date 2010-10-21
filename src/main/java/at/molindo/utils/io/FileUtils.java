@@ -16,13 +16,17 @@
 
 package at.molindo.utils.io;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 
 public class FileUtils {
 
@@ -53,6 +57,16 @@ public class FileUtils {
 		}
 		return StreamUtils.compress(new FileOutputStream(file), compression) ;	
 	}
+	
+	public static BufferedReader read(File file, Compression compression) throws FileNotFoundException, IOException {
+		return new BufferedReader(new InputStreamReader(in(file, compression), CharsetUtils.UTF_8));
+	}
+	
+	public static BufferedWriter write(File file, Compression compression) throws FileNotFoundException, IOException {
+		return new BufferedWriter(new OutputStreamWriter(out(file, compression), CharsetUtils.UTF_8));
+	}
+	
+	
 	
 	/**
 	 * @param name name of a file
