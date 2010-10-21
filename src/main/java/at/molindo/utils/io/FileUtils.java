@@ -35,46 +35,73 @@ public class FileUtils {
 	}
 
 	/**
-	 * @return extension of file including last '.' or empty string (e.g.
+	 * @return normalized (trimmed, lower case) extension of file including last '.' or empty string (e.g.
 	 *         "foo.tar.gz" => ".gz")
 	 */
 	public static String extension(final File file) {
-		final String fileName = file.getName();
-		return fileName.lastIndexOf(".") == -1 ? "" : fileName
-				.substring(fileName.lastIndexOf("."), fileName.length()).toLowerCase();
+		return extension(file.getName());
+	}
+	
+	public static String extension(final String fileName) {
+		int idx = fileName.lastIndexOf(".");
+		
+		return idx == -1 ? "" : fileName.substring(
+				idx, fileName.length()).trim().toLowerCase();
 	}
 
-	public static InputStream in(final File file, Compression compression) throws FileNotFoundException, IOException {
-		if (Compression.AUTO == compression) {
-			compression = compression(file.getName());
-		}
-		return StreamUtils.decompress(new FileInputStream(file), compression) ;	
-	}
-
-	public static OutputStream out(final File file, Compression compression) throws FileNotFoundException, IOException {
-		if (Compression.AUTO == compression) {
-			compression = compression(file.getName());
-		}
-		return StreamUtils.compress(new FileOutputStream(file), compression) ;	
-	}
-	
-	public static BufferedReader read(File file, Compression compression) throws FileNotFoundException, IOException {
-		return new BufferedReader(new InputStreamReader(in(file, compression), CharsetUtils.UTF_8));
-	}
-	
-	public static BufferedWriter write(File file, Compression compression) throws FileNotFoundException, IOException {
-		return new BufferedWriter(new OutputStreamWriter(out(file, compression), CharsetUtils.UTF_8));
-	}
-	
-	
-	
 	/**
-	 * @param name name of a file
+	 * @return normalized (trimmed, lower case) full extension of file including first '.' or empty string (e.g.
+	 *         "foo.tar.gz" => ".tar.gz")
+	 */
+	public static String extensionFull(final File file) {
+		return extensionFull(file.getName());
+	}
+	
+	public static String extensionFull(final String fileName) {
+		int idx = fileName.indexOf(".");
+		
+		return idx == -1 ? "" : fileName.substring(
+				idx, fileName.length()).trim().toLowerCase();
+	}
+
+	public static InputStream in(final File file, Compression compression)
+			throws FileNotFoundException, IOException {
+		if (Compression.AUTO == compression) {
+			compression = compression(file.getName());
+		}
+		return StreamUtils.decompress(new FileInputStream(file), compression);
+	}
+
+	public static OutputStream out(final File file, Compression compression)
+			throws FileNotFoundException, IOException {
+		if (Compression.AUTO == compression) {
+			compression = compression(file.getName());
+		}
+		return StreamUtils.compress(new FileOutputStream(file), compression);
+	}
+
+	public static BufferedReader read(File file, Compression compression)
+			throws FileNotFoundException, IOException {
+		return new BufferedReader(new InputStreamReader(in(file, compression),
+				CharsetUtils.UTF_8));
+	}
+
+	public static BufferedWriter write(File file, Compression compression)
+			throws FileNotFoundException, IOException {
+		return new BufferedWriter(new OutputStreamWriter(
+				out(file, compression), CharsetUtils.UTF_8));
+	}
+
+	/**
+	 * @param name
+	 *            name of a file
 	 * @return never <code>null</code>, never {@link Compression#AUTO}
 	 */
 	public static Compression compression(String name) {
-		if (name.endsWith(".gz")) return Compression.GZIP;
-		if (name.endsWith(".bz2")) return Compression.BZIP2;
+		if (name.endsWith(".gz"))
+			return Compression.GZIP;
+		if (name.endsWith(".bz2"))
+			return Compression.BZIP2;
 		return Compression.NONE;
 	}
 
