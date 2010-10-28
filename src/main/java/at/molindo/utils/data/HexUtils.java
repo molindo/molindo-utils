@@ -51,4 +51,5 @@ public abstract class HexUtils {
 		}
 		return bytes;
 	}
+	
 }
