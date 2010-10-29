@@ -23,8 +23,6 @@ import java.nio.charset.CodingErrorAction;
 import java.nio.charset.MalformedInputException;
 import java.nio.charset.UnmappableCharacterException;
 
-import sun.nio.cs.ThreadLocalCoders;
-
 public final class CharsetUtils {
 	public static final Charset US_ASCII = Charset.forName("US-ASCII");
 	public static final Charset ISO_8859_1 = Charset.forName("ISO-8859-1");
@@ -39,7 +37,7 @@ public final class CharsetUtils {
 
 	public static boolean is(final String str, Charset charset) {
 	    try {
-			ThreadLocalCoders.encoderFor(charset)
+			charset.newEncoder()
 				.onMalformedInput(CodingErrorAction.REPORT)
 				.onUnmappableCharacter(CodingErrorAction.REPORT)
 				.encode(CharBuffer.wrap(str));
@@ -52,4 +50,5 @@ public final class CharsetUtils {
 			return false;
 		}
 	}
+	
 }
