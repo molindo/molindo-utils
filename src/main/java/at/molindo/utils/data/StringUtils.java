@@ -21,15 +21,67 @@ import java.util.NoSuchElementException;
 
 public class StringUtils {
 	private StringUtils() {
-		
+
 	}
-	
+
 	public static boolean empty(String string) {
 		return string == null || string.isEmpty();
 	}
-	
+
 	public static String trim(String string) {
 		return string == null ? null : string.trim();
+	}
+
+	public static String afterFirst(final String string, final String delim) {
+		if (string == null) {
+			return null;
+		}
+		final int index = string.indexOf(delim);
+
+		if (index == -1) {
+			return "";
+		}
+
+		return string.substring(index + delim.length());
+	}
+
+	public static String afterLast(final String string, final String delim) {
+		if (string == null) {
+			return null;
+		}
+		final int index = string.lastIndexOf(delim);
+
+		if (index == -1) {
+			return "";
+		}
+
+		return string.substring(index + delim.length());
+	}
+
+	public static String beforeFirst(final String string, final String delim) {
+		if (string == null) {
+			return null;
+		}
+		final int index = string.indexOf(delim);
+
+		if (index == -1) {
+			return "";
+		}
+
+		return string.substring(0, index);
+	}
+
+	public static String beforeLast(final String string, final String delim) {
+		if (string == null) {
+			return null;
+		}
+		final int index = string.lastIndexOf(delim);
+
+		if (index == -1) {
+			return "";
+		}
+
+		return string.substring(0, index);
 	}
 	
 	public static Iterable<String> split(final String string, final String split) {
@@ -42,15 +94,15 @@ public class StringUtils {
 		if (split.isEmpty()) {
 			throw new IllegalArgumentException("split must not be empty");
 		}
-		
+
 		return new Iterable<String>() {
-			
+
 			@Override
 			public Iterator<String> iterator() {
 				return new Iterator<String>() {
 
 					private int _pos = 0;
-					
+
 					@Override
 					public boolean hasNext() {
 						return _pos >= 0;
@@ -61,11 +113,11 @@ public class StringUtils {
 						if (!hasNext()) {
 							throw new NoSuchElementException();
 						}
-						
+
 						int next = string.indexOf(split, _pos);
-						
+
 						String str;
-						
+
 						if (next > 0) {
 							str = string.substring(_pos, next);
 							_pos = next + split.length();
@@ -73,7 +125,7 @@ public class StringUtils {
 							str = string.substring(_pos);
 							_pos = -1;
 						}
-						
+
 						return str;
 					}
 
@@ -81,7 +133,7 @@ public class StringUtils {
 					public void remove() {
 						throw new UnsupportedOperationException();
 					}
-					
+
 				};
 			}
 		};
