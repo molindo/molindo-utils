@@ -84,6 +84,28 @@ public class StringUtils {
 		return string.substring(0, index);
 	}
 	
+	/**
+	 * 
+	 * @param string
+	 * @param delim
+	 * @param a 
+	 * @return number of string written to a
+	 * @throws IllegalArgumentException if a is of length 0
+	 * @throws ArrayIndexOutOfBoundsException if a is too small to fit all strings
+	 * @see #split(String, String)
+	 */
+	public static int split(String string, String delim, String[] a) {
+		if (a.length == 0) {
+			throw new IllegalArgumentException();
+		}
+		
+		int idx = 0;
+		for (String s : split(string, delim)) {
+			a[idx++] = s;
+		}
+		return idx;
+	}
+	
 	public static Iterable<String> split(final String string, final String split) {
 		if (string == null) {
 			throw new NullPointerException("string");
