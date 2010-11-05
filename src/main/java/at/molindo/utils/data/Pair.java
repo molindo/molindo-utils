@@ -51,6 +51,17 @@ public class Pair<A, B> implements Serializable {
 	}
 
 	/**
+	 * utility method to create pairs with implicit parameterization
+	 * 
+	 * @param <K>
+	 * @param <V>
+	 * @return
+	 */
+	public static <K, V> Pair<K, V> pair() {
+		return new Pair<K, V>();
+	}
+	
+	/**
 	 * Contructs a pair holding two null values.
 	 */
 	public Pair() {
