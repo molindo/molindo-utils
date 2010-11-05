@@ -16,9 +16,13 @@
 
 package at.molindo.utils.io;
 
+import java.io.Closeable;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.io.StringWriter;
+import java.nio.charset.Charset;
 import java.util.Arrays;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;
@@ -36,6 +40,31 @@ public class StreamUtils {
 	private StreamUtils() {
 	}
 
+	public static String string(InputStream in) throws IOException {
+		return string(in, CharsetUtils.UTF_8);
+	}
+	
+	public static String string(InputStream in, Charset charset) throws IOException {
+		return string(in, charset, 4096);
+	}
+	
+
+	public static String string(InputStream in, Charset charset, int bufferSize) throws IOException {
+        try {
+            InputStreamReader reader = new InputStreamReader(in, charset);
+    		StringWriter writer = new StringWriter();
+            
+    		int n;
+            char[] buffer = new char[bufferSize];
+            while ((n = reader.read(buffer)) != -1) {
+                writer.write(buffer, 0, n);
+            }
+            return writer.toString();
+        } finally {
+           close(in);
+        }
+	}
+	
 	public static int copy(final InputStream in, final OutputStream out) throws IOException {
 		return copy(in, out, 4096);
 	}
@@ -92,17 +121,17 @@ public class StreamUtils {
 		}
 	}
 	
-	public static void close(InputStream ... in) {
+	public static void close(Closeable ... in) {
 		close(Arrays.asList(in));
 	}
 	
-	public static void close(Iterable<InputStream> iterable) {
-		for (InputStream in : iterable) {
+	public static void close(Iterable<Closeable> iterable) {
+		for (Closeable in : iterable) {
 			close(in);
 		}
 	}
 	
-	public static void close(InputStream in) {
+	public static void close(Closeable in) {
 		try {
 			in.close();
 		} catch (IOException e) {
@@ -128,4 +157,5 @@ public class StreamUtils {
 		// TODO linux compatibility?
 		return new CBZip2OutputStream(out);
 	}
+	
 }
