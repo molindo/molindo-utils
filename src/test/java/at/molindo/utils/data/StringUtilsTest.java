@@ -98,4 +98,20 @@ public class StringUtilsTest {
 		assertEquals("", StringUtils.afterFirst("fooXbarYbaz", "XY"));
 		assertNull(StringUtils.afterFirst(null, "."));
 	}
+
+	@Test
+	public void testStartWith() {	
+		assertEquals("/foo/", StringUtils.startWith("foo/", "/"));
+		assertEquals("/foo/", StringUtils.startWith("/foo/", "/"));
+		assertEquals("/", StringUtils.startWith("", "/"));
+		assertEquals("/", StringUtils.startWith(null, "/"));
+	}
+
+	@Test
+	public void testEndWith() {
+		assertEquals("/foo/", StringUtils.endWith("/foo", "/"));
+		assertEquals("/foo/", StringUtils.endWith("/foo/", "/"));
+		assertEquals("/", StringUtils.endWith("", "/"));
+		assertEquals("/", StringUtils.endWith(null, "/"));
+	}
 }

@@ -84,6 +84,26 @@ public class StringUtils {
 		return string.substring(0, index);
 	}
 	
+	public static String startWith(String string, String prefix) {
+		if (empty(string)) {
+			return prefix;
+		} else if (string.startsWith(prefix)) {
+			return string;
+		} else {
+			return prefix + string;
+		}
+	}
+	
+	public static String endWith(String string, String suffix) {
+		if (empty(string)) {
+			return suffix;
+		} else if (string.endsWith(suffix)) {
+			return string;
+		} else {
+			return string + suffix;
+		}
+	}
+	
 	/**
 	 * 
 	 * @param string
