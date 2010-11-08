@@ -114,4 +114,13 @@ public class StringUtilsTest {
 		assertEquals("/", StringUtils.endWith("", "/"));
 		assertEquals("/", StringUtils.endWith(null, "/"));
 	}
+	
+	@Test
+	public void testEquals() {
+		assertTrue(StringUtils.equals(null, null));
+		assertFalse(StringUtils.equals(null, "foo"));
+		assertFalse(StringUtils.equals("foo", null));
+		assertFalse(StringUtils.equals("foo", "bar"));
+		assertTrue(StringUtils.equals("foo", "foo"));
+	}
 }

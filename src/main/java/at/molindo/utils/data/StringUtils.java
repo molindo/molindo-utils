@@ -126,6 +126,21 @@ public class StringUtils {
 		return idx;
 	}
 	
+	/**
+	 * null-safe equals
+	 * 
+	 * @param s1
+	 * @param s2
+	 * @return
+	 */
+	public static boolean equals(String s1, String s2) {
+		if (s1 == null) {
+			return s2 == null;
+		} else {
+			return s1.equals(s2);
+		}
+	}
+	
 	public static Iterable<String> split(final String string, final String split) {
 		if (string == null) {
 			throw new NullPointerException("string");
