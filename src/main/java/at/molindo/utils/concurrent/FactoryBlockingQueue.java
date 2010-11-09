@@ -68,6 +68,7 @@ public abstract class FactoryBlockingQueue<E> implements BlockingQueue<E> {
 	}
 
 	@Override
+	@edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "JLM_JSR166_UTILCONCURRENT_MONITORENTER", justification = "know bug, class is deprecated, avoid warning")
 	public E poll() {
 		E e;
 
@@ -87,6 +88,7 @@ public abstract class FactoryBlockingQueue<E> implements BlockingQueue<E> {
 		return peek();
 	}
 
+	@edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "JLM_JSR166_UTILCONCURRENT_MONITORENTER", justification = "know bug, class is deprecated, avoid warning")
 	public synchronized E peek() {
 		E e;
 
@@ -174,6 +176,7 @@ public abstract class FactoryBlockingQueue<E> implements BlockingQueue<E> {
 		return _queue.removeAll(c);
 	}
 
+	@edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "JLM_JSR166_UTILCONCURRENT_MONITORENTER", justification = "know bug, class is deprecated, avoid warning")
 	public boolean retainAll(Collection<?> c) {
 		synchronized (_queue) {
 			if (_queue.size() == 0) {
