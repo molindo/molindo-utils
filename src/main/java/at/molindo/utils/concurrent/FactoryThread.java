@@ -76,10 +76,11 @@ public class FactoryThread extends Thread {
 
 	protected void handleException(Throwable t, int consecutiveErrors, boolean terminate) {
 		if (terminate) {
-			log.error("unhandled exception from created runnable, terminating after " + consecutiveErrors + " consecutive errors",
-					t);
+			log.error("unhandled exception from created runnable, terminating after " + consecutiveErrors
+					+ " consecutive errors", t);
 		} else {
-			log.warn("unhandled exception from created runnable, " + consecutiveErrors + " consecutive errors, continuing", t);
+			log.warn("unhandled exception from created runnable, " + consecutiveErrors
+					+ " consecutive errors, continuing", t);
 		}
 	}
 
@@ -97,12 +98,12 @@ public class FactoryThread extends Thread {
 		@Nonnull
 		Runnable newRunnable();
 	}
-	
+
 	public static class FactoryThreadGroup extends ThreadGroup {
 
 		private final List<FactoryThread> _threads = new ArrayList<FactoryThread>();
-		
-		public FactoryThreadGroup (String groupName, @Nonnegative int threads, @Nonnull IRunnableFactory factory) {
+
+		public FactoryThreadGroup(String groupName, @Nonnegative int threads, @Nonnull IRunnableFactory factory) {
 			super(groupName);
 
 			for (int i = 0; i < threads; i++) {
@@ -115,41 +116,55 @@ public class FactoryThread extends Thread {
 				});
 			}
 		}
-		
+
 		public FactoryThreadGroup setMaxErrors(int maxErrors) {
 			for (FactoryThread t : _threads) {
 				t.setMaxErrors(maxErrors);
 			}
 			return this;
 		}
-		
+
 		public FactoryThreadGroup start() {
 			for (FactoryThread t : _threads) {
 				t.start();
 			}
 			return this;
 		}
-		
+
 		public FactoryThreadGroup setInactive() {
 			for (FactoryThread t : _threads) {
 				t.setInactive();
 			}
 			return this;
 		}
-		
+
 		public FactoryThreadGroup join() throws InterruptedException {
 			for (FactoryThread t : _threads) {
 				t.join();
 			}
 			return this;
 		}
-		
+
+		public FactoryThreadGroup join(long millis) throws InterruptedException {
+			long end = System.currentTimeMillis() + millis;
+
+			for (FactoryThread t : _threads) {
+				long remaining = end - System.currentTimeMillis();
+				if (remaining > 0) {
+					t.join(remaining);
+				}
+			}
+
+			return this;
+		}
+
 		protected void handleException(Throwable t, int consecutiveErrors, boolean terminate) {
 			if (terminate) {
-				log.error("unhandled exception from created runnable, terminating after " + consecutiveErrors + " consecutive errors",
-						t);
+				log.error("unhandled exception from created runnable, terminating after " + consecutiveErrors
+						+ " consecutive errors", t);
 			} else {
-				log.warn("unhandled exception from created runnable, " + consecutiveErrors + " consecutive errors, continuing", t);
+				log.warn("unhandled exception from created runnable, " + consecutiveErrors
+						+ " consecutive errors, continuing", t);
 			}
 		}
 	}
