@@ -44,7 +44,6 @@
 			<groupId>com.google.code.findbugs</groupId>
 			<artifactId>annotations</artifactId>
 			<version>${findbugs.version}</version>
-			<scope>test</scope>
 		</dependency>
 
 		<dependency>
