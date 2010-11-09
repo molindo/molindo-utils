@@ -25,6 +25,7 @@ import java.util.concurrent.TimeUnit;
 
 import org.junit.Test;
 
+@SuppressWarnings("deprecation")
 public class FactoryBlockingQueueTest {
 
 	private static FactoryBlockingQueue<Integer> q() {

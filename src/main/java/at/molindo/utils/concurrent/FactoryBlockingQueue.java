@@ -22,10 +22,20 @@ import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * 
+ * @author stf
+ * 
+ * @param <E>
+ * 
+ * @deprecated Synchronization of this class is broken. Using
+ *             synchronized(_queue) doesn't work (see FindBugs report)
+ */
+@Deprecated
 public abstract class FactoryBlockingQueue<E> implements BlockingQueue<E> {
 
 	private ArrayBlockingQueue<E> _queue = new ArrayBlockingQueue<E>(1);
-	
+
 	private final void fill() {
 		if (_queue.size() == 0) {
 			E e = create();
@@ -35,12 +45,12 @@ public abstract class FactoryBlockingQueue<E> implements BlockingQueue<E> {
 			_queue.add(e);
 		}
 	}
-	
+
 	/**
 	 * @return a new element, never null
 	 */
 	protected abstract E create();
-	
+
 	@Override
 	public E remove() {
 		// poll never returns null in this implementation
@@ -51,21 +61,21 @@ public abstract class FactoryBlockingQueue<E> implements BlockingQueue<E> {
 		// poll never returns null in this implementation
 		return poll();
 	}
-	
+
 	public E poll(long timeout, TimeUnit unit) throws InterruptedException {
 		// poll never returns null in this implementation
 		return poll();
 	}
-	
+
 	@Override
 	public E poll() {
 		E e;
-		
+
 		synchronized (_queue) {
 			fill();
 			e = _queue.poll();
 		}
-		
+
 		if (e == null) {
 			throw new RuntimeException("queue empty");
 		}
@@ -79,18 +89,18 @@ public abstract class FactoryBlockingQueue<E> implements BlockingQueue<E> {
 
 	public synchronized E peek() {
 		E e;
-		
+
 		synchronized (_queue) {
 			fill();
 			e = _queue.peek();
 		}
-		
+
 		if (e == null) {
 			throw new RuntimeException("queue empty");
 		}
 		return e;
 	}
-	
+
 	/**
 	 * @return always false
 	 */
@@ -99,7 +109,8 @@ public abstract class FactoryBlockingQueue<E> implements BlockingQueue<E> {
 	}
 
 	/**
-	 * @throws always an {@link IllegalStateException}
+	 * @throws always
+	 *             an {@link IllegalStateException}
 	 */
 	public boolean add(E e) {
 		throw new IllegalStateException("operation not supported");
@@ -115,11 +126,14 @@ public abstract class FactoryBlockingQueue<E> implements BlockingQueue<E> {
 	/**
 	 * WARNING: blocks indefinitely as this queue is always full by definition
 	 */
+	@edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "UW_UNCOND_WAIT", justification = "see javadoc")
 	public void put(E e) throws InterruptedException {
 		// this is a very bad idea
 		Object mon = new Object();
 		synchronized (mon) {
-			mon.wait();
+			while (true) {
+				mon.wait();
+			}
 		}
 	}
 
@@ -128,7 +142,7 @@ public abstract class FactoryBlockingQueue<E> implements BlockingQueue<E> {
 	 */
 	public boolean offer(E e, long timeout, TimeUnit unit)
 			throws InterruptedException {
-		
+
 		Object mon = new Object();
 		synchronized (mon) {
 			mon.wait(unit.toMillis(timeout));
@@ -144,7 +158,7 @@ public abstract class FactoryBlockingQueue<E> implements BlockingQueue<E> {
 		if (c == this) {
 			throw new IllegalArgumentException("cannot drainTo self");
 		}
-		
+
 		if (maxElements == 0) {
 			return 0;
 		} else {
@@ -152,11 +166,11 @@ public abstract class FactoryBlockingQueue<E> implements BlockingQueue<E> {
 			return 1;
 		}
 	}
-	
+
 	public boolean containsAll(Collection<?> c) {
 		return _queue.containsAll(c);
 	}
-	
+
 	public boolean removeAll(Collection<?> c) {
 		return _queue.removeAll(c);
 	}
@@ -179,15 +193,15 @@ public abstract class FactoryBlockingQueue<E> implements BlockingQueue<E> {
 	public boolean contains(Object o) {
 		return _queue.contains(o);
 	}
-	
+
 	public void clear() {
 		_queue.clear();
 	}
-	
+
 	public boolean isEmpty() {
 		return false;
 	}
-	
+
 	public int size() {
 		return 1;
 	}
@@ -203,18 +217,16 @@ public abstract class FactoryBlockingQueue<E> implements BlockingQueue<E> {
 	@SuppressWarnings("unchecked")
 	public <T> T[] toArray(T[] a) {
 		if (a.length == 0) {
-            a = (T[])java.lang.reflect.Array.newInstance(
-                    a.getClass().getComponentType(),
-                    1
-                    );
+			a = (T[]) java.lang.reflect.Array.newInstance(a.getClass()
+					.getComponentType(), 1);
 		}
-		
+
 		a[0] = (T) peek();
-		
-        if (a.length > 1) {
-            a[1] = null;
-        }
-        
+
+		if (a.length > 1) {
+			a[1] = null;
+		}
+
 		return a;
 	}
 
@@ -236,7 +248,8 @@ public abstract class FactoryBlockingQueue<E> implements BlockingQueue<E> {
 			@Override
 			public void remove() {
 				if (_last == null) {
-					throw new IllegalStateException("next() not called or already deleted");
+					throw new IllegalStateException(
+							"next() not called or already deleted");
 				} else {
 					FactoryBlockingQueue.this.remove(_last);
 					_last = null;

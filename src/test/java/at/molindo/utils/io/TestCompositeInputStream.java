@@ -34,5 +34,7 @@ public class TestCompositeInputStream extends TestCase
         assertEquals(8, bytesRead);
         for (int i = 0; i < 8; i++)
             assertEquals(i, buffer[i]);
+        
+        StreamUtils.close(first, second, composite);
     }
 }
