@@ -16,6 +16,8 @@
 
 package at.molindo.utils.concurrent;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -26,7 +28,7 @@ public class KeyLock<K, V> {
 	public static <K, V> KeyLock<K, V> newKeyLock() {
 		return new KeyLock<K, V>();
 	}
-	
+
 	public V withLock(final K key, final Callable<V> callable) throws Exception {
 		if (key == null) {
 			throw new NullPointerException("key");
@@ -72,6 +74,22 @@ public class KeyLock<K, V> {
 	 */
 	protected V replace(final V result, final Exception ex) throws Exception {
 		return null;
+	}
+
+	/**
+	 * @return number of active keys
+	 */
+	public int activeCount() {
+		return _map.size();
+	}
+
+	/**
+	 * @return a newly created {@link List} of all active keys. Changes to this
+	 *         list don't have any effect to this {@link KeyLock} (changes to the
+	 *         values will have an undefined effect though).
+	 */
+	public List<K> activeKeys() {
+		return new ArrayList<K>(_map.keySet());
 	}
 
 	private final class Task {
