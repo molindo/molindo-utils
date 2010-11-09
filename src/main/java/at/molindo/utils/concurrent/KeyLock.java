@@ -23,6 +23,10 @@ public class KeyLock<K, V> {
 
 	private final ConcurrentHashMap<K, Task> _map = new ConcurrentHashMap<K, Task>();
 
+	public static <K, V> KeyLock<K, V> newKeyLock() {
+		return new KeyLock<K, V>();
+	}
+	
 	public V withLock(final K key, final Callable<V> callable) throws Exception {
 		if (key == null) {
 			throw new NullPointerException("key");
