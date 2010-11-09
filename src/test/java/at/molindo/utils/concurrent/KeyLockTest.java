@@ -18,6 +18,7 @@ package at.molindo.utils.concurrent;
 
 import static org.junit.Assert.*;
 
+import java.util.Arrays;
 import java.util.concurrent.Callable;
 
 import org.junit.Test;
@@ -41,6 +42,10 @@ public class KeyLockTest {
 
 			@Override
 			public Integer call() throws Exception {
+				
+				assertEquals(1, lock.activeCount());
+				assertEquals(Arrays.asList("foo"), lock.activeKeys());
+				
 				threads[0] = new Thread() {
 
 					@Override
