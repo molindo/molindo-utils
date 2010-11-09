@@ -32,8 +32,8 @@ public class DnsUtils {
 	}
 
 	/**
-	 * best effort method to determine host name of localhost. falls back to 'localhost'
-	 * if not possible
+	 * best effort method to determine host name of localhost. falls back to
+	 * 'localhost' if not possible
 	 * 
 	 * @return a domain name
 	 */
@@ -69,8 +69,7 @@ public class DnsUtils {
 		// get the MX records from the default DNS directory service
 		// provider
 		// NamingException thrown if no DNS record found for domainName
-		final Attributes attributes = iDirC
-				.getAttributes("dns:/" + domainName, new String[] { "MX" });
+		final Attributes attributes = iDirC.getAttributes("dns:/" + domainName, new String[] { "MX" });
 		// attributeMX is an attribute ('list') of the Mail Exchange(MX)
 		// Resource Records(RR)
 		final Attribute attributeMX = attributes.get("MX");
@@ -97,8 +96,8 @@ public class DnsUtils {
 		// put sorted host names in an array, get rid of any trailing '.'
 		final String[] sortedHostNames = new String[pvhn.length];
 		for (int i = 0; i < pvhn.length; i++) {
-			sortedHostNames[i] = pvhn[i][1].endsWith(".") ? pvhn[i][1].substring(0, pvhn[i][1]
-					.length() - 1) : pvhn[i][1];
+			sortedHostNames[i] = pvhn[i][1].endsWith(".") ? pvhn[i][1].substring(0, pvhn[i][1].length() - 1)
+					: pvhn[i][1];
 		}
 		return sortedHostNames;
 	}

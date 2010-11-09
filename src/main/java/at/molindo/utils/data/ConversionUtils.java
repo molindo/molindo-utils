@@ -18,33 +18,34 @@ package at.molindo.utils.data;
 
 public class ConversionUtils {
 	private ConversionUtils() {
-		
+
 	}
-	
-	public static byte[] bytes(final int ... ints) {
+
+	public static byte[] bytes(final int... ints) {
 		byte[] b = new byte[ints.length * 4];
 		for (int i = 0; i < ints.length; i++) {
 			int offset = i * 4;
-			b[offset] =  (byte) (ints[i] >> 24);
-			b[offset+1] =  (byte) (ints[i] >> 16);
-			b[offset+2] =  (byte) (ints[i] >> 8);
-			b[offset+3] =  (byte) (ints[i]);
+			b[offset] = (byte) (ints[i] >> 24);
+			b[offset + 1] = (byte) (ints[i] >> 16);
+			b[offset + 2] = (byte) (ints[i] >> 8);
+			b[offset + 3] = (byte) (ints[i]);
 		}
 		return b;
 	}
 
-	public static final int[] ints(final byte ... b) {
+	public static final int[] ints(final byte... b) {
 		if (b.length % 4 != 0) {
 			throw new IllegalArgumentException("array length must be a multiple of 4, was " + b.length);
 		}
-		
+
 		int[] ints = new int[b.length / 4];
-		
+
 		for (int i = 0; i < ints.length; i++) {
 			int offset = i * 4;
-			ints[i] = (b[offset + 0] << 24) + ((b[offset + 1] & 0xFF) << 16) + ((b[offset + 2] & 0xFF) << 8) + (b[offset + 3] & 0xFF);
+			ints[i] = (b[offset + 0] << 24) + ((b[offset + 1] & 0xFF) << 16) + ((b[offset + 2] & 0xFF) << 8)
+					+ (b[offset + 3] & 0xFF);
 		}
-		
+
 		return ints;
 	}
 }

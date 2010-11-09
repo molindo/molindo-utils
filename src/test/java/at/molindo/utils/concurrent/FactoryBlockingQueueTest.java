@@ -115,19 +115,19 @@ public class FactoryBlockingQueueTest {
 	public void testIterator() {
 		FactoryBlockingQueue<Integer> q = q();
 		Iterator<Integer> iter = q.iterator();
-		
+
 		assertTrue(iter.hasNext());
-		
+
 		Integer i = iter.next();
-		
+
 		assertTrue(q.contains(i));
-		
+
 		iter.remove();
-		
+
 		assertFalse(q.contains(i));
 
 		assertTrue(iter.hasNext());
-		
+
 		iter.remove();
 	}
 
@@ -226,7 +226,7 @@ public class FactoryBlockingQueueTest {
 
 		Integer i = q.peek();
 		assertFalse(q.retainAll(Arrays.asList(i, 42)));
-		
+
 		q.remove(i);
 		assertTrue(q.retainAll(Arrays.asList(i, 42)));
 	}
@@ -245,13 +245,13 @@ public class FactoryBlockingQueueTest {
 	@Test
 	public void testToArray() {
 		FactoryBlockingQueue<Integer> q = q();
-		assertArrayEquals(new Integer[] {q.peek()}, q.toArray());
+		assertArrayEquals(new Integer[] { q.peek() }, q.toArray());
 	}
 
 	@Test
 	public void testToArrayTArray() {
 		FactoryBlockingQueue<Integer> q = q();
-		assertArrayEquals(new Integer[] {q.peek(), null, 42}, q.toArray(new Integer[] {42, 42, 42}));
+		assertArrayEquals(new Integer[] { q.peek(), null, 42 }, q.toArray(new Integer[] { 42, 42, 42 }));
 	}
 
 }

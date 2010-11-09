@@ -43,7 +43,7 @@ public class StringUtilsTest {
 	@Test
 	public void testSplit() {
 		Iterator<String> iter = StringUtils.split("foo\nbar\nbaz", "\n").iterator();
-		
+
 		assertTrue(iter.hasNext());
 		assertEquals("foo", iter.next());
 		assertTrue(iter.hasNext());
@@ -51,9 +51,9 @@ public class StringUtilsTest {
 		assertTrue(iter.hasNext());
 		assertEquals("baz", iter.next());
 		assertFalse(iter.hasNext());
-		
+
 		iter = StringUtils.split("foo\nbar\n", "\n").iterator();
-		
+
 		assertTrue(iter.hasNext());
 		assertEquals("foo", iter.next());
 		assertTrue(iter.hasNext());
@@ -61,7 +61,7 @@ public class StringUtilsTest {
 		assertTrue(iter.hasNext());
 		assertEquals("", iter.next());
 		assertFalse(iter.hasNext());
-		
+
 		String[] split = new String[5];
 		assertEquals(3, StringUtils.split("foo,bar,baz", ",", split));
 		assertEquals("foo", split[0]);
@@ -77,21 +77,21 @@ public class StringUtilsTest {
 		assertEquals("", StringUtils.beforeLast("fooXbarYbaz", "XY"));
 		assertNull(StringUtils.beforeLast(null, "."));
 	}
-	
+
 	@Test
 	public void testAfterLast() {
 		assertEquals("baz", StringUtils.afterLast("fooXYbarXYbaz", "XY"));
 		assertEquals("", StringUtils.afterLast("fooXbarYbaz", "XY"));
 		assertNull(StringUtils.afterLast(null, "."));
 	}
-	
+
 	@Test
 	public void testBeforeFirst() {
 		assertEquals("foo", StringUtils.beforeFirst("fooXYbarXYbaz", "XY"));
 		assertEquals("", StringUtils.beforeFirst("fooXbarYbaz", "XY"));
 		assertNull(StringUtils.beforeFirst(null, "."));
 	}
-	
+
 	@Test
 	public void testAfterFirst() {
 		assertEquals("barXYbaz", StringUtils.afterFirst("fooXYbarXYbaz", "XY"));
@@ -100,7 +100,7 @@ public class StringUtilsTest {
 	}
 
 	@Test
-	public void testStartWith() {	
+	public void testStartWith() {
 		assertEquals("/foo/", StringUtils.startWith("foo/", "/"));
 		assertEquals("/foo/", StringUtils.startWith("/foo/", "/"));
 		assertEquals("/", StringUtils.startWith("", "/"));
@@ -114,7 +114,7 @@ public class StringUtilsTest {
 		assertEquals("/", StringUtils.endWith("", "/"));
 		assertEquals("/", StringUtils.endWith(null, "/"));
 	}
-	
+
 	@Test
 	public void testEquals() {
 		assertTrue(StringUtils.equals(null, null));

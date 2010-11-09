@@ -30,23 +30,17 @@ import java.io.InputStream;
  * An input stream that decompresses from the BZip2 format (without the file
  * header chars) to be read as any other stream.
  * 
- * <p>
- * The decompression requires large amounts of memory. Thus you should call the
- * {@link #close() close()} method as soon as possible, to force
+ * <p> The decompression requires large amounts of memory. Thus you should call
+ * the {@link #close() close()} method as soon as possible, to force
  * <tt>CBZip2InputStream</tt> to release the allocated memory. See
  * {@link CBZip2OutputStream CBZip2OutputStream} for information about memory
- * usage.
- * </p>
+ * usage. </p>
  * 
- * <p>
- * <tt>CBZip2InputStream</tt> reads bytes from the compressed source stream via
- * the single byte {@link java.io.InputStream#read() read()} method exclusively.
- * Thus you should consider to use a buffered source stream.
- * </p>
+ * <p> <tt>CBZip2InputStream</tt> reads bytes from the compressed source stream
+ * via the single byte {@link java.io.InputStream#read() read()} method
+ * exclusively. Thus you should consider to use a buffered source stream. </p>
  * 
- * <p>
- * Instances of this class are not threadsafe.
- * </p>
+ * <p> Instances of this class are not threadsafe. </p>
  */
 public class CBZip2InputStream extends InputStream implements BZip2Constants {
 
@@ -136,12 +130,10 @@ public class CBZip2InputStream extends InputStream implements BZip2Constants {
 	 * Constructs a new CBZip2InputStream which decompresses bytes read from the
 	 * specified stream.
 	 * 
-	 * <p>
-	 * Although BZip2 headers are marked with the magic <tt>"Bz"</tt> this
+	 * <p> Although BZip2 headers are marked with the magic <tt>"Bz"</tt> this
 	 * constructor expects the next byte in the stream to be the first one after
 	 * the magic. Thus callers have to skip the first two bytes. Otherwise this
-	 * constructor will throw an exception.
-	 * </p>
+	 * constructor will throw an exception. </p>
 	 * 
 	 * @throws IOException
 	 *             if the stream content is malformed or an I/O error occurs.
@@ -173,8 +165,8 @@ public class CBZip2InputStream extends InputStream implements BZip2Constants {
 			throw new IndexOutOfBoundsException("len(" + len + ") < 0.");
 		}
 		if (offs + len > dest.length) {
-			throw new IndexOutOfBoundsException("offs(" + offs + ") + len(" + len
-					+ ") > dest.length(" + dest.length + ").");
+			throw new IndexOutOfBoundsException("offs(" + offs + ") + len(" + len + ") > dest.length(" + dest.length
+					+ ").");
 		}
 		if (this.in == null) {
 			throw new IOException("stream closed");
@@ -237,14 +229,13 @@ public class CBZip2InputStream extends InputStream implements BZip2Constants {
 		}
 		final int magic2 = this.in.read();
 		if (magic2 != 'h') {
-			throw new IOException("Stream is not BZip2 formatted: expected 'h'"
-					+ " as first byte but got '" + (char) magic2 + "'");
+			throw new IOException("Stream is not BZip2 formatted: expected 'h'" + " as first byte but got '"
+					+ (char) magic2 + "'");
 		}
 
 		final int blockSize = this.in.read();
 		if (blockSize < '1' || blockSize > '9') {
-			throw new IOException("Stream is not BZip2 formatted: illegal " + "blocksize "
-					+ (char) blockSize);
+			throw new IOException("Stream is not BZip2 formatted: illegal " + "blocksize " + (char) blockSize);
 		}
 
 		this.blockSize100k = blockSize - '0';
@@ -261,8 +252,7 @@ public class CBZip2InputStream extends InputStream implements BZip2Constants {
 		final char magic4 = bsGetUByte();
 		final char magic5 = bsGetUByte();
 
-		if (magic0 == 0x17 && magic1 == 0x72 && magic2 == 0x45 && magic3 == 0x38 && magic4 == 0x50
-				&& magic5 == 0x90) {
+		if (magic0 == 0x17 && magic1 == 0x72 && magic2 == 0x45 && magic3 == 0x38 && magic4 == 0x50 && magic5 == 0x90) {
 			complete(); // end of file
 		} else if (magic0 != 0x31 || // '1'
 				magic1 != 0x41 || // ')'
@@ -390,7 +380,8 @@ public class CBZip2InputStream extends InputStream implements BZip2Constants {
 	/**
 	 * Called by createHuffmanDecodingTables() exclusively.
 	 */
-	private static void hbCreateDecodeTables(final int[] limit, final int[] base, final int[] perm, final char[] length, final int minLen, final int maxLen, final int alphaSize) {
+	private static void hbCreateDecodeTables(final int[] limit, final int[] base, final int[] perm,
+			final char[] length, final int minLen, final int maxLen, final int alphaSize) {
 		for (int i = minLen, pp = 0; i <= maxLen; i++) {
 			for (int j = 0; j < alphaSize; j++) {
 				if (length[j] == i) {

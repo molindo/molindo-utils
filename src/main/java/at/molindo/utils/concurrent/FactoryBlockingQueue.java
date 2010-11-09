@@ -140,8 +140,7 @@ public abstract class FactoryBlockingQueue<E> implements BlockingQueue<E> {
 	/**
 	 * blocks until timeout as this queue is always full by definition
 	 */
-	public boolean offer(E e, long timeout, TimeUnit unit)
-			throws InterruptedException {
+	public boolean offer(E e, long timeout, TimeUnit unit) throws InterruptedException {
 
 		Object mon = new Object();
 		synchronized (mon) {
@@ -217,8 +216,7 @@ public abstract class FactoryBlockingQueue<E> implements BlockingQueue<E> {
 	@SuppressWarnings("unchecked")
 	public <T> T[] toArray(T[] a) {
 		if (a.length == 0) {
-			a = (T[]) java.lang.reflect.Array.newInstance(a.getClass()
-					.getComponentType(), 1);
+			a = (T[]) java.lang.reflect.Array.newInstance(a.getClass().getComponentType(), 1);
 		}
 
 		a[0] = (T) peek();
@@ -248,8 +246,7 @@ public abstract class FactoryBlockingQueue<E> implements BlockingQueue<E> {
 			@Override
 			public void remove() {
 				if (_last == null) {
-					throw new IllegalStateException(
-							"next() not called or already deleted");
+					throw new IllegalStateException("next() not called or already deleted");
 				} else {
 					FactoryBlockingQueue.this.remove(_last);
 					_last = null;

@@ -32,7 +32,7 @@ public class Pair<A, B> implements Serializable {
 		}
 		return map;
 	}
-	
+
 	private A _first;
 
 	private B _second;
@@ -60,7 +60,7 @@ public class Pair<A, B> implements Serializable {
 	public static <K, V> Pair<K, V> pair() {
 		return new Pair<K, V>();
 	}
-	
+
 	/**
 	 * Contructs a pair holding two null values.
 	 */
@@ -110,7 +110,7 @@ public class Pair<A, B> implements Serializable {
 		if (!(obj instanceof Pair)) {
 			return false;
 		}
-		final Pair<?,?> other = (Pair<?,?>) obj;
+		final Pair<?, ?> other = (Pair<?, ?>) obj;
 		if (_first == null) {
 			if (other._first != null) {
 				return false;

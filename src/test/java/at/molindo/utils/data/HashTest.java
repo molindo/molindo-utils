@@ -27,11 +27,11 @@ public class HashTest {
 	public static Hash h() {
 		return h("foo");
 	}
-	
+
 	public static Hash h(String content) {
 		return Hash.sha256(content);
 	}
-	
+
 	@Test
 	public void testHashCode() {
 		assertEquals(h().hashCode(), h().hashCode());
@@ -74,7 +74,7 @@ public class HashTest {
 	public void testValidateString() {
 		String foo = "foo";
 		Hash h = h(foo);
-		
+
 		assertTrue(h.validate(foo));
 		assertFalse(h.validate("bar"));
 	}
@@ -83,7 +83,7 @@ public class HashTest {
 	public void testValidateStringCharset() {
 		String foo = "foo\u00FC";
 		Hash h = h(foo);
-		
+
 		assertTrue(h.validate(foo, CharsetUtils.UTF_8));
 		assertFalse(h.validate(foo, CharsetUtils.US_ASCII));
 	}
@@ -92,7 +92,7 @@ public class HashTest {
 	public void testValidateByteArray() {
 		byte[] foo = ConversionUtils.bytes(42);
 		Hash h = Hash.md5(foo);
-		
+
 		assertTrue(h.validate(foo));
 		assertFalse(h.validate(ConversionUtils.bytes(43)));
 	}

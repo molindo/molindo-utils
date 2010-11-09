@@ -32,35 +32,35 @@ public class Hash {
 	public static Hash md5(String content) {
 		return hash(Algorithm.MD5, content);
 	}
-	
+
 	public static Hash md5(byte[] content) {
 		return hash(Algorithm.MD5, content);
 	}
-	
+
 	public static Hash sha256(String content) {
 		return hash(Algorithm.SHA_256, content);
 	}
-	
+
 	public static Hash sha256(byte[] content) {
 		return hash(Algorithm.SHA_256, content);
 	}
-	
+
 	public static Hash sha512(String content) {
 		return hash(Algorithm.SHA_512, content);
 	}
-	
+
 	public static Hash sha512(byte[] content) {
 		return hash(Algorithm.SHA_512, content);
 	}
-	
+
 	public static Hash hash(Algorithm algorithm, String content) {
 		return algorithm.builder().add(content).hash();
 	}
-	
+
 	public static Hash hash(Algorithm algorithm, byte[] content) {
 		return algorithm.builder().add(content).hash();
 	}
-	
+
 	public Hash(String hex, IAlgorithm algorithm) {
 		this(HexUtils.bytes(hex), algorithm);
 	}
@@ -87,7 +87,7 @@ public class Hash {
 	public byte[] getBytes() {
 		return _bytes;
 	}
-	
+
 	@Override
 	public String toString() {
 		return toHex();
@@ -109,8 +109,7 @@ public class Hash {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result
-				+ ((_algorithm == null) ? 0 : _algorithm.hashCode());
+		result = prime * result + ((_algorithm == null) ? 0 : _algorithm.hashCode());
 		result = prime * result + Arrays.hashCode(_bytes);
 		return result;
 	}
@@ -183,8 +182,7 @@ public class Hash {
 				}
 
 				@Override
-				public IHashBuilder add(final String string,
-						final Charset charset) {
+				public IHashBuilder add(final String string, final Charset charset) {
 					_md.update(string.getBytes(charset));
 					return this;
 				}

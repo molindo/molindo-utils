@@ -26,7 +26,7 @@ public class FileUtilsTest {
 	public void extension() {
 		assertEquals(".gz", FileUtils.extension("foo.TAR.GZ "));
 	}
-	
+
 	@Test
 	public void extensionFull() {
 		assertEquals(".tar.gz", FileUtils.extensionFull("foo.TAR.GZ "));

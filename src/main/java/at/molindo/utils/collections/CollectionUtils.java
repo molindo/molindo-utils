@@ -20,9 +20,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CollectionUtils {
-	
-	private CollectionUtils() {}
-	
+
+	private CollectionUtils() {
+	}
+
 	/**
 	 * a sublist implementation that is diffrent from
 	 * {@link List#subList(int, int)} as it handles out of bounds indexes
@@ -35,4 +36,3 @@ public class CollectionUtils {
 		return list.subList(first, Math.min(first + count, list.size()));
 	}
 }
-

@@ -36,19 +36,17 @@ public final class CharsetUtils {
 	}
 
 	public static boolean is(final String str, Charset charset) {
-	    try {
-			charset.newEncoder()
-				.onMalformedInput(CodingErrorAction.REPORT)
-				.onUnmappableCharacter(CodingErrorAction.REPORT)
-				.encode(CharBuffer.wrap(str));
+		try {
+			charset.newEncoder().onMalformedInput(CodingErrorAction.REPORT)
+					.onUnmappableCharacter(CodingErrorAction.REPORT).encode(CharBuffer.wrap(str));
 			return true;
-	    } catch (UnmappableCharacterException e) {
+		} catch (UnmappableCharacterException e) {
 			return false;
-	    } catch (MalformedInputException e) {
+		} catch (MalformedInputException e) {
 			return false;
 		} catch (CharacterCodingException e) {
 			return false;
 		}
 	}
-	
+
 }

@@ -19,29 +19,26 @@ package at.molindo.utils.io;
 import java.io.IOException;
 import java.io.InputStream;
 
-public class CompositeInputStream extends InputStream
-{
-    private final InputStream[] _streams;
+public class CompositeInputStream extends InputStream {
+	private final InputStream[] _streams;
 	private int _current;
 
-    public CompositeInputStream(InputStream ... streams)
-    {
-    	if (streams == null) {
+	public CompositeInputStream(InputStream... streams) {
+		if (streams == null) {
 			throw new NullPointerException("streams");
 		}
-    	if (streams.length == 0) {
-    		throw new IllegalArgumentException("at least one stream required");
-    	}
-    	
-        _streams = streams;
-        _current = 0;
-    }
+		if (streams.length == 0) {
+			throw new IllegalArgumentException("at least one stream required");
+		}
 
-    public int read() throws IOException
-    {
-        int result = _streams[_current].read();
-        if (result == -1 && _current < _streams.length - 1)
-            result = _streams[++_current].read();
-        return result;
-    }
+		_streams = streams;
+		_current = 0;
+	}
+
+	public int read() throws IOException {
+		int result = _streams[_current].read();
+		if (result == -1 && _current < _streams.length - 1)
+			result = _streams[++_current].read();
+		return result;
+	}
 }

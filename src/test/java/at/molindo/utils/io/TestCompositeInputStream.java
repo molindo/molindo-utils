@@ -21,20 +21,18 @@ import java.io.InputStream;
 
 import junit.framework.TestCase;
 
-public class TestCompositeInputStream extends TestCase
-{
-    public void testRead() throws Exception
-    {
-        InputStream first = new ByteArrayInputStream(new byte[]{ 0, 1, 2, 3 });
-        InputStream second = new ByteArrayInputStream(new byte[]{ 4, 5, 6, 7 });
-        InputStream composite = new CompositeInputStream(first, second);
+public class TestCompositeInputStream extends TestCase {
+	public void testRead() throws Exception {
+		InputStream first = new ByteArrayInputStream(new byte[] { 0, 1, 2, 3 });
+		InputStream second = new ByteArrayInputStream(new byte[] { 4, 5, 6, 7 });
+		InputStream composite = new CompositeInputStream(first, second);
 
-        byte[] buffer = new byte[32];
-        int bytesRead = composite.read(buffer, 0, 32);
-        assertEquals(8, bytesRead);
-        for (int i = 0; i < 8; i++)
-            assertEquals(i, buffer[i]);
-        
-        StreamUtils.close(first, second, composite);
-    }
+		byte[] buffer = new byte[32];
+		int bytesRead = composite.read(buffer, 0, 32);
+		assertEquals(8, bytesRead);
+		for (int i = 0; i < 8; i++)
+			assertEquals(i, buffer[i]);
+
+		StreamUtils.close(first, second, composite);
+	}
 }

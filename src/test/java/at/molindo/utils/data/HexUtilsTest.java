@@ -21,16 +21,10 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 public class HexUtilsTest {
-	
+
 	private static final String HEX = "0000002afffff6d77fffffff8000000000000000";
-	private static final byte[] BYTES = {
-		0, 0, 0, 42, 
-		-1, -1, -10, -41, 
-		127, -1, -1, -1, 
-		-128, 0, 0, 0, 
-		0, 0, 0, 0
-	};
-	
+	private static final byte[] BYTES = { 0, 0, 0, 42, -1, -1, -10, -41, 127, -1, -1, -1, -128, 0, 0, 0, 0, 0, 0, 0 };
+
 	@Test
 	public void testString() {
 		assertEquals(HEX, HexUtils.string(BYTES));

@@ -22,13 +22,13 @@ import org.junit.Test;
 
 public class ConversionUtilsTest {
 
-	private static final int [] INTS = {42, -2345, Integer.MAX_VALUE, Integer.MIN_VALUE, 0};
+	private static final int[] INTS = { 42, -2345, Integer.MAX_VALUE, Integer.MIN_VALUE, 0 };
 	private static final byte[] BYTES = HexUtils.bytes("0000002afffff6d77fffffff8000000000000000");
-	
+
 	@Test
 	public void testBytes() {
 		System.out.println(HexUtils.string(BYTES));
-		
+
 		assertArrayEquals(BYTES, ConversionUtils.bytes(INTS));
 	}
 

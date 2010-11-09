@@ -83,7 +83,7 @@ public class StringUtils {
 
 		return string.substring(0, index);
 	}
-	
+
 	public static String startWith(String string, String prefix) {
 		if (empty(string)) {
 			return prefix;
@@ -93,7 +93,7 @@ public class StringUtils {
 			return prefix + string;
 		}
 	}
-	
+
 	public static String endWith(String string, String suffix) {
 		if (empty(string)) {
 			return suffix;
@@ -103,29 +103,31 @@ public class StringUtils {
 			return string + suffix;
 		}
 	}
-	
+
 	/**
 	 * 
 	 * @param string
 	 * @param delim
-	 * @param a 
+	 * @param a
 	 * @return number of string written to a
-	 * @throws IllegalArgumentException if a is of length 0
-	 * @throws ArrayIndexOutOfBoundsException if a is too small to fit all strings
+	 * @throws IllegalArgumentException
+	 *             if a is of length 0
+	 * @throws ArrayIndexOutOfBoundsException
+	 *             if a is too small to fit all strings
 	 * @see #split(String, String)
 	 */
 	public static int split(String string, String delim, String[] a) {
 		if (a.length == 0) {
 			throw new IllegalArgumentException();
 		}
-		
+
 		int idx = 0;
 		for (String s : split(string, delim)) {
 			a[idx++] = s;
 		}
 		return idx;
 	}
-	
+
 	/**
 	 * null-safe equals
 	 * 
@@ -140,7 +142,7 @@ public class StringUtils {
 			return s1.equals(s2);
 		}
 	}
-	
+
 	public static Iterable<String> split(final String string, final String split) {
 		if (string == null) {
 			throw new NullPointerException("string");

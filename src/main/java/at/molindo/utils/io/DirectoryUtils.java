@@ -25,16 +25,18 @@ import java.util.Map;
 
 public class DirectoryUtils {
 	private DirectoryUtils() {
-		
+
 	}
-	
-	public static Map<File, InputStream> open(File directory, boolean recursive) throws FileNotFoundException, IOException {
+
+	public static Map<File, InputStream> open(File directory, boolean recursive) throws FileNotFoundException,
+			IOException {
 		return open(directory, Compression.NONE, recursive);
 	}
-	
-	public static Map<File, InputStream> open(File directory, Compression compression, boolean recursive) throws FileNotFoundException, IOException {
+
+	public static Map<File, InputStream> open(File directory, Compression compression, boolean recursive)
+			throws FileNotFoundException, IOException {
 		Map<File, InputStream> map = new HashMap<File, InputStream>();
-		
+
 		if (!directory.isDirectory()) {
 			map.put(directory, FileUtils.in(directory, compression));
 		} else {
@@ -46,7 +48,7 @@ public class DirectoryUtils {
 				}
 			}
 		}
-		
+
 		return map;
 	}
 }

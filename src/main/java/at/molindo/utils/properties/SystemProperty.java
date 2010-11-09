@@ -25,60 +25,28 @@ import java.util.TreeMap;
 import java.util.TreeSet;
 
 /**
- * <p>
- * This enum is supposed to be a complete list of available system properties on
- * different JVM and Java versions. And with complete I don't mean the list
- * documented at {@link System#getProperties()}. I mean properties that are
- * specific to different verndors, versions and operating stystems.
- * </p>
- * <p>
+ * <p> This enum is supposed to be a complete list of available system
+ * properties on different JVM and Java versions. And with complete I don't mean
+ * the list documented at {@link System#getProperties()}. I mean properties that
+ * are specific to different verndors, versions and operating stystems. </p> <p>
  * Use {@link #get()} or {@link #toString()} to access the property values or
  * {@link #set(String)} to update them - but only those that aren't read-only (
- * {@link #isReadOnly()}).
- * </p>
- * <p>
- * If you discover some new properties in your environment, please run the
- * contained {@link #main(String[])} method and send the output to me:
- * </p>
- * <p>
- * You may want to check for updates once in a while: <a
- * href="http://techblog.molindo.at/files/SystemProperty.java"
+ * {@link #isReadOnly()}). </p> <p> If you discover some new properties in your
+ * environment, please run the contained {@link #main(String[])} method and send
+ * the output to me: </p> <p> You may want to check for updates once in a while:
+ * <a href="http://techblog.molindo.at/files/SystemProperty.java"
  * >SystemProperty.java</a> and <a
  * href="http://techblog.molindo.at/2009/11/java-system-properties.html">Molindo
- * Techblog: The Final Take On Java System Properties</a>
- * </p>
+ * Techblog: The Final Take On Java System Properties</a> </p>
  * 
- * <p>
- * <strong>List of tested JVMs</strong><br />
- * <small>If your JVM is missing, please <a
+ * <p> <strong>List of tested JVMs</strong><br /> <small>If your JVM is missing,
+ * please <a
  * href="http://techblog.molindo.at/2009/11/java-system-properties.html">send
  * me</a> your output of the included {@link #main(String[])} method</small>
- * <ul>
- * <li>Sun JVM 1.6
- * <ul>
- * <li>Ubuntu Hardy</li>
- * <li>Cent OS</li>
- * <li>Mac OS X</li>
- * <li>Windows XP</li>
- * </ul>
- * <ul>
- * <li>Sun JVM 1.5
- * <ul>
- * <li>Ubuntu Hardy</li>
- * </ul>
- * </li>
- * <li>Open JDK 6
- * <ul>
- * <li>Ubuntu Hardy</li>
- * </ul>
- * </li>
- * <li>IBM JVM 1.4.2
- * <ul>
- * <li>Windows XP</li>
- * </ul>
- * </li>
- * </ul>
- * <p>
+ * <ul> <li>Sun JVM 1.6 <ul> <li>Ubuntu Hardy</li> <li>Cent OS</li> <li>Mac OS
+ * X</li> <li>Windows XP</li> </ul> <ul> <li>Sun JVM 1.5 <ul> <li>Ubuntu
+ * Hardy</li> </ul> </li> <li>Open JDK 6 <ul> <li>Ubuntu Hardy</li> </ul> </li>
+ * <li>IBM JVM 1.4.2 <ul> <li>Windows XP</li> </ul> </li> </ul> <p>
  * 
  * @see System#getProperties()
  * 
@@ -87,66 +55,41 @@ import java.util.TreeSet;
 public enum SystemProperty {
 
 	/**
-	 * <p>
-	 * <strong>Known values:</strong>
-	 * <ul>
-	 * <li>"MacRoman": Mac OS X</li>
-	 * <li>"Cp1252": Windows XP</li>
-	 * <li>"UTF-8": CentOS, Ubuntu Hardy/JVM 1.5, Ubuntu Hardy/Open JDK 6</li>
-	 * <li>"ISO-8859-1": Ubuntu Hardy/JVM 1.6</li>
-	 * </ul>
-	 * </p>
-	 * <em>Note: This property <strong>is not</strong> part of {@link System#getProperties()} doc.</em>
+	 * <p> <strong>Known values:</strong> <ul> <li>"MacRoman": Mac OS X</li>
+	 * <li>"Cp1252": Windows XP</li> <li>"UTF-8": CentOS, Ubuntu Hardy/JVM 1.5,
+	 * Ubuntu Hardy/Open JDK 6</li> <li>"ISO-8859-1": Ubuntu Hardy/JVM 1.6</li>
+	 * </ul> </p> <em>Note: This property <strong>is not</strong> part of
+	 * {@link System#getProperties()} doc.</em>
 	 */
 	FILE_ENCODING("file.encoding"),
 
 	/**
-	 * This property is available on all
-	 * <p>
-	 * <strong>Known values:</strong>
-	 * <ul>
-	 * <li>"sun.io"</li>
-	 * </ul>
-	 * </p>
-	 * <em>Note: This property <strong>is not</strong> part of {@link System#getProperties()} doc.</em>
+	 * This property is available on all <p> <strong>Known values:</strong> <ul>
+	 * <li>"sun.io"</li> </ul> </p> <em>Note: This property <strong>is
+	 * not</strong> part of {@link System#getProperties()} doc.</em>
 	 */
 	FILE_ENCODING_PKG("file.encoding.pkg"),
 
 	/**
-	 * <p>
-	 * {@link System#getProperties()} doc: File separator ("/" on UNIX)
-	 * </p>
+	 * <p> {@link System#getProperties()} doc: File separator ("/" on UNIX) </p>
 	 * 
-	 * <p>
-	 * <strong>Known values:</strong>
-	 * <ul>
-	 * <li>"\" (Windows)</li>
-	 * <li>"/" (Mac OS X, Linux)</li>
-	 * <li>"\\" (Windows, IBM JVM)</li>
-	 * </ul>
-	 * </p>
+	 * <p> <strong>Known values:</strong> <ul> <li>"\" (Windows)</li> <li>"/"
+	 * (Mac OS X, Linux)</li> <li>"\\" (Windows, IBM JVM)</li> </ul> </p>
 	 */
 	FILE_SEPARATOR("file.separator"),
 
 	/**
-	 * <p>
-	 * <strong>Known values:</strong>
-	 * <ul>
+	 * <p> <strong>Known values:</strong> <ul>
 	 * <li>"sun.awt.X11GraphicsEnvironment": Ubuntu Hardy</li>
 	 * <li>"apple.awt.CGraphicsEnvironment": Mac OS X</li>
-	 * <li>"sun.awt.Win32GraphicsEnvironment": Windows XP</li>
-	 * </ul>
-	 * </p>
-	 * <em>Note: This property <strong>is not</strong> part of {@link System#getProperties()} doc.</em>
+	 * <li>"sun.awt.Win32GraphicsEnvironment": Windows XP</li> </ul> </p>
+	 * <em>Note: This property <strong>is not</strong> part of
+	 * {@link System#getProperties()} doc.</em>
 	 */
-	JAVA_AWT_GRAPHICSENV("java.awt.graphicsenv"),
-	JAVA_AWT_PRINTERJOB("java.awt.printerjob"),
+	JAVA_AWT_GRAPHICSENV("java.awt.graphicsenv"), JAVA_AWT_PRINTERJOB("java.awt.printerjob"),
 
-	JAVA_CLASS_PATH("java.class.path"),
-	JAVA_CLASS_VERSION("java.class.version"),
-	JAVA_COMPILER("java.compiler"),
-	JAVA_ENDORSED_DIRS("java.endorsed.dirs"),
-	JAVA_EXT_DIRS("java.ext.dirs"),
+	JAVA_CLASS_PATH("java.class.path"), JAVA_CLASS_VERSION("java.class.version"), JAVA_COMPILER("java.compiler"), JAVA_ENDORSED_DIRS(
+			"java.endorsed.dirs"), JAVA_EXT_DIRS("java.ext.dirs"),
 
 	JAVA_HOME("java.home"),
 
@@ -177,18 +120,14 @@ public enum SystemProperty {
 		}
 	},
 
-	JAVA_LIBRARY_PATH("java.library.path"),
-	JAVA_RUNTIME_NAME("java.runtime.name"),
-	JAVA_RUNTIME_VERSION("java.runtime.version"),
+	JAVA_LIBRARY_PATH("java.library.path"), JAVA_RUNTIME_NAME("java.runtime.name"), JAVA_RUNTIME_VERSION(
+			"java.runtime.version"),
 
-	JAVA_SPECIFICATION_NAME("java.specification.name"),
-	JAVA_SPECIFICATION_VENDOR("java.specification.vendor"),
-	JAVA_SPECIFICATION_VERSION("java.specification.version"),
+	JAVA_SPECIFICATION_NAME("java.specification.name"), JAVA_SPECIFICATION_VENDOR("java.specification.vendor"), JAVA_SPECIFICATION_VERSION(
+			"java.specification.version"),
 
-	JAVA_VERSION("java.version"),
-	JAVA_VENDOR("java.vendor"),
-	JAVA_VENDOR_URL("java.vendor.url"),
-	JAVA_VENDOR_URL_BUG("java.vendor.url.bug"),
+	JAVA_VERSION("java.version"), JAVA_VENDOR("java.vendor"), JAVA_VENDOR_URL("java.vendor.url"), JAVA_VENDOR_URL_BUG(
+			"java.vendor.url.bug"),
 
 	JAVA_VM_INFO("java.vm.info"),
 
@@ -199,42 +138,28 @@ public enum SystemProperty {
 	 * known values: "Java HotSpot(TM) 64-Bit Server VM",
 	 * "Java HotSpot(TM) Client VM"
 	 */
-	JAVA_VM_NAME("java.vm.name"),
-	JAVA_VM_SPECIFICATION_NAME("java.vm.specification.name"),
-	JAVA_VM_SPECIFICATION_VENDOR("java.vm.specification.vendor"),
-	JAVA_VM_SPECIFICATION_VERSION("java.vm.specification.version"),
-	JAVA_VM_VERSION("java.vm.version"),
-	JAVA_VM_VENDOR("java.vm.vendor"),
+	JAVA_VM_NAME("java.vm.name"), JAVA_VM_SPECIFICATION_NAME("java.vm.specification.name"), JAVA_VM_SPECIFICATION_VENDOR(
+			"java.vm.specification.vendor"), JAVA_VM_SPECIFICATION_VERSION("java.vm.specification.version"), JAVA_VM_VERSION(
+			"java.vm.version"), JAVA_VM_VENDOR("java.vm.vendor"),
 
 	LINE_SEPARATOR("line.separator"),
 
 	/**
 	 * see http://lopica.sourceforge.net/os.html for possible values
 	 */
-	OS_NAME("os.name"),
-	OS_ARCH("os.arch"),
-	OS_VERSION("os.version"),
+	OS_NAME("os.name"), OS_ARCH("os.arch"), OS_VERSION("os.version"),
 
 	PATH_SEPARATOR("path.separator"),
 
-	SUN_ARCH_DATA_MODEL("sun.arch.data.model"),
-	SUN_BOOT_CLASS_PATH("sun.boot.class.path"),
-	SUN_BOOT_LIBRARY_PATH("sun.boot.library.path"),
-	SUN_CPU_ENDIAN("sun.cpu.endian"),
-	SUN_CPU_ISALIST("sun.cpu.isalist"),
+	SUN_ARCH_DATA_MODEL("sun.arch.data.model"), SUN_BOOT_CLASS_PATH("sun.boot.class.path"), SUN_BOOT_LIBRARY_PATH(
+			"sun.boot.library.path"), SUN_CPU_ENDIAN("sun.cpu.endian"), SUN_CPU_ISALIST("sun.cpu.isalist"),
 
-	SUN_IO_UNICODE_ENCODING("sun.io.unicode.encoding"),
-	SUN_JAVA_LAUNCHER("sun.java.launcher"),
-	SUN_JNU_ENCODING("sun.jnu.encoding"),
-	SUN_MANAGEMENT_COMPILER("sun.management.compiler"),
-	SUN_OS_PATCH_LEVEL("sun.os.patch.level"),
+	SUN_IO_UNICODE_ENCODING("sun.io.unicode.encoding"), SUN_JAVA_LAUNCHER("sun.java.launcher"), SUN_JNU_ENCODING(
+			"sun.jnu.encoding"), SUN_MANAGEMENT_COMPILER("sun.management.compiler"), SUN_OS_PATCH_LEVEL(
+			"sun.os.patch.level"),
 
-	USER_COUNTRY("user.country"),
-	USER_DIR("user.dir"),
-	USER_HOME("user.home"),
-	USER_LANGUAGE("user.language"),
-	USER_NAME("user.name"),
-	USER_TIMEZONE("user.timezone"),
+	USER_COUNTRY("user.country"), USER_DIR("user.dir"), USER_HOME("user.home"), USER_LANGUAGE("user.language"), USER_NAME(
+			"user.name"), USER_TIMEZONE("user.timezone"),
 
 	/*
 	 * Windows ONLY
@@ -480,24 +405,20 @@ public enum SystemProperty {
 	 * derived properties
 	 */
 	/**
-	 * <ul>
-	 * <li><strong>windows</strong> if OS name contains the word "windows"</li>
-	 * <li><strong>os/2</strong> if OS name contains the word "os/2"</li>
-	 * <li><strong>netware</strong> if OS name contains the word "netware"</li>
-	 * <li><strong>dos</strong> if OS family is not "netware", and its path
-	 * separator is ";"</li>
-	 * <li><strong>mac</strong> if OS name contains the word "mac"</li>
-	 * <li><strong>tandem</strong> if OS name contains the word "nonstop_kernel"
-	 * </li>
-	 * <li><strong>unix</strong> if OS family is not "openvms" and not "mac"
-	 * which names does not end with "X", and its path separator is ":"</li>
-	 * <li><strong>win9x</strong> is OS family is "windows" and OS name contains
-	 * "95", "98", "me", or "ce"</li>
+	 * <ul> <li><strong>windows</strong> if OS name contains the word
+	 * "windows"</li> <li><strong>os/2</strong> if OS name contains the word
+	 * "os/2"</li> <li><strong>netware</strong> if OS name contains the word
+	 * "netware"</li> <li><strong>dos</strong> if OS family is not "netware",
+	 * and its path separator is ";"</li> <li><strong>mac</strong> if OS name
+	 * contains the word "mac"</li> <li><strong>tandem</strong> if OS name
+	 * contains the word "nonstop_kernel" </li> <li><strong>unix</strong> if OS
+	 * family is not "openvms" and not "mac" which names does not end with "X",
+	 * and its path separator is ":"</li> <li><strong>win9x</strong> is OS
+	 * family is "windows" and OS name contains "95", "98", "me", or "ce"</li>
 	 * <li><strong>z/os</strong> if OS name contains the word "z/os" or "os/390"
-	 * </li>
-	 * <li><strong>os/400</strong> if OS name contains the word "os/400"</li>
-	 * <li><strong>openvms</strong> if OS name contains the word "openvms"</li>
-	 * <li><strong>unknown</strong> if none of the above matches
+	 * </li> <li><strong>os/400</strong> if OS name contains the word
+	 * "os/400"</li> <li><strong>openvms</strong> if OS name contains the word
+	 * "openvms"</li> <li><strong>unknown</strong> if none of the above matches
 	 * </ul>
 	 */
 	OS_FAMILY("os.family") {
@@ -507,8 +428,7 @@ public enum SystemProperty {
 			if (osName != null) {
 				final String os = osName.toLowerCase();
 				if (os.contains("windows")) {
-					if (os.contains("95") || os.contains("98") || os.contains("me")
-							|| os.contains("ce")) {
+					if (os.contains("95") || os.contains("98") || os.contains("me") || os.contains("ce")) {
 						return "win9x";
 					} else {
 						return "windows";
@@ -547,16 +467,12 @@ public enum SystemProperty {
 	},
 
 	/**
-	 * <p>
-	 * returns true if VM is running in "Server Mode" (java -server). This is
-	 * only true if java.vm.name starts with "Java HotSpot(TM)" and contains
+	 * <p> returns true if VM is running in "Server Mode" (java -server). This
+	 * is only true if java.vm.name starts with "Java HotSpot(TM)" and contains
 	 * "Server". <code>null</code> is returned if java.vm.name is null (which
-	 * should never be the case).
-	 * </p>
-	 * <p>
-	 * <a href="http://stackoverflow.com/questions/1833129/how-to-make-sure-im-using-the-server-jvm"
-	 * > Stackoverflow: How to make sure I'm using the "server" JVM? </a>
-	 * </p>
+	 * should never be the case). </p> <p> <a href=
+	 * "http://stackoverflow.com/questions/1833129/how-to-make-sure-im-using-the-server-jvm"
+	 * > Stackoverflow: How to make sure I'm using the "server" JVM? </a> </p>
 	 */
 	JAVA_VM_SERVER("java.vm.server") {
 		public String get() {
@@ -577,8 +493,7 @@ public enum SystemProperty {
 		}
 	};
 
-	private static final org.slf4j.Logger log = org.slf4j.LoggerFactory
-			.getLogger(SystemProperty.class);
+	private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SystemProperty.class);
 
 	/**
 	 * Type of property (only used in constructor for readability)
@@ -950,13 +865,10 @@ public enum SystemProperty {
 				System.out.println(e);
 			}
 
-			System.out
-					.println("\n\n### PLEASE POST FULL OUTPUT . AT http://j.mp/props0 or http://j.mp/props1");
+			System.out.println("\n\n### PLEASE POST FULL OUTPUT . AT http://j.mp/props0 or http://j.mp/props1");
 			for (final Map.Entry<Object, Object> e : props.entrySet()) {
-				System.out
-						.println(String
-								.format("\t/**\n\t * %s only: known values: %s\n\t */\n\t%s(\"%s\"),", OS_NAME, e
-										.getValue(), toEnumName((String) e.getKey()), e.getKey()));
+				System.out.println(String.format("\t/**\n\t * %s only: known values: %s\n\t */\n\t%s(\"%s\"),",
+						OS_NAME, e.getValue(), toEnumName((String) e.getKey()), e.getKey()));
 			}
 		} else {
 			System.out
@@ -974,8 +886,7 @@ public enum SystemProperty {
 		final String expected = toEnumName(p.getName());
 
 		if (!p.name().equals(expected)) {
-			System.err.println("name missmatch: " + p.toDebugString() + " (expected " + expected
-					+ ")");
+			System.err.println("name missmatch: " + p.toDebugString() + " (expected " + expected + ")");
 		}
 	}
 

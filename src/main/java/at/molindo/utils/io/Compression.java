@@ -15,6 +15,7 @@
  */
 
 package at.molindo.utils.io;
+
 public enum Compression {
 	AUTO, GZIP, BZIP2, NONE
 }

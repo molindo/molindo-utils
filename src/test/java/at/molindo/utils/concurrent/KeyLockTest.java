@@ -29,17 +29,16 @@ public class KeyLockTest {
 		final KeyLock<String, Integer> lock = new KeyLock<String, Integer>() {
 
 			@Override
-			protected Integer replace(Integer result, Exception ex)
-					throws Exception {
+			protected Integer replace(Integer result, Exception ex) throws Exception {
 				return ex == null ? result : null;
 			}
-			
+
 		};
 		final Integer[] values = new Integer[2];
 		final Thread[] threads = new Thread[1];
-		
+
 		values[0] = lock.withLock("foo", new Callable<Integer>() {
-			
+
 			@Override
 			public Integer call() throws Exception {
 				threads[0] = new Thread() {
@@ -53,27 +52,27 @@ public class KeyLockTest {
 								public Integer call() throws Exception {
 									throw new RuntimeException("must not be called");
 								}
-								
+
 							});
 						} catch (Exception e) {
 							e.printStackTrace();
 							fail(e.getMessage());
 						}
 					}
-					
+
 				};
 				threads[0].start();
 
 				// allow other thread to hit lock
 				Thread.sleep(300);
-				
+
 				return 42;
 			}
 		});
-		
+
 		threads[0].join();
-		
-		assertArrayEquals(new Integer[]{42,42}, values);
+
+		assertArrayEquals(new Integer[] { 42, 42 }, values);
 	}
 
 }

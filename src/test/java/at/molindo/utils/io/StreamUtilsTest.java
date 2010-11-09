@@ -31,10 +31,10 @@ public class StreamUtilsTest {
 	public void testString() throws IOException {
 		String test = "this is a test";
 		Charset charset = CharsetUtils.US_ASCII;
-		
+
 		ByteArrayInputStream in = new ByteArrayInputStream(test.getBytes(charset));
 		StreamUtils.close(in);
-		
+
 		assertEquals(test, StreamUtils.string(in, charset, 4));
 	}
 
@@ -43,14 +43,13 @@ public class StreamUtilsTest {
 		String test = "this is a test";
 		Charset charset = CharsetUtils.US_ASCII;
 		byte[] bytes = test.getBytes(charset);
-		
 
 		ByteArrayInputStream in = new ByteArrayInputStream(test.getBytes(charset));
 		ByteArrayOutputStream out = new ByteArrayOutputStream();
-		
+
 		assertEquals(bytes.length, StreamUtils.copy(in, out, 4));
 		StreamUtils.close(in, out);
-		
+
 		assertArrayEquals(bytes, out.toByteArray());
 	}
 

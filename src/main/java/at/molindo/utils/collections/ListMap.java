@@ -30,7 +30,7 @@ public class ListMap<T, E> implements Map<T, List<E>> {
 	public static <T, E> ListMap<T, E> newListMap() {
 		return new ListMap<T, E>();
 	}
-	
+
 	public ListMap() {
 		_map = newMap();
 	}

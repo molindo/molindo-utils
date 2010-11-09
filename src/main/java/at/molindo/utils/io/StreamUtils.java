@@ -36,35 +36,34 @@ import at.molindo.thirdparty.org.apache.tools.bzip2.CBZip2OutputStream;
 public class StreamUtils {
 
 	private static Logger log = LoggerFactory.getLogger(StreamUtils.class);
-	
+
 	private StreamUtils() {
 	}
 
 	public static String string(InputStream in) throws IOException {
 		return string(in, CharsetUtils.UTF_8);
 	}
-	
+
 	public static String string(InputStream in, Charset charset) throws IOException {
 		return string(in, charset, 4096);
 	}
-	
 
 	public static String string(InputStream in, Charset charset, int bufferSize) throws IOException {
-        try {
-            InputStreamReader reader = new InputStreamReader(in, charset);
-    		StringWriter writer = new StringWriter();
-            
-    		int n;
-            char[] buffer = new char[bufferSize];
-            while ((n = reader.read(buffer)) != -1) {
-                writer.write(buffer, 0, n);
-            }
-            return writer.toString();
-        } finally {
-           close(in);
-        }
+		try {
+			InputStreamReader reader = new InputStreamReader(in, charset);
+			StringWriter writer = new StringWriter();
+
+			int n;
+			char[] buffer = new char[bufferSize];
+			while ((n = reader.read(buffer)) != -1) {
+				writer.write(buffer, 0, n);
+			}
+			return writer.toString();
+		} finally {
+			close(in);
+		}
 	}
-	
+
 	public static int copy(final InputStream in, final OutputStream out) throws IOException {
 		return copy(in, out, 4096);
 	}
@@ -82,14 +81,16 @@ public class StreamUtils {
 		}
 		return bytesCopied;
 	}
-	
+
 	/**
 	 * 
 	 * @param in
 	 * @param compression
 	 * @return
 	 * @throws IOException
-	 * @throws IllegalArgumentException if compression none of {@link Compression#BZIP2}, {@link Compression#GZIP}, {@link Compression#NONE}
+	 * @throws IllegalArgumentException
+	 *             if compression none of {@link Compression#BZIP2},
+	 *             {@link Compression#GZIP}, {@link Compression#NONE}
 	 */
 	public static InputStream decompress(InputStream in, Compression compression) throws IOException {
 		switch (compression) {
@@ -105,7 +106,7 @@ public class StreamUtils {
 			throw new IllegalArgumentException("compression not implemented: " + compression);
 		}
 	}
-	
+
 	public static OutputStream compress(OutputStream out, Compression compression) throws IOException {
 		switch (compression) {
 		case BZIP2:
@@ -120,17 +121,17 @@ public class StreamUtils {
 			throw new IllegalArgumentException("compression not implemented: " + compression);
 		}
 	}
-	
-	public static void close(Closeable ... in) {
+
+	public static void close(Closeable... in) {
 		close(Arrays.asList(in));
 	}
-	
+
 	public static void close(Iterable<Closeable> iterable) {
 		for (Closeable in : iterable) {
 			close(in);
 		}
 	}
-	
+
 	public static void close(Closeable in) {
 		try {
 			in.close();
@@ -152,10 +153,10 @@ public class StreamUtils {
 		in = new CBZip2InputStream(in);
 		return in;
 	}
-	
+
 	private static OutputStream newBz2OutputStream(OutputStream out) throws IOException {
 		// TODO linux compatibility?
 		return new CBZip2OutputStream(out);
 	}
-	
+
 }

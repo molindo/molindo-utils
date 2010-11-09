@@ -21,15 +21,15 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 public class CharsetUtilsTest {
-	
+
 	@Test
 	public void is() {
 		assertTrue(CharsetUtils.is("foobar", CharsetUtils.US_ASCII));
 		assertFalse(CharsetUtils.is("fo\u00f6bar", CharsetUtils.US_ASCII));
-		
+
 		assertTrue(CharsetUtils.is("fo\u00f6bar", CharsetUtils.ISO_8859_1));
 		assertFalse(CharsetUtils.is("fo\u03B8bar", CharsetUtils.ISO_8859_1));
-		
+
 		assertTrue(CharsetUtils.is("fo\u03B8bar", CharsetUtils.UTF_8));
 		assertTrue(CharsetUtils.is("fo\u03B8bar", CharsetUtils.UTF_16));
 	}
