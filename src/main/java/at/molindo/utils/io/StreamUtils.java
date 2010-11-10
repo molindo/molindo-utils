@@ -133,10 +133,12 @@ public class StreamUtils {
 	}
 
 	public static void close(Closeable in) {
-		try {
-			in.close();
-		} catch (IOException e) {
-			log.debug("stream close failed", e);
+		if (in != null) {
+			try {
+				in.close();
+			} catch (IOException e) {
+				log.debug("stream close failed", e);
+			}
 		}
 	}
 
