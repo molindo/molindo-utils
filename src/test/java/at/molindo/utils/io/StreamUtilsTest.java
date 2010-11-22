@@ -88,4 +88,15 @@ public class StreamUtilsTest {
 		StreamUtils.readFully(in, buf);
 		StreamUtils.close(in);
 	}
+
+	public void testEquals() throws IOException {
+		assertTrue(StreamUtils.equals(stream("abcd"), stream("abcd")));
+		assertTrue(!StreamUtils.equals(stream("abcd"), stream("ab01")));
+		assertTrue(!StreamUtils.equals(stream("abcd"), stream("ab")));
+		assertTrue(!StreamUtils.equals(stream("ab"), stream("abcd")));
+	}
+
+	private static ByteArrayInputStream stream(String hex) {
+		return new ByteArrayInputStream(HexUtils.bytes(hex));
+	}
 }

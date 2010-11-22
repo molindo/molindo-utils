@@ -33,9 +33,11 @@ import org.slf4j.LoggerFactory;
 
 import at.molindo.thirdparty.org.apache.tools.bzip2.CBZip2InputStream;
 import at.molindo.thirdparty.org.apache.tools.bzip2.CBZip2OutputStream;
+import at.molindo.utils.data.ArrayUtils;
 
 public class StreamUtils {
 
+	private static final int DEFAULT_BUFFER = 4096;
 	private static Logger log = LoggerFactory.getLogger(StreamUtils.class);
 
 	private StreamUtils() {
@@ -46,7 +48,7 @@ public class StreamUtils {
 	}
 
 	public static String string(InputStream in, Charset charset) throws IOException {
-		return string(in, charset, 4096);
+		return string(in, charset, DEFAULT_BUFFER);
 	}
 
 	public static String string(InputStream in, Charset charset, int bufferSize) throws IOException {
@@ -143,11 +145,11 @@ public class StreamUtils {
 		}
 	}
 
-	public static void readFully(InputStream in, byte[] b) throws IOException {
+	public static void readFully(InputStream in, byte[] b) throws EOFException, IOException {
 		readFully(in, b, 0, b.length);
 	}
 
-	public static void readFully(InputStream in, byte[] b, int off, int len) throws IOException {
+	public static void readFully(InputStream in, byte[] b, int off, int len) throws EOFException, IOException {
 		while (len > 0) {
 			int read = in.read(b, off, len);
 			if (read == -1) {
@@ -155,6 +157,38 @@ public class StreamUtils {
 			}
 			off += read;
 			len -= read;
+		}
+	}
+
+	public static boolean equals(InputStream i1, InputStream i2) throws IOException {
+		return equals(i1, i2, DEFAULT_BUFFER);
+	}
+
+	public static boolean equals(InputStream i1, InputStream i2, int buf) throws IOException {
+		try {
+			// do the compare
+			while (true) {
+				byte[] b1 = new byte[buf];
+				byte[] b2 = new byte[buf];
+
+				int length = i1.read(b1);
+				if (length == -1) {
+					return i2.read(b2, 0, 1) == -1;
+				}
+
+				try {
+					StreamUtils.readFully(i2, b2, 0, length);
+				} catch (EOFException e) {
+					// i2 is shorter than i1
+					return false;
+				}
+
+				if (!ArrayUtils.equals(b1, b2, 0, length)) {
+					return false;
+				}
+			}
+		} finally {
+			StreamUtils.close(i1, i2);
 		}
 	}
 
