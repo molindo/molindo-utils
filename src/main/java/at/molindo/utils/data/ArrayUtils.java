@@ -31,11 +31,6 @@ public class ArrayUtils {
 			return false;
 		}
 
-		int length = a.length;
-		if (a2.length != length) {
-			return false;
-		}
-
 		for (int i = off; i < off + len; i++) {
 			if (a[i] != a2[i]) {
 				return false;

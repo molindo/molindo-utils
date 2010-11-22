@@ -16,14 +16,21 @@
 
 package at.molindo.utils.io;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.EOFException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.charset.Charset;
 
 import org.junit.Test;
+
+import at.molindo.utils.data.ArrayUtils;
+import at.molindo.utils.data.HexUtils;
 
 public class StreamUtilsTest {
 
@@ -53,4 +60,32 @@ public class StreamUtilsTest {
 		assertArrayEquals(bytes, out.toByteArray());
 	}
 
+	@Test
+	public void testReadFully() throws IOException {
+		byte[] bytes = HexUtils.bytes("1234567890abcdef1234567890abcdef");
+		assertEquals(16, bytes.length);
+
+		byte[] buf = new byte[10];
+
+		InputStream in = new ByteArrayInputStream(bytes);
+
+		StreamUtils.readFully(in, buf);
+
+		assertTrue(ArrayUtils.equals(bytes, buf, 0, buf.length));
+
+		StreamUtils.close(in);
+	}
+
+	@Test(expected = EOFException.class)
+	public void testReadFullyEOF() throws IOException {
+		byte[] bytes = HexUtils.bytes("1234567890abcdef1234567890abcdef");
+		assertEquals(16, bytes.length);
+
+		byte[] buf = new byte[20];
+
+		InputStream in = new ByteArrayInputStream(bytes);
+
+		StreamUtils.readFully(in, buf);
+		StreamUtils.close(in);
+	}
 }

@@ -17,6 +17,7 @@
 package at.molindo.utils.io;
 
 import java.io.Closeable;
+import java.io.EOFException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -139,6 +140,21 @@ public class StreamUtils {
 			} catch (IOException e) {
 				log.debug("stream close failed", e);
 			}
+		}
+	}
+
+	public static void readFully(InputStream in, byte[] b) throws IOException {
+		readFully(in, b, 0, b.length);
+	}
+
+	public static void readFully(InputStream in, byte[] b, int off, int len) throws IOException {
+		while (len > 0) {
+			int read = in.read(b, off, len);
+			if (read == -1) {
+				throw new EOFException();
+			}
+			off += read;
+			len -= read;
 		}
 	}
 
