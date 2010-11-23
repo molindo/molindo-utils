@@ -20,6 +20,10 @@ import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.junit.Test;
@@ -57,5 +61,10 @@ public class CollectionBuilderTest {
 
 		sortedSet = CollectionBuilder.<String> sortedSet().add("foo").get();
 		assertEquals(CollectionUtils.sortedSet("foo"), sortedSet);
+
+		// generic elements
+		List<Map<String, Object>> mapList = CollectionBuilder.builder(new LinkedList<Map<String, Object>>())
+				.add(new HashMap<String, Object>()).get();
+		assertEquals(1, mapList.size());
 	}
 }
