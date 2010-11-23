@@ -33,7 +33,7 @@ import org.slf4j.LoggerFactory;
 
 import at.molindo.thirdparty.org.apache.tools.bzip2.CBZip2InputStream;
 import at.molindo.thirdparty.org.apache.tools.bzip2.CBZip2OutputStream;
-import at.molindo.utils.data.ArrayUtils;
+import at.molindo.utils.collections.ArrayUtils;
 
 public class StreamUtils {
 

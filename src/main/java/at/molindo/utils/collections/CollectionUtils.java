@@ -17,11 +17,26 @@
 package at.molindo.utils.collections;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.TreeSet;
 
 public class CollectionUtils {
 
 	private CollectionUtils() {
+	}
+
+	public static <E> HashSet<E> set(E... e) {
+		return new HashSet<E>(Arrays.asList(e));
+	}
+
+	public static <E> TreeSet<E> sortedSet(E... e) {
+		return new TreeSet<E>(Arrays.asList(e));
+	}
+
+	public static <E> ArrayList<E> list(E... e) {
+		return new ArrayList<E>(Arrays.asList(e));
 	}
 
 	/**

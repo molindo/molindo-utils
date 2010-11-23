@@ -20,6 +20,8 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
+import at.molindo.utils.collections.ArrayUtils;
+
 public class ArrayUtilsTest {
 
 	@Test

@@ -16,7 +16,7 @@
 
 package at.molindo.utils.collections;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import java.util.Arrays;
 import java.util.Collections;

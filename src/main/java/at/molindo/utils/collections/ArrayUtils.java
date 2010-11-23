@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package at.molindo.utils.data;
+package at.molindo.utils.collections;
 
 public class ArrayUtils {
 	public static boolean equals(byte[] a, byte[] a2, int off, int len) {
@@ -36,7 +36,7 @@ public class ArrayUtils {
 				return false;
 			}
 		}
-
 		return true;
 	}
+
 }

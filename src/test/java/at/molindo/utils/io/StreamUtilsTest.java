@@ -29,7 +29,7 @@ import java.nio.charset.Charset;
 
 import org.junit.Test;
 
-import at.molindo.utils.data.ArrayUtils;
+import at.molindo.utils.collections.ArrayUtils;
 import at.molindo.utils.data.HexUtils;
 
 public class StreamUtilsTest {
