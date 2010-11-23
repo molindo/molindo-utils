@@ -16,6 +16,10 @@
 
 package at.molindo.utils.collections;
 
+import static at.molindo.utils.collections.CollectionBuilder.builder;
+import static at.molindo.utils.collections.CollectionBuilder.list;
+import static at.molindo.utils.collections.CollectionBuilder.set;
+import static at.molindo.utils.collections.CollectionBuilder.sortedSet;
 import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
@@ -34,13 +38,12 @@ public class CollectionBuilderTest {
 
 		// custom collection
 
-		ArrayList<String> list = CollectionBuilder.builder(new ArrayList<String>()).add("foo").addAll("bar", "baz")
-				.get();
+		ArrayList<String> list = builder(new ArrayList<String>()).add("foo").addAll("bar", "baz").get();
 		assertEquals(Arrays.asList("foo", "bar", "baz"), list);
 
 		// list
 
-		list = CollectionBuilder.list(String.class).add("foo").get();
+		list = list(String.class).add("foo").get();
 		assertEquals(CollectionUtils.list("foo"), list);
 
 		list = CollectionBuilder.<String> list().add("foo").get();
@@ -48,7 +51,7 @@ public class CollectionBuilderTest {
 
 		// set
 
-		Set<String> set = CollectionBuilder.set(String.class).add("foo").get();
+		Set<String> set = set(String.class).add("foo").get();
 		assertEquals(CollectionUtils.set("foo"), set);
 
 		list = CollectionBuilder.<String> list().add("foo").get();
@@ -56,15 +59,16 @@ public class CollectionBuilderTest {
 
 		// sorted set
 
-		Set<String> sortedSet = CollectionBuilder.sortedSet(String.class).add("foo").get();
+		Set<String> sortedSet = sortedSet(String.class).add("foo").get();
 		assertEquals(CollectionUtils.sortedSet("foo"), sortedSet);
 
 		sortedSet = CollectionBuilder.<String> sortedSet().add("foo").get();
 		assertEquals(CollectionUtils.sortedSet("foo"), sortedSet);
 
 		// generic elements
-		List<Map<String, Object>> mapList = CollectionBuilder.builder(new LinkedList<Map<String, Object>>())
-				.add(new HashMap<String, Object>()).get();
+		List<Map<String, Object>> mapList = builder(new LinkedList<Map<String, Object>>()).add(
+				new HashMap<String, Object>()).get();
 		assertEquals(1, mapList.size());
+
 	}
 }

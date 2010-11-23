@@ -16,6 +16,9 @@
 
 package at.molindo.utils.collections;
 
+import static at.molindo.utils.collections.MapBuilder.builder;
+import static at.molindo.utils.collections.MapBuilder.map;
+import static at.molindo.utils.collections.MapBuilder.sortedMap;
 import static org.junit.Assert.assertEquals;
 
 import java.util.Arrays;
@@ -35,29 +38,28 @@ public class MapBuilderTest {
 		expected.put("k2", "v2");
 
 		// custom collection
-		Map<String, String> map = MapBuilder.builder(new HashMap<String, String>()).put("k1", "v1").put("k2", "v2")
-				.get();
+		Map<String, String> map = builder(new HashMap<String, String>()).put("k1", "v1").put("k2", "v2").get();
 
 		assertEquals(expected, map);
 
 		// map
-		map = MapBuilder.map(String.class, String.class).put("k1", "v1").put("k2", "v2").get();
+		map = map(String.class, String.class).put("k1", "v1").put("k2", "v2").get();
 		assertEquals(expected, map);
 
 		map = MapBuilder.<String, String> map().put("k1", "v1").put("k2", "v2").get();
 		assertEquals(expected, map);
 
 		// sorted map
-		map = MapBuilder.sortedMap(String.class, String.class).put("k1", "v1").put("k2", "v2").get();
+		map = sortedMap(String.class, String.class).put("k1", "v1").put("k2", "v2").get();
 		assertEquals(expected, map);
 
 		map = MapBuilder.<String, String> sortedMap().put("k1", "v1").put("k2", "v2").get();
 		assertEquals(expected, map);
 
 		// generic elements
-		TreeMap<List<String>, Map<String, Object>> genericsMap = MapBuilder
-				.builder(new TreeMap<List<String>, Map<String, Object>>())
-				.put(Arrays.asList("foo"), new HashMap<String, Object>()).get();
+		TreeMap<List<String>, Map<String, Object>> genericsMap = builder(
+				new TreeMap<List<String>, Map<String, Object>>()).put(Arrays.asList("foo"),
+				new HashMap<String, Object>()).get();
 		assertEquals(1, genericsMap.size());
 	}
 }
