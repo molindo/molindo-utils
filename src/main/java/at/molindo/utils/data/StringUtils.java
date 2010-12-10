@@ -104,6 +104,30 @@ public class StringUtils {
 		}
 	}
 
+	public static String stripTrailing(String string, String suffix) {
+		if (string == null) {
+			return null;
+		}
+
+		if (suffix != null && string.endsWith(suffix)) {
+			return string.substring(0, string.length() - suffix.length());
+		} else {
+			return string;
+		}
+	}
+
+	public static String stripLeading(String string, String prefix) {
+		if (string == null) {
+			return null;
+		}
+
+		if (prefix != null && string.startsWith(prefix)) {
+			return string.substring(prefix.length());
+		} else {
+			return string;
+		}
+	}
+
 	/**
 	 * 
 	 * @param string

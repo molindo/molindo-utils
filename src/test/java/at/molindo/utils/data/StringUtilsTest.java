@@ -16,7 +16,10 @@
 
 package at.molindo.utils.data;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 import java.util.Iterator;
 
@@ -122,5 +125,21 @@ public class StringUtilsTest {
 		assertFalse(StringUtils.equals("foo", null));
 		assertFalse(StringUtils.equals("foo", "bar"));
 		assertTrue(StringUtils.equals("foo", "foo"));
+	}
+
+	@Test
+	public void testStripLeading() {
+		assertNull(StringUtils.stripLeading(null, "foo"));
+		assertEquals("foo", StringUtils.stripLeading("foo", null));
+		assertEquals("bar", StringUtils.stripLeading("foobar", "foo"));
+		assertEquals("bar", StringUtils.stripLeading("bar", "foo"));
+	}
+
+	@Test
+	public void testStripTrailing() {
+		assertNull(StringUtils.stripTrailing(null, "foo"));
+		assertEquals("foo", StringUtils.stripTrailing("foo", null));
+		assertEquals("foo", StringUtils.stripTrailing("foobar", "bar"));
+		assertEquals("bar", StringUtils.stripTrailing("bar", "foo"));
 	}
 }
