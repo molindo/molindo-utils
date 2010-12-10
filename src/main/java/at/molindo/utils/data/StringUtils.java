@@ -104,6 +104,20 @@ public class StringUtils {
 		}
 	}
 
+	public static String trailing(String string, String suffix) {
+		if (string == null) {
+			return null;
+		}
+		return suffix == null || string.endsWith(suffix) ? string : string + suffix;
+	}
+
+	public static String leading(String string, String prefix) {
+		if (string == null) {
+			return null;
+		}
+		return prefix == null || string.startsWith(prefix) ? string : prefix + string;
+	}
+
 	public static String stripTrailing(String string, String suffix) {
 		if (string == null) {
 			return null;

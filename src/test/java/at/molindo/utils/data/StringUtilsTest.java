@@ -128,6 +128,22 @@ public class StringUtilsTest {
 	}
 
 	@Test
+	public void testLeading() {
+		assertNull(StringUtils.leading(null, "foo"));
+		assertEquals("foo", StringUtils.leading("foo", null));
+		assertEquals("foobar", StringUtils.leading("bar", "foo"));
+		assertEquals("foo", StringUtils.leading("foo", "foo"));
+	}
+
+	@Test
+	public void testTrailing() {
+		assertNull(StringUtils.trailing(null, "foo"));
+		assertEquals("foo", StringUtils.trailing("foo", null));
+		assertEquals("foobar", StringUtils.trailing("foo", "bar"));
+		assertEquals("foo", StringUtils.trailing("foo", "foo"));
+	}
+
+	@Test
 	public void testStripLeading() {
 		assertNull(StringUtils.stripLeading(null, "foo"));
 		assertEquals("foo", StringUtils.stripLeading("foo", null));
