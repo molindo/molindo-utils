@@ -16,6 +16,7 @@
 
 package at.molindo.utils.io;
 
+import java.io.ByteArrayOutputStream;
 import java.io.Closeable;
 import java.io.EOFException;
 import java.io.IOException;
@@ -142,6 +143,28 @@ public class StreamUtils {
 			} catch (IOException e) {
 				log.debug("stream close failed", e);
 			}
+		}
+	}
+
+	public static byte[] bytes(InputStream in) throws IOException {
+		return bytes(in, DEFAULT_BUFFER);
+	}
+
+	/**
+	 * get bytes from InputStream
+	 * 
+	 * @param in
+	 * @param bufferSize
+	 * @return
+	 * @throws IOException
+	 */
+	public static byte[] bytes(InputStream in, int bufferSize) throws IOException {
+		ByteArrayOutputStream out = new ByteArrayOutputStream(bufferSize);
+		try {
+			copy(in, out);
+			return out.toByteArray();
+		} finally {
+			close(out);
 		}
 	}
 

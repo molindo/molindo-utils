@@ -61,6 +61,12 @@ public class StreamUtilsTest {
 	}
 
 	@Test
+	public void testBytes() throws IOException {
+		byte[] bytes = HexUtils.bytes("1234567890abcdef1234567890abcdef");
+		assertArrayEquals(bytes, StreamUtils.bytes(new ByteArrayInputStream(bytes)));
+	}
+
+	@Test
 	public void testReadFully() throws IOException {
 		byte[] bytes = HexUtils.bytes("1234567890abcdef1234567890abcdef");
 		assertEquals(16, bytes.length);
