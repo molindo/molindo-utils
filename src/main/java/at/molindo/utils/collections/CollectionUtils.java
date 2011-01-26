@@ -18,8 +18,11 @@ package at.molindo.utils.collections;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.SortedSet;
 import java.util.TreeSet;
 
 public class CollectionUtils {
@@ -27,16 +30,52 @@ public class CollectionUtils {
 	private CollectionUtils() {
 	}
 
+	public static <E> Set<E> unmodifiableSet(Iterable<E> e) {
+		return Collections.unmodifiableSet(set(e));
+	}
+
+	public static <E> Set<E> unmodifiableSet(E... e) {
+		return Collections.unmodifiableSet(set(e));
+	}
+
 	public static <E> HashSet<E> set(E... e) {
-		return new HashSet<E>(Arrays.asList(e));
+		return set(Arrays.asList(e));
+	}
+
+	public static <E> HashSet<E> set(Iterable<E> e) {
+		return IteratorUtils.addAll(new HashSet<E>(), e.iterator());
+	}
+
+	public static <E> SortedSet<E> unmodifiableSortedSet(E... e) {
+		return Collections.unmodifiableSortedSet(sortedSet(e));
+	}
+
+	public static <E> SortedSet<E> unmodifiableSortedSet(Iterable<E> e) {
+		return Collections.unmodifiableSortedSet(sortedSet(e));
 	}
 
 	public static <E> TreeSet<E> sortedSet(E... e) {
-		return new TreeSet<E>(Arrays.asList(e));
+		return sortedSet(Arrays.asList(e));
+	}
+
+	public static <E> TreeSet<E> sortedSet(Iterable<E> e) {
+		return IteratorUtils.addAll(new TreeSet<E>(), e.iterator());
+	}
+
+	public static <E> List<E> unmodifiableList(E... e) {
+		return Collections.unmodifiableList(list(e));
+	}
+
+	public static <E> List<E> unmodifiableList(Iterable<E> e) {
+		return Collections.unmodifiableList(list(e));
 	}
 
 	public static <E> ArrayList<E> list(E... e) {
 		return new ArrayList<E>(Arrays.asList(e));
+	}
+
+	public static <E> ArrayList<E> list(Iterable<E> e) {
+		return IteratorUtils.addAll(new ArrayList<E>(), e.iterator());
 	}
 
 	/**
