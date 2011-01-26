@@ -64,14 +64,14 @@ public class FileUtils {
 
 	public static InputStream in(final File file, Compression compression) throws FileNotFoundException, IOException {
 		if (Compression.AUTO == compression) {
-			compression = compression(file.getName());
+			compression = compression(file);
 		}
 		return StreamUtils.decompress(new FileInputStream(file), compression);
 	}
 
 	public static OutputStream out(final File file, Compression compression) throws FileNotFoundException, IOException {
 		if (Compression.AUTO == compression) {
-			compression = compression(file.getName());
+			compression = compression(file);
 		}
 		return StreamUtils.compress(new FileOutputStream(file), compression);
 	}
@@ -84,16 +84,35 @@ public class FileUtils {
 		return new BufferedWriter(new OutputStreamWriter(out(file, compression), CharsetUtils.UTF_8));
 	}
 
+	public static byte[] bytes(File file) throws FileNotFoundException, IOException {
+		return bytes(file, compression(file));
+	}
+
+	public static byte[] bytes(File file, Compression compression) throws FileNotFoundException, IOException {
+		InputStream in = FileUtils.in(file, compression);
+		try {
+			return StreamUtils.bytes(in);
+		} finally {
+			StreamUtils.close(in);
+		}
+	}
+
+	public static Compression compression(File file) {
+		return compression(file.getName());
+	}
+
 	/**
 	 * @param name
 	 *            name of a file
 	 * @return never <code>null</code>, never {@link Compression#AUTO}
 	 */
 	public static Compression compression(String name) {
-		if (name.endsWith(".gz"))
+		if (name.endsWith(".gz")) {
 			return Compression.GZIP;
-		if (name.endsWith(".bz2"))
+		}
+		if (name.endsWith(".bz2")) {
 			return Compression.BZIP2;
+		}
 		return Compression.NONE;
 	}
 
