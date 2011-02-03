@@ -158,4 +158,12 @@ public class StringUtilsTest {
 		assertEquals("foo", StringUtils.stripTrailing("foobar", "bar"));
 		assertEquals("bar", StringUtils.stripTrailing("bar", "foo"));
 	}
+
+	@Test
+	public void testPair() {
+		assertEquals(Pair.pair("", ""), StringUtils.pair(null, ";"));
+		assertEquals(Pair.pair("foo", "bar"), StringUtils.pair("foo:bar", ":"));
+		assertEquals(Pair.pair("foobar", ""), StringUtils.pair("foobar", ":"));
+		assertEquals(Pair.pair("", "foobar"), StringUtils.pair(":foobar", ":"));
+	}
 }

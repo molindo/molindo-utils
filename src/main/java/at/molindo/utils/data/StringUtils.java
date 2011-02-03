@@ -167,6 +167,26 @@ public class StringUtils {
 	}
 
 	/**
+	 * splits a string into a pair at the first occurence of delim
+	 * 
+	 * @param string
+	 * @param delim
+	 * @return
+	 */
+	public static Pair<String, String> pair(String string, String delim) {
+		if (string == null) {
+			return Pair.pair("", "");
+		}
+
+		int idx = string.indexOf(delim);
+		if (idx < 0) {
+			return Pair.pair(string, "");
+		} else {
+			return Pair.pair(string.substring(0, idx), string.substring(idx + 1));
+		}
+	}
+
+	/**
 	 * null-safe equals
 	 * 
 	 * @param s1
