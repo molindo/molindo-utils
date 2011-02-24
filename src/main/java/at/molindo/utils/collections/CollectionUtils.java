@@ -18,9 +18,11 @@ package at.molindo.utils.collections;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -88,5 +90,29 @@ public class CollectionUtils {
 			return new ArrayList<T>(0);
 		}
 		return list.subList(first, Math.min(first + count, list.size()));
+	}
+
+	public static boolean empty(Collection<?> c) {
+		return c == null || c.isEmpty();
+	}
+
+	public static boolean empty(Map<?, ?> c) {
+		return c == null || c.isEmpty();
+	}
+
+	public static <T> T first(Collection<T> c) {
+		return c == null ? null : IteratorUtils.next(c.iterator());
+	}
+
+	public static <K, V> Map.Entry<K, V> first(Map<K, V> c) {
+		return c == null ? null : IteratorUtils.next(c.entrySet().iterator());
+	}
+
+	public static <K> K firstKey(Map<K, ?> c) {
+		return c == null ? null : IteratorUtils.next(c.keySet().iterator());
+	}
+
+	public static <V> V firstValue(Map<?, V> c) {
+		return c == null ? null : IteratorUtils.next(c.values().iterator());
 	}
 }
