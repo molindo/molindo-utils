@@ -39,4 +39,10 @@ public class ArrayUtils {
 		return true;
 	}
 
+	/**
+	 * @return <code>true</code> if a is not null and a.length > 0
+	 */
+	public static <T> boolean empty(T[] a) {
+		return a == null || a.length == 0;
+	}
 }

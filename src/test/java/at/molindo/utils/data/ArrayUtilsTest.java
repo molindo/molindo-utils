@@ -16,6 +16,8 @@
 
 package at.molindo.utils.data;
 
+import static at.molindo.utils.collections.ArrayUtils.empty;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
@@ -32,5 +34,12 @@ public class ArrayUtilsTest {
 		assertTrue(ArrayUtils.equals(b1, b2, 1, 6));
 		assertTrue(!ArrayUtils.equals(b1, b2, 0, 6));
 		assertTrue(!ArrayUtils.equals(b1, b2, 1, 7));
+	}
+
+	@Test
+	public void testEmpty() {
+		assertTrue(empty(null));
+		assertTrue(empty(new Object[0]));
+		assertFalse(empty(new Object[1]));
 	}
 }
