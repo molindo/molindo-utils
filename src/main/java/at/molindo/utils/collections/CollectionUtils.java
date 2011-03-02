@@ -26,6 +26,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
+import java.util.concurrent.ConcurrentMap;
 
 public class CollectionUtils {
 
@@ -114,5 +115,10 @@ public class CollectionUtils {
 
 	public static <V> V firstValue(Map<?, V> c) {
 		return c == null ? null : IteratorUtils.next(c.values().iterator());
+	}
+
+	public static <K, V> V putIfAbsent(ConcurrentMap<K, V> map, K key, V value) {
+		V current = map.putIfAbsent(key, value);
+		return current != null ? current : value;
 	}
 }

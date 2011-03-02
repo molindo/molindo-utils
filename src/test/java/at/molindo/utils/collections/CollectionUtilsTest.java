@@ -16,11 +16,15 @@
 
 package at.molindo.utils.collections;
 
+import static at.molindo.utils.collections.CollectionUtils.putIfAbsent;
+import static at.molindo.utils.collections.CollectionUtils.subList;
+import static java.util.Collections.emptyList;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertSame;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.junit.Test;
 
@@ -30,11 +34,20 @@ public class CollectionUtilsTest {
 	public void testSubList() {
 		List<String> list = Arrays.asList("foo", "bar", "baz", "qux");
 
-		assertEquals(list, CollectionUtils.subList(list, 0, 100));
+		assertEquals(list, subList(list, 0, 100));
 		assertEquals(list.subList(2, 4), CollectionUtils.subList(list, 2, 100));
 		assertEquals(list.subList(0, 2), CollectionUtils.subList(list, 0, 2));
-		assertEquals(list.subList(2, 3), CollectionUtils.subList(list, 2, 1));
-		assertEquals(Collections.emptyList(), CollectionUtils.subList(list, 50, 100));
+		assertEquals(list.subList(2, 3), subList(list, 2, 1));
+		assertEquals(emptyList(), subList(list, 50, 100));
 	}
 
+	@Test
+	public void testPutIfAbsent() {
+		ConcurrentHashMap<String, Object[]> map = new ConcurrentHashMap<String, Object[]>();
+
+		Object[] old = new Object[0];
+
+		assertSame(old, putIfAbsent(map, "foo", old));
+		assertSame(old, putIfAbsent(map, "foo", new Object[1]));
+	}
 }
