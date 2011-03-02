@@ -45,4 +45,12 @@ public class ArrayUtils {
 	public static <T> boolean empty(T[] a) {
 		return a == null || a.length == 0;
 	}
+
+	/**
+	 * @return a[0] if array isn't empty
+	 * @see #empty(Object[])
+	 */
+	public static <T> T first(T[] a) {
+		return empty(a) ? null : a[0];
+	}
 }
