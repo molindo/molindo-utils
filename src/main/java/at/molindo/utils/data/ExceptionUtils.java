@@ -37,4 +37,7 @@ public class ExceptionUtils {
 		return error.toString();
 	}
 
+	public static <T> T unexpected(Throwable t) {
+		throw new RuntimeException("unexpected exception", t);
+	}
 }
