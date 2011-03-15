@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>at.molindo</groupId>
 		<artifactId>molindo-oss-pom</artifactId>
-		<version>1.0-SNAPSHOT</version>
+		<version>1</version>
 	</parent>
 
 	<groupId>at.molindo</groupId>
