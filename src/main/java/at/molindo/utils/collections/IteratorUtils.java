@@ -224,4 +224,31 @@ public class IteratorUtils {
 
 		};
 	}
+
+	public static <T> Iterator<T> object(final T o) {
+		return new Iterator<T>() {
+
+			private boolean _hasNext = o != null;
+
+			@Override
+			public boolean hasNext() {
+				return _hasNext;
+			}
+
+			@Override
+			public T next() {
+				if (!_hasNext) {
+					throw new NoSuchElementException();
+				}
+				_hasNext = false;
+				return o;
+			}
+
+			@Override
+			public void remove() {
+				throw new UnsupportedOperationException();
+			}
+
+		};
+	}
 }
