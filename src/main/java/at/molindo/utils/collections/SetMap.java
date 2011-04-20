@@ -18,28 +18,27 @@ package at.molindo.utils.collections;
 
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
 
-public class ListMap<T, E> implements Map<T, List<E>> {
+public class SetMap<T, E> implements Map<T, Set<E>> {
 
-	private final Map<T, List<E>> _map;
+	private final Map<T, Set<E>> _map;
 
-	public static <T, E> ListMap<T, E> newListMap() {
-		return new ListMap<T, E>();
+	public static <T, E> SetMap<T, E> newSetMap() {
+		return new SetMap<T, E>();
 	}
 
-	public ListMap() {
+	public SetMap() {
 		_map = newMap();
 	}
 
-	protected Map<T, List<E>> newMap() {
-		return new HashMap<T, List<E>>();
+	protected Map<T, Set<E>> newMap() {
+		return new HashMap<T, Set<E>>();
 	}
 
-	protected Map<T, List<E>> getMap() {
+	protected Map<T, Set<E>> getMap() {
 		return _map;
 	}
 
@@ -59,7 +58,7 @@ public class ListMap<T, E> implements Map<T, List<E>> {
 	}
 
 	@Override
-	public Set<Entry<T, List<E>>> entrySet() {
+	public Set<Entry<T, Set<E>>> entrySet() {
 		return _map.entrySet();
 	}
 
@@ -69,7 +68,7 @@ public class ListMap<T, E> implements Map<T, List<E>> {
 	}
 
 	@Override
-	public List<E> get(final Object key) {
+	public Set<E> get(final Object key) {
 		return _map.get(key);
 	}
 
@@ -89,34 +88,34 @@ public class ListMap<T, E> implements Map<T, List<E>> {
 	}
 
 	public void put(final T key, final E value) {
-		getList(key).add(value);
+		getSet(key).add(value);
 	}
 
 	public void putAll(final T key, final Collection<E> values) {
-		getList(key).addAll(values);
+		getSet(key).addAll(values);
 	}
 
 	@Override
-	public List<E> put(final T key, final List<E> value) {
+	public Set<E> put(final T key, final Set<E> value) {
 		return _map.put(key, value);
 	}
 
 	@Override
-	public void putAll(final Map<? extends T, ? extends List<E>> m) {
+	public void putAll(final Map<? extends T, ? extends Set<E>> m) {
 		_map.putAll(m);
 	}
 
-	public void addAll(final T key, final List<E> values) {
-		getList(key).addAll(values);
+	public void addAll(final T key, final Set<E> values) {
+		getSet(key).addAll(values);
 	}
 
 	@Override
-	public List<E> remove(final Object key) {
+	public Set<E> remove(final Object key) {
 		return _map.remove(key);
 	}
 
 	public boolean remove(final T key, final E value) {
-		final List<E> list = _map.get(key);
+		final Set<E> list = _map.get(key);
 		return list == null ? false : list.remove(value);
 	}
 
@@ -126,19 +125,19 @@ public class ListMap<T, E> implements Map<T, List<E>> {
 	}
 
 	@Override
-	public Collection<List<E>> values() {
+	public Collection<Set<E>> values() {
 		return _map.values();
 	}
 
 	@Override
 	public String toString() {
-		return ListMap.class.getSimpleName() + ": " + _map;
+		return SetMap.class.getSimpleName() + ": " + _map;
 	}
 
-	public List<E> getList(final T key) {
-		List<E> list = _map.get(key);
+	public Set<E> getSet(final T key) {
+		Set<E> list = _map.get(key);
 		if (list == null) {
-			list = new LinkedList<E>();
+			list = new LinkedHashSet<E>();
 			_map.put(key, list);
 		}
 		return list;
