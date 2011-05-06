@@ -40,17 +40,22 @@ public class ClassUtils {
 	 * @return actual type arguments of gernicCls in type hierarchy of cls
 	 */
 	public static Class<?>[] getTypeArguments(Class<?> cls, Class<?> genericCls) {
-		if (genericCls.isAssignableFrom(cls)) {
+		if (cls != null && genericCls.isAssignableFrom(cls)) {
 			while (cls != Object.class) {
 				Class<?>[] classes;
 
-				classes = getTypeArguments(cls.getGenericSuperclass(), genericCls);
+				classes = arguments(cls.getGenericSuperclass(), genericCls);
 				if (classes != null) {
 					return classes;
 				}
 
 				for (Type type : cls.getGenericInterfaces()) {
-					classes = getTypeArguments(type, genericCls);
+					classes = arguments(type, genericCls);
+					if (classes != null) {
+						return classes;
+					}
+					// recursively check interfaces
+					classes = getTypeArguments(toClass(type), genericCls);
 					if (classes != null) {
 						return classes;
 					}
@@ -67,23 +72,29 @@ public class ClassUtils {
 	 * @param genericCls
 	 * @return actual type arguments of type to gernicCls
 	 */
-	private static Class<?>[] getTypeArguments(Type type, Class<?> genericCls) {
+	private static Class<?>[] arguments(Type type, Class<?> genericCls) {
 		if (type instanceof ParameterizedType) {
 			ParameterizedType pt = (ParameterizedType) type;
 			if (genericCls == pt.getRawType()) {
 				Type[] typeArgs = pt.getActualTypeArguments();
 				Class<?>[] classes = new Class<?>[typeArgs.length];
 				for (int i = 0; i < typeArgs.length; i++) {
-					Type typeArg = typeArgs[i];
-					if (typeArg instanceof Class<?>) {
-						classes[i] = (Class<?>) typeArg;
-					} else if (typeArg instanceof ParameterizedType) {
-						classes[i] = (Class<?>) ((ParameterizedType) typeArg).getRawType();
-					}
+					classes[i] = toClass(typeArgs[i]);
 				}
 				return classes;
 			}
 		}
 		return null;
+	}
+
+	public static Class<?> toClass(Type type) {
+		if (type instanceof Class<?>) {
+			return (Class<?>) type;
+		} else if (type instanceof ParameterizedType) {
+			return toClass(((ParameterizedType) type).getRawType());
+		} else {
+			// TODO
+			return null;
+		}
 	}
 }
