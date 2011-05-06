@@ -33,14 +33,14 @@ public class ClassUtilsTest {
 		T doSomething();
 	}
 
-	public interface VeryDoable extends Doable<String> {
+	public interface VeryDoable<V> extends Doable<V> {
 	}
 
 	public abstract static class Foo<T> {
 		abstract T foo();
 	}
 
-	public static class Bar extends Foo<Integer> implements VeryDoable {
+	public static class Bar extends Foo<Integer> implements VeryDoable<String> {
 
 		@Override
 		Integer foo() {

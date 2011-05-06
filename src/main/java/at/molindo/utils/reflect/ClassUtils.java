@@ -16,9 +16,9 @@
 
 package at.molindo.utils.reflect;
 
-import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 
+import at.molindo.thirdparty.org.springframework.core.GenericTypeResolver;
 import at.molindo.utils.collections.ArrayUtils;
 
 public class ClassUtils {
@@ -40,61 +40,10 @@ public class ClassUtils {
 	 * @return actual type arguments of gernicCls in type hierarchy of cls
 	 */
 	public static Class<?>[] getTypeArguments(Class<?> cls, Class<?> genericCls) {
-		if (cls != null && genericCls.isAssignableFrom(cls)) {
-			while (cls != Object.class) {
-				Class<?>[] classes;
-
-				classes = arguments(cls.getGenericSuperclass(), genericCls);
-				if (classes != null) {
-					return classes;
-				}
-
-				for (Type type : cls.getGenericInterfaces()) {
-					classes = arguments(type, genericCls);
-					if (classes != null) {
-						return classes;
-					}
-					// recursively check interfaces
-					classes = getTypeArguments(toClass(type), genericCls);
-					if (classes != null) {
-						return classes;
-					}
-				}
-
-				cls = cls.getSuperclass();
-			}
-		}
-		return null;
+		return GenericTypeResolver.resolveTypeArguments(cls, genericCls);
 	}
 
-	/**
-	 * @param type
-	 * @param genericCls
-	 * @return actual type arguments of type to gernicCls
-	 */
-	private static Class<?>[] arguments(Type type, Class<?> genericCls) {
-		if (type instanceof ParameterizedType) {
-			ParameterizedType pt = (ParameterizedType) type;
-			if (genericCls == pt.getRawType()) {
-				Type[] typeArgs = pt.getActualTypeArguments();
-				Class<?>[] classes = new Class<?>[typeArgs.length];
-				for (int i = 0; i < typeArgs.length; i++) {
-					classes[i] = toClass(typeArgs[i]);
-				}
-				return classes;
-			}
-		}
-		return null;
-	}
-
-	public static Class<?> toClass(Type type) {
-		if (type instanceof Class<?>) {
-			return (Class<?>) type;
-		} else if (type instanceof ParameterizedType) {
-			return toClass(((ParameterizedType) type).getRawType());
-		} else {
-			// TODO
-			return null;
-		}
+	public static Class<?> toClass(Class<?> declaringCls, Type type) {
+		return GenericTypeResolver.extractClass(declaringCls, type);
 	}
 }
