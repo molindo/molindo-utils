@@ -64,6 +64,16 @@ public class IteratorUtils {
 	}
 
 	/**
+	 * @param <T>
+	 * @param iterable
+	 * @return {@link Iterable#iterator()} or {@link #EMPTY_ITERATOR} if null
+	 */
+	@SuppressWarnings("unchecked")
+	public static <T> Iterator<T> iterator(Iterable<T> iterable) {
+		return iterable == null ? (Iterator<T>) EMPTY_ITERATOR : iterable.iterator();
+	}
+
+	/**
 	 * 
 	 * @param <T>
 	 * @param iter
