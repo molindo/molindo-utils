@@ -46,7 +46,7 @@ public class CollectionUtils {
 	}
 
 	public static <E> HashSet<E> set(Iterable<E> e) {
-		return IteratorUtils.addAll(new HashSet<E>(), e.iterator());
+		return IteratorUtils.addAll(new HashSet<E>(), IteratorUtils.iterator(e));
 	}
 
 	public static <E> SortedSet<E> unmodifiableSortedSet(E... e) {
@@ -62,7 +62,7 @@ public class CollectionUtils {
 	}
 
 	public static <E> TreeSet<E> sortedSet(Iterable<E> e) {
-		return IteratorUtils.addAll(new TreeSet<E>(), e.iterator());
+		return IteratorUtils.addAll(new TreeSet<E>(), IteratorUtils.iterator(e));
 	}
 
 	public static <E> List<E> unmodifiableList(E... e) {
@@ -78,7 +78,7 @@ public class CollectionUtils {
 	}
 
 	public static <E> ArrayList<E> list(Iterable<E> e) {
-		return IteratorUtils.addAll(new ArrayList<E>(), e.iterator());
+		return IteratorUtils.addAll(new ArrayList<E>(), IteratorUtils.iterator(e));
 	}
 
 	/**
@@ -102,19 +102,19 @@ public class CollectionUtils {
 	}
 
 	public static <T> T first(Collection<T> c) {
-		return c == null ? null : IteratorUtils.next(c.iterator());
+		return c == null ? null : IteratorUtils.next(IteratorUtils.iterator(c));
 	}
 
 	public static <K, V> Map.Entry<K, V> first(Map<K, V> c) {
-		return c == null ? null : IteratorUtils.next(c.entrySet().iterator());
+		return c == null ? null : IteratorUtils.next(IteratorUtils.iterator(c.entrySet()));
 	}
 
 	public static <K> K firstKey(Map<K, ?> c) {
-		return c == null ? null : IteratorUtils.next(c.keySet().iterator());
+		return c == null ? null : IteratorUtils.next(IteratorUtils.iterator(c.keySet()));
 	}
 
 	public static <V> V firstValue(Map<?, V> c) {
-		return c == null ? null : IteratorUtils.next(c.values().iterator());
+		return c == null ? null : IteratorUtils.next(IteratorUtils.iterator(c.values()));
 	}
 
 	public static <K, V> V putIfAbsent(ConcurrentMap<K, V> map, K key, V value) {
