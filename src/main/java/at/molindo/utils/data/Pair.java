@@ -17,9 +17,12 @@
 package at.molindo.utils.data;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map.Entry;
+
+import at.molindo.utils.collections.CollectionBuilder;
 
 public class Pair<A, B> implements Serializable {
 
@@ -59,6 +62,24 @@ public class Pair<A, B> implements Serializable {
 	 */
 	public static <K, V> Pair<K, V> pair() {
 		return new Pair<K, V>();
+	}
+
+	public static <K> PairCollectionBuilder<K, K> pairs(Class<K> kv) {
+		return pairs(kv, kv);
+	}
+
+	public static <K, V> PairCollectionBuilder<K, V> pairs(K k, V v) {
+		PairCollectionBuilder<K, V> pairs = pairs();
+		pairs.pair(k, v);
+		return pairs;
+	}
+
+	public static <K, V> PairCollectionBuilder<K, V> pairs(Class<K> k, Class<V> v) {
+		return pairs();
+	}
+
+	public static <K, V> PairCollectionBuilder<K, V> pairs() {
+		return new PairCollectionBuilder<K, V>();
 	}
 
 	/**
@@ -159,4 +180,15 @@ public class Pair<A, B> implements Serializable {
 		return "['" + getKey() + "' = '" + getValue() + "']";
 	}
 
+	public static class PairCollectionBuilder<K, V> extends CollectionBuilder<Pair<K, V>, List<Pair<K, V>>> {
+
+		protected PairCollectionBuilder() {
+			super(new ArrayList<Pair<K, V>>());
+		}
+
+		public PairCollectionBuilder<K, V> pair(K key, V value) {
+			add(Pair.pair(key, value));
+			return this;
+		}
+	}
 }
