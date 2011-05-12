@@ -24,16 +24,16 @@ import java.util.TreeSet;
 
 public class CollectionBuilder<V, C extends Collection<V>> {
 
-	public static <V> CollectionBuilder<V, ArrayList<V>> list() {
-		return builder(new ArrayList<V>());
+	public static <V> CollectionBuilder<V, ArrayList<V>> list(V... v) {
+		return builder(new ArrayList<V>()).addAll(v);
 	}
 
-	public static <V> CollectionBuilder<V, HashSet<V>> set() {
-		return builder(new HashSet<V>());
+	public static <V> CollectionBuilder<V, HashSet<V>> set(V... v) {
+		return builder(new HashSet<V>()).addAll(v);
 	}
 
-	public static <V> CollectionBuilder<V, TreeSet<V>> sortedSet() {
-		return builder(new TreeSet<V>());
+	public static <V> CollectionBuilder<V, TreeSet<V>> sortedSet(V... v) {
+		return builder(new TreeSet<V>()).addAll(v);
 	}
 
 	public static <V> CollectionBuilder<V, ArrayList<V>> list(Class<V> cls) {

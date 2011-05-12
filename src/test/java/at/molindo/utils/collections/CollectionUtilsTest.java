@@ -28,6 +28,8 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import org.junit.Test;
 
+import at.molindo.utils.data.Function;
+
 public class CollectionUtilsTest {
 
 	@Test
@@ -49,5 +51,33 @@ public class CollectionUtilsTest {
 
 		assertSame(old, putIfAbsent(map, "foo", old));
 		assertSame(old, putIfAbsent(map, "foo", new Object[1]));
+	}
+
+	@Test
+	public void find() {
+		List<Integer> list = CollectionBuilder.list(1, 2, 3, 4, 5).get();
+
+		Function<Integer, Double> f1 = new Function<Integer, Double>() {
+
+			@Override
+			public Double apply(Integer input) {
+				return input / 2.0;
+			}
+
+		};
+		assertEquals(4, (int) CollectionUtils.find(list, f1, 2.0));
+		assertEquals(CollectionBuilder.list(4).get(), CollectionUtils.findAll(list, f1, 2.0));
+
+		Function<Integer, Boolean> f2 = new Function<Integer, Boolean>() {
+
+			@Override
+			public Boolean apply(Integer input) {
+				return input % 2 == 0;
+			}
+
+		};
+
+		assertEquals(2, (int) CollectionUtils.find(list, f2));
+		assertEquals(CollectionBuilder.list(2, 4).get(), CollectionUtils.findAll(list, f2));
 	}
 }

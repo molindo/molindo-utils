@@ -21,12 +21,15 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.concurrent.ConcurrentMap;
+
+import at.molindo.utils.data.Function;
 
 public class CollectionUtils {
 
@@ -120,5 +123,43 @@ public class CollectionUtils {
 	public static <K, V> V putIfAbsent(ConcurrentMap<K, V> map, K key, V value) {
 		V current = map.putIfAbsent(key, value);
 		return current != null ? current : value;
+	}
+
+	public static <T, V> T find(Collection<T> c, Function<T, Boolean> f) {
+		for (T t : c) {
+			if (f.apply(t) == Boolean.TRUE) {
+				return t;
+			}
+		}
+		return null;
+	}
+
+	public static <T, V> List<T> findAll(Collection<T> c, Function<T, Boolean> f) {
+		List<T> list = new LinkedList<T>();
+		for (T t : c) {
+			if (f.apply(t) == Boolean.TRUE) {
+				list.add(t);
+			}
+		}
+		return list;
+	}
+
+	public static <T, V> T find(Collection<T> c, Function<T, V> f, V match) {
+		for (T t : c) {
+			if (match.equals(f.apply(t))) {
+				return t;
+			}
+		}
+		return null;
+	}
+
+	public static <T, V> List<T> findAll(Collection<T> c, Function<T, V> f, V match) {
+		List<T> list = new LinkedList<T>();
+		for (T t : c) {
+			if (match.equals(f.apply(t))) {
+				list.add(t);
+			}
+		}
+		return list;
 	}
 }
