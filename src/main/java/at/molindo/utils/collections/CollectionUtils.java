@@ -162,4 +162,28 @@ public class CollectionUtils {
 		}
 		return list;
 	}
+
+	public static <C extends Collection<T>, T, F> C add(C to, F o, Function<? super F, T> f) {
+		to.add(f.apply(o));
+		return to;
+	}
+
+	public static <C extends Collection<T>, T, F> C addAll(C to, Collection<? extends F> from, Function<? super F, T> f) {
+		for (F o : from) {
+			to.add(f.apply(o));
+		}
+		return to;
+	}
+
+	public static <M extends Map<T, F>, T, F> M put(M to, F o, Function<? super F, T> f) {
+		to.put(f.apply(o), o);
+		return to;
+	}
+
+	public static <M extends Map<T, F>, T, F> M putAll(M to, Collection<? extends F> from, Function<? super F, T> f) {
+		for (F o : from) {
+			to.put(f.apply(o), o);
+		}
+		return to;
+	}
 }

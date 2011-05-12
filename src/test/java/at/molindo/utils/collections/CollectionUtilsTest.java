@@ -23,12 +23,17 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertSame;
 
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.junit.Test;
 
 import at.molindo.utils.data.Function;
+import at.molindo.utils.data.FunctionUtils;
 
 public class CollectionUtilsTest {
 
@@ -79,5 +84,22 @@ public class CollectionUtilsTest {
 
 		assertEquals(2, (int) CollectionUtils.find(list, f2));
 		assertEquals(CollectionBuilder.list(2, 4).get(), CollectionUtils.findAll(list, f2));
+	}
+
+	@Test
+	public void addAll() {
+		List<Integer> list = CollectionBuilder.list(1, 2, 3, 4, 5).get();
+
+		Set<String> strings = CollectionUtils.addAll(new HashSet<String>(), list, FunctionUtils.toStringFunction());
+		assertEquals(CollectionBuilder.set("1", "2", "3", "4", "5").get(), strings);
+	}
+
+	@Test
+	public void putAll() {
+		List<Integer> list = CollectionBuilder.list(1, 2, 3, 4, 5).get();
+		Map<String, Integer> strings = CollectionUtils.putAll(new HashMap<String, Integer>(), list,
+				FunctionUtils.toStringFunction());
+		assertEquals(CollectionBuilder.set("1", "2", "3", "4", "5").get(), strings.keySet());
+		assertEquals(CollectionBuilder.set(1, 2, 3, 4, 5).get(), new HashSet<Integer>(strings.values()));
 	}
 }
