@@ -18,7 +18,7 @@ package at.molindo.utils.collections;
 
 public class ArrayUtils {
 	public static boolean equals(byte[] a, byte[] a2, int off, int len) {
-		if (off < 0 || len < 0 || len > a.length - off || len > a2.length - off) {
+		if (off < 0 || len < 0 || len > length(a) - off || len > length(a2) - off) {
 			throw new IndexOutOfBoundsException();
 		} else if (len == 0) {
 			return true;
@@ -47,10 +47,149 @@ public class ArrayUtils {
 	}
 
 	/**
+	 * @return <code>true</code> if a is not null and a.length > 0
+	 */
+	public static boolean empty(byte[] a) {
+		return a == null || a.length == 0;
+	}
+
+	/**
+	 * @return <code>true</code> if a is not null and a.length > 0
+	 */
+	public static boolean empty(int[] a) {
+		return a == null || a.length == 0;
+	}
+
+	/**
+	 * @return <code>true</code> if a is not null and a.length > 0
+	 */
+	public static boolean empty(long[] a) {
+		return a == null || a.length == 0;
+	}
+
+	/**
+	 * @return <code>true</code> if a is not null and a.length > 0
+	 */
+	public static boolean empty(float[] a) {
+		return a == null || a.length == 0;
+	}
+
+	/**
+	 * @return <code>true</code> if a is not null and a.length > 0
+	 */
+	public static boolean empty(double[] a) {
+		return a == null || a.length == 0;
+	}
+
+	/**
+	 * @return <code>true</code> if a is not null and a.length > 0
+	 */
+	public static boolean empty(char[] a) {
+		return a == null || a.length == 0;
+	}
+
+	/**
 	 * @return a[0] if array isn't empty
 	 * @see #empty(Object[])
 	 */
 	public static <T> T first(T[] a) {
 		return empty(a) ? null : a[0];
+	}
+
+	/**
+	 * @return a[0] if array isn't empty
+	 * @see #empty(Object[])
+	 */
+	public static byte first(byte[] a) {
+		return empty(a) ? 0x00 : a[0];
+	}
+
+	/**
+	 * @return a[0] if array isn't empty
+	 * @see #empty(Object[])
+	 */
+	public static int first(int[] a) {
+		return empty(a) ? 0 : a[0];
+	}
+
+	/**
+	 * @return a[0] if array isn't empty
+	 * @see #empty(Object[])
+	 */
+	public static long first(long[] a) {
+		return empty(a) ? 0L : a[0];
+	}
+
+	/**
+	 * @return a[0] if array isn't empty
+	 * @see #empty(Object[])
+	 */
+	public static float first(float[] a) {
+		return empty(a) ? 0.0F : a[0];
+	}
+
+	/**
+	 * @return a[0] if array isn't empty
+	 * @see #empty(Object[])
+	 */
+	public static double first(double[] a) {
+		return empty(a) ? 0.0 : a[0];
+	}
+
+	/**
+	 * @return a[0] if array isn't empty
+	 * @see #empty(Object[])
+	 */
+	public static char first(char[] a) {
+		return empty(a) ? 0x00 : a[0];
+	}
+
+	/**
+	 * @return null-safe length of array
+	 */
+	public static <T> int length(T[] a) {
+		return a == null ? 0 : a.length;
+	}
+
+	/**
+	 * @return null-safe length of array
+	 */
+	public static int length(byte[] a) {
+		return a == null ? 0 : a.length;
+	}
+
+	/**
+	 * @return null-safe length of array
+	 */
+	public static int length(int[] a) {
+		return a == null ? 0 : a.length;
+	}
+
+	/**
+	 * @return null-safe length of array
+	 */
+	public static int length(long[] a) {
+		return a == null ? 0 : a.length;
+	}
+
+	/**
+	 * @return null-safe length of array
+	 */
+	public static int length(float[] a) {
+		return a == null ? 0 : a.length;
+	}
+
+	/**
+	 * @return null-safe length of array
+	 */
+	public static int length(double[] a) {
+		return a == null ? 0 : a.length;
+	}
+
+	/**
+	 * @return null-safe length of array
+	 */
+	public static int length(char[] a) {
+		return a == null ? 0 : a.length;
 	}
 }

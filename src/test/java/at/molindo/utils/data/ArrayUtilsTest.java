@@ -41,14 +41,14 @@ public class ArrayUtilsTest {
 
 	@Test
 	public void testEmpty() {
-		assertTrue(empty(null));
+		assertTrue(empty((Object[]) null));
 		assertTrue(empty(new Object[0]));
 		assertFalse(empty(new Object[1]));
 	}
 
 	@Test
 	public void testFirst() {
-		assertNull(first(null));
+		assertNull(first((Object[]) null));
 		assertNull(first(new Object[0]));
 		assertEquals("foo", first(new Object[] { "foo" }));
 	}
