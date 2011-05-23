@@ -24,12 +24,20 @@ import java.nio.charset.MalformedInputException;
 import java.nio.charset.UnmappableCharacterException;
 
 public final class CharsetUtils {
-	public static final Charset US_ASCII = Charset.forName("US-ASCII");
-	public static final Charset ISO_8859_1 = Charset.forName("ISO-8859-1");
-	public static final Charset UTF_8 = Charset.forName("UTF-8");
-	public static final Charset UTF_16 = Charset.forName("UTF-16");
-	public static final Charset UTF_16LE = Charset.forName("UTF-16LE");
-	public static final Charset UTF_16BE = Charset.forName("UTF-16BE");
+
+	public static final String US_ASCII_NAME = "US-ASCII";
+	public static final String ISO_8859_1_NAME = "ISO-8859-1";
+	public static final String UTF_8_NAME = "UTF-8";
+	public static final String UTF_16_NAME = "UTF-16";
+	public static final String UTF_16LE_NAME = "UTF-16LE";
+	public static final String UTF_16BE_NAME = "UTF-16BE";
+
+	public static final Charset US_ASCII = Charset.forName(US_ASCII_NAME);
+	public static final Charset ISO_8859_1 = Charset.forName(ISO_8859_1_NAME);
+	public static final Charset UTF_8 = Charset.forName(UTF_8_NAME);
+	public static final Charset UTF_16 = Charset.forName(UTF_16_NAME);
+	public static final Charset UTF_16LE = Charset.forName(UTF_16LE_NAME);
+	public static final Charset UTF_16BE = Charset.forName(UTF_16BE_NAME);
 
 	private CharsetUtils() {
 
