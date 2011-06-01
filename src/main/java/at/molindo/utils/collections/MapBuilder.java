@@ -16,6 +16,7 @@
 
 package at.molindo.utils.collections;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
@@ -53,6 +54,10 @@ public class MapBuilder<K, V, M extends Map<K, V>> {
 
 	public M get() {
 		return _map;
+	}
+
+	public Map<K, V> getUnmodifiable() {
+		return Collections.unmodifiableMap(get());
 	}
 
 	public MapBuilder<K, V, M> put(K key, V value) {
