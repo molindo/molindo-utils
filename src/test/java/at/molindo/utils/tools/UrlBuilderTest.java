@@ -54,4 +54,11 @@ public class UrlBuilderTest {
 		builder.clearParams();
 		assertEquals("http://example.com/", builder.toString());
 	}
+
+	@Test
+	public void encode() {
+		UrlBuilder builder = new UrlBuilder();
+		builder.addParams("key", "foo bar", "foo+bar");
+		assertEquals("http://example.com/?key=foo%20bar&key=foo%2Bbar", builder.toString());
+	}
 }

@@ -17,11 +17,8 @@
 package at.molindo.utils.tools;
 
 import java.io.Serializable;
-import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.URLDecoder;
-import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -33,7 +30,6 @@ import java.util.regex.Pattern;
 
 import at.molindo.utils.collections.MapBuilder;
 import at.molindo.utils.data.StringUtils;
-import at.molindo.utils.io.CharsetUtils;
 
 /**
  * helps building URLs following the format:
@@ -92,8 +88,8 @@ public class UrlBuilder implements Serializable, Cloneable {
 
 		for (String param : query.split("&")) {
 			String[] pair = param.split("=", 2);
-			String key = decode(pair[0]);
-			String value = decode(pair.length > 2 ? null : pair[1]);
+			String key = decode(URLCoder.QUERY, pair[0]);
+			String value = decode(URLCoder.QUERY, pair.length > 2 ? null : pair[1]);
 			List<String> values = params.get(key);
 			if (values == null) {
 				values = new ArrayList<String>();
@@ -104,50 +100,41 @@ public class UrlBuilder implements Serializable, Cloneable {
 		return params;
 	}
 
-	public static String encode(String s) {
+	public static String encode(URLCoder encoder, String s) {
 		if (StringUtils.empty(s)) {
 			return null;
 		}
-
-		try {
-			return URLEncoder.encode(s, CharsetUtils.UTF_8_NAME);
-		} catch (UnsupportedEncodingException e) {
-			throw new RuntimeException(CharsetUtils.UTF_8_NAME + " unknown!?", e);
-		}
+		return encoder.encode(s);
 	}
 
-	public static List<String> encodeAll(List<String> list) {
+	public static List<String> encodeAll(URLCoder encoder, List<String> list) {
 		if (list == null) {
 			return null;
 		}
 
 		List<String> encoded = new ArrayList<String>(list.size());
 		for (String s : list) {
-			encoded.add(encode(s));
+			encoded.add(encode(encoder, s));
 		}
 		return encoded;
 	}
 
-	public static String decode(String s) {
+	public static String decode(URLCoder decoder, String s) {
 		if (StringUtils.empty(s)) {
 			return null;
 		}
 
-		try {
-			return URLDecoder.decode(s, CharsetUtils.UTF_8_NAME);
-		} catch (UnsupportedEncodingException e) {
-			throw new RuntimeException(CharsetUtils.UTF_8_NAME + " unknown!?", e);
-		}
+		return decoder.decode(s);
 	}
 
-	public static List<String> decodeAll(List<String> list) {
+	public static List<String> decodeAll(URLCoder decoder, List<String> list) {
 		if (list == null) {
 			return null;
 		}
 
 		List<String> decoded = new ArrayList<String>(list.size());
 		for (String s : list) {
-			decoded.add(decode(s));
+			decoded.add(decode(decoder, s));
 		}
 		return decoded;
 	}
@@ -204,7 +191,7 @@ public class UrlBuilder implements Serializable, Cloneable {
 			}
 		}
 
-		_user = encode(user);
+		_user = encode(URLCoder.USER_INFO, user);
 		return this;
 	}
 
@@ -215,7 +202,7 @@ public class UrlBuilder implements Serializable, Cloneable {
 			}
 		}
 
-		_password = encode(password);
+		_password = encode(URLCoder.USER_INFO, password);
 		return this;
 	}
 
@@ -298,7 +285,7 @@ public class UrlBuilder implements Serializable, Cloneable {
 		if (values == null || values.size() == 0) {
 			params.remove(key);
 		} else {
-			params.put(key, encodeAll(values));
+			params.put(key, encodeAll(URLCoder.QUERY_PARAM, values));
 		}
 
 		return this;
@@ -319,9 +306,9 @@ public class UrlBuilder implements Serializable, Cloneable {
 		LinkedHashMap<String, List<String>> params = params();
 		List<String> current = params.get(key);
 		if (current == null) {
-			params.put(key, encodeAll(values));
+			params.put(key, encodeAll(URLCoder.QUERY_PARAM, values));
 		} else {
-			current.addAll(encodeAll(values));
+			current.addAll(encodeAll(URLCoder.QUERY_PARAM, values));
 		}
 		return this;
 	}
@@ -343,7 +330,7 @@ public class UrlBuilder implements Serializable, Cloneable {
 		if (StringUtils.empty(key)) {
 			throw new IllegalArgumentException("key must not be empty");
 		}
-		return encode(key);
+		return encode(URLCoder.QUERY_PARAM, key);
 	}
 
 	private LinkedHashMap<String, List<String>> params() {
@@ -397,9 +384,9 @@ public class UrlBuilder implements Serializable, Cloneable {
 
 			for (Map.Entry<String, List<String>> e : params.entrySet()) {
 				for (String value : e.getValue()) {
-					buf.append(encode(e.getKey())).append("=");
+					buf.append(e.getKey()).append("=");
 					if (!StringUtils.empty(value)) {
-						buf.append(encode(value));
+						buf.append(value);
 					}
 					buf.append("&");
 				}
