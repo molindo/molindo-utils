@@ -32,6 +32,26 @@ public class StringUtils {
 		return string == null ? null : string.trim();
 	}
 
+	public static String sub(String s, int length) {
+		return sub(s, "", length);
+	}
+
+	public static String sub(String s, String suffix, int maxLength) {
+		if (suffix == null) {
+			suffix = "";
+		}
+		if (maxLength < suffix.length()) {
+			throw new IllegalArgumentException("suffix ('" + suffix + "') must not be longer than maxLength ("
+					+ maxLength + ")");
+		}
+
+		if (s == null || s.length() <= maxLength) {
+			return s;
+		}
+
+		return s.substring(0, maxLength - suffix.length()) + suffix;
+	}
+
 	public static String afterFirst(final String string, final String delim) {
 		if (string == null) {
 			return null;

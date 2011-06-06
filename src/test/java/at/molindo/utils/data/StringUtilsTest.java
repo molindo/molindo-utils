@@ -20,6 +20,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import java.util.Iterator;
 
@@ -72,6 +73,18 @@ public class StringUtilsTest {
 		assertEquals("baz", split[2]);
 		assertNull(split[3]);
 		assertNull(split[4]);
+	}
+
+	@Test
+	public void testSub() {
+		assertEquals("foobar", StringUtils.sub("foobar", "...", 6));
+		assertEquals("fo...", StringUtils.sub("foobar", "...", 5));
+		try {
+			assertEquals("", StringUtils.sub("foobar", "...", 2));
+			fail();
+		} catch (IllegalArgumentException e) {
+			// expected
+		}
 	}
 
 	@Test
