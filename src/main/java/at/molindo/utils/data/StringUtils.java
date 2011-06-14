@@ -17,6 +17,7 @@
 package at.molindo.utils.data;
 
 import java.util.Iterator;
+import java.util.Locale;
 import java.util.NoSuchElementException;
 
 public class StringUtils {
@@ -218,6 +219,30 @@ public class StringUtils {
 			return s2 == null;
 		} else {
 			return s1.equals(s2);
+		}
+	}
+
+	public static String upperFirst(String s) {
+		return upperFirst(s, Locale.getDefault());
+	}
+
+	public static String upperFirst(String s, Locale locale) {
+		if (s == null || s.length() < 1) {
+			return s;
+		} else {
+			return s.substring(0, 1).toUpperCase(locale) + s.substring(1);
+		}
+	}
+
+	public static String lowerFirst(String s) {
+		return lowerFirst(s, Locale.getDefault());
+	}
+
+	public static String lowerFirst(String s, Locale locale) {
+		if (s == null || s.length() < 1) {
+			return s;
+		} else {
+			return s.substring(0, 1).toLowerCase(locale) + s.substring(1);
 		}
 	}
 

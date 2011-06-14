@@ -179,4 +179,24 @@ public class StringUtilsTest {
 		assertEquals(Pair.pair("foobar", ""), StringUtils.pair("foobar", ":"));
 		assertEquals(Pair.pair("", "foobar"), StringUtils.pair(":foobar", ":"));
 	}
+
+	@Test
+	public void testUpperFirst() {
+		assertNull(StringUtils.upperFirst(null));
+		assertEquals("", StringUtils.upperFirst(""));
+		assertEquals("A", StringUtils.upperFirst("a"));
+		assertEquals("A", StringUtils.upperFirst("A"));
+		assertEquals("Foo", StringUtils.upperFirst("foo"));
+		assertEquals("Foo", StringUtils.upperFirst("Foo"));
+	}
+
+	@Test
+	public void testLowerFirst() {
+		assertNull(StringUtils.lowerFirst(null));
+		assertEquals("", StringUtils.lowerFirst(""));
+		assertEquals("a", StringUtils.lowerFirst("a"));
+		assertEquals("a", StringUtils.lowerFirst("A"));
+		assertEquals("foo", StringUtils.lowerFirst("foo"));
+		assertEquals("foo", StringUtils.lowerFirst("Foo"));
+	}
 }
