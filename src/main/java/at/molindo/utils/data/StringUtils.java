@@ -16,9 +16,13 @@
 
 package at.molindo.utils.data;
 
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.Locale;
 import java.util.NoSuchElementException;
+
+import at.molindo.utils.collections.CollectionUtils;
 
 public class StringUtils {
 	private StringUtils() {
@@ -299,5 +303,30 @@ public class StringUtils {
 				};
 			}
 		};
+	}
+
+	public static String join(String separator, String... fragments) {
+		return join(separator, Arrays.asList(fragments));
+	}
+
+	public static String join(String separator, Collection<String> fragments) {
+		if (CollectionUtils.empty(fragments)) {
+			return "";
+		} else if (fragments.size() == 1) {
+			return CollectionUtils.first(fragments);
+		} else {
+			if (separator == null) {
+				separator = "";
+			}
+
+			StringBuffer buf = new StringBuffer(128);
+			for (String fragment : fragments) {
+				if (!empty(fragment)) {
+					buf.append(fragment).append(separator);
+				}
+			}
+			buf.setLength(buf.length() - separator.length());
+			return buf.toString();
+		}
 	}
 }

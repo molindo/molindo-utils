@@ -22,6 +22,7 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+import java.util.Collection;
 import java.util.Iterator;
 
 import org.junit.Test;
@@ -198,5 +199,16 @@ public class StringUtilsTest {
 		assertEquals("a", StringUtils.lowerFirst("A"));
 		assertEquals("foo", StringUtils.lowerFirst("foo"));
 		assertEquals("foo", StringUtils.lowerFirst("Foo"));
+	}
+
+	@Test
+	public void testJoin() {
+		assertEquals("", StringUtils.join(", ", (Collection<String>) null));
+		assertEquals("", StringUtils.join(", "));
+		assertEquals("foo", StringUtils.join(", ", "foo"));
+		assertEquals("foo, bar", StringUtils.join(", ", "foo", "bar"));
+		assertEquals("foo, bar", StringUtils.join(", ", "foo", null, "bar"));
+		assertEquals("foo, bar", StringUtils.join(", ", "foo", "bar", ""));
+		assertEquals("foo- -bar", StringUtils.join("-", "foo", " ", "bar"));
 	}
 }
