@@ -17,6 +17,7 @@
 package at.molindo.utils.data;
 
 import java.io.Serializable;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -34,6 +35,36 @@ public class Pair<A, B> implements Serializable {
 			map.put(pair.getKey(), pair.getValue());
 		}
 		return map;
+	}
+
+	public static Object[] keys(PairList<?, ?> c) {
+		return keys(Object.class, c);
+	}
+
+	public static <T> T[] keys(Class<T> cls, PairList<? extends T, ?> c) {
+		@SuppressWarnings("unchecked")
+		T[] a = (T[]) Array.newInstance(cls, c.size());
+
+		int i = 0;
+		for (Pair<? extends T, ?> p : c) {
+			a[i++] = p.getKey();
+		}
+		return a;
+	}
+
+	public static Object[] values(PairList<?, ?> c) {
+		return values(Object.class, c);
+	}
+
+	public static <T> T[] values(Class<T> cls, PairList<?, ? extends T> c) {
+		@SuppressWarnings("unchecked")
+		T[] a = (T[]) Array.newInstance(cls, c.size());
+
+		int i = 0;
+		for (Pair<?, ? extends T> p : c) {
+			a[i++] = p.getValue();
+		}
+		return a;
 	}
 
 	private A _first;

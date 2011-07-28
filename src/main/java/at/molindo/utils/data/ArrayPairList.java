@@ -17,14 +17,41 @@
 package at.molindo.utils.data;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
 
-public class ArrayPairList<K, V> extends ArrayList<Pair<K, V>> {
+public class ArrayPairList<K, V> extends ArrayList<Pair<K, V>> implements PairList<K, V> {
 
 	private static final long serialVersionUID = 1L;
 
 	public static <K, V> ArrayPairList<K, V> create() {
 		return new ArrayPairList<K, V>();
+	}
+
+	public static <K, V> ArrayPairList<K, V> createWithCapacity(int size) {
+		return new ArrayPairList<K, V>(size);
+	}
+
+	public static <K, V> ArrayPairList<K, V> create(K[] keys, V[] values) {
+		return create(Arrays.asList(keys), Arrays.asList(values));
+	}
+
+	public static <K, V> ArrayPairList<K, V> create(List<K> keys, List<V> values) {
+		if (keys.size() != values.size()) {
+			throw new IllegalArgumentException("keys and values must be of same length");
+		}
+
+		ArrayPairList<K, V> list = createWithCapacity(keys.size());
+
+		Iterator<K> keysIter = keys.iterator();
+		Iterator<V> valuesIter = values.iterator();
+		while (keysIter.hasNext()) {
+			list.put(keysIter.next(), valuesIter.next());
+		}
+
+		return list;
 	}
 
 	public ArrayPairList(final int initialCapacity) {
@@ -33,6 +60,25 @@ public class ArrayPairList<K, V> extends ArrayList<Pair<K, V>> {
 
 	public ArrayPairList() {
 		super();
+	}
+
+	public ArrayPairList(K[] keys, V[] values) {
+		this(Arrays.asList(keys), Arrays.asList(values));
+	}
+
+	public ArrayPairList(List<K> keys, List<V> values) {
+		super();
+
+		if (keys.size() != values.size()) {
+			throw new IllegalArgumentException("keys and values must be of same length");
+		}
+
+		Iterator<K> keysIter = keys.iterator();
+		Iterator<V> valuesIter = values.iterator();
+
+		while (keysIter.hasNext()) {
+			put(keysIter.next(), valuesIter.next());
+		}
 	}
 
 	/**
@@ -48,6 +94,7 @@ public class ArrayPairList<K, V> extends ArrayList<Pair<K, V>> {
 		super(c);
 	}
 
+	@Override
 	public void put(final K key, final V value) {
 		add(new Pair<K, V>(key, value));
 	}

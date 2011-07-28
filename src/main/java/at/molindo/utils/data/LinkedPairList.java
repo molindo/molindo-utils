@@ -19,7 +19,7 @@ package at.molindo.utils.data;
 import java.util.Collection;
 import java.util.LinkedList;
 
-public class LinkedPairList<K, V> extends LinkedList<Pair<K, V>> {
+public class LinkedPairList<K, V> extends LinkedList<Pair<K, V>> implements PairList<K, V> {
 
 	private static final long serialVersionUID = 1L;
 
@@ -44,6 +44,7 @@ public class LinkedPairList<K, V> extends LinkedList<Pair<K, V>> {
 		super(c);
 	}
 
+	@Override
 	public void put(final K key, final V value) {
 		add(new Pair<K, V>(key, value));
 	}
