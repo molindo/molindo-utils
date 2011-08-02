@@ -201,4 +201,26 @@ public class CollectionUtils {
 		}
 		return list;
 	}
+
+	/**
+	 * set index of list to obj, resizing list if necessary
+	 * 
+	 * @param <T>
+	 * @param list
+	 * @param idx
+	 * @param obj
+	 * @return
+	 */
+	public static <T> List<T> set(List<T> list, int idx, T obj) {
+		return set(list, idx, obj, null);
+	}
+
+	public static <T> List<T> set(List<T> list, int idx, T obj, T defaultValue) {
+		int currentSize = list.size();
+		while (currentSize++ <= idx) {
+			list.add(defaultValue);
+		}
+		list.set(idx, obj);
+		return list;
+	}
 }

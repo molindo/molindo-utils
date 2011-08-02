@@ -21,6 +21,7 @@ import static at.molindo.utils.collections.CollectionUtils.subList;
 import static java.util.Collections.emptyList;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
@@ -119,5 +120,25 @@ public class CollectionUtilsTest {
 		CollectionUtils.resize(list, 5, null);
 		assertEquals(5, list.size());
 		assertTrue(list.contains(null));
+	}
+
+	@Test
+	public void set() {
+		List<String> list = new ArrayList<String>();
+		assertEquals(0, list.size());
+
+		CollectionUtils.set(list, 2, "foo");
+		assertEquals(3, list.size());
+		assertEquals("foo", list.get(2));
+		assertNull(list.get(1));
+		assertNull(list.get(0));
+
+		CollectionUtils.set(list, 4, "bar", "baz");
+		assertEquals(5, list.size());
+		assertEquals("bar", list.get(4));
+		assertEquals("baz", list.get(3));
+		assertEquals("foo", list.get(2));
+		assertNull(list.get(1));
+		assertNull(list.get(0));
 	}
 }
