@@ -20,8 +20,11 @@ import static at.molindo.utils.collections.CollectionUtils.putIfAbsent;
 import static at.molindo.utils.collections.CollectionUtils.subList;
 import static java.util.Collections.emptyList;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -101,5 +104,20 @@ public class CollectionUtilsTest {
 				FunctionUtils.toStringFunction());
 		assertEquals(CollectionBuilder.set("1", "2", "3", "4", "5").get(), strings.keySet());
 		assertEquals(CollectionBuilder.set(1, 2, 3, 4, 5).get(), new HashSet<Integer>(strings.values()));
+	}
+
+	@Test
+	public void resize() {
+		List<String> list = new ArrayList<String>();
+		assertEquals(0, list.size());
+		CollectionUtils.resize(list, 5, "foo");
+		assertEquals(5, list.size());
+		assertTrue(list.contains("foo"));
+		CollectionUtils.resize(list, 3, "bar");
+		assertEquals(3, list.size());
+		assertFalse(list.contains("bar"));
+		CollectionUtils.resize(list, 5, null);
+		assertEquals(5, list.size());
+		assertTrue(list.contains(null));
 	}
 }

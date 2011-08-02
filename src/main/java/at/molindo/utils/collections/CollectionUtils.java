@@ -186,4 +186,19 @@ public class CollectionUtils {
 		}
 		return to;
 	}
+
+	public static <T> List<T> resize(List<T> list, int size) {
+		return resize(list, size, null);
+	}
+
+	public static <T> List<T> resize(List<T> list, int size, T defaultValue) {
+		int currentSize = list.size();
+		while (currentSize > size) {
+			list.remove(--currentSize);
+		}
+		while (currentSize++ < size) {
+			list.add(defaultValue);
+		}
+		return list;
+	}
 }
