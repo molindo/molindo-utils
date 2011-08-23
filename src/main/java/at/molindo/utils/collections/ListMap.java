@@ -23,12 +23,22 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import at.molindo.utils.data.Function;
+
 public class ListMap<T, E> implements Map<T, List<E>> {
 
 	private final Map<T, List<E>> _map;
 
 	public static <T, E> ListMap<T, E> newListMap() {
 		return new ListMap<T, E>();
+	}
+
+	public static <T, E> ListMap<T, E> build(Iterable<E> c, Function<E, T> f) {
+		ListMap<T, E> map = newListMap();
+		for (E e : c) {
+			map.put(f.apply(e), e);
+		}
+		return map;
 	}
 
 	public ListMap() {
