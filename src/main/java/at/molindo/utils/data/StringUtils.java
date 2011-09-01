@@ -329,4 +329,8 @@ public class StringUtils {
 			return buf.toString();
 		}
 	}
+
+	public static String string(Object o) {
+		return o == null ? null : o.toString();
+	}
 }
