@@ -24,6 +24,10 @@ public class BusinessKeyHashMap<K, V extends IBusinessKey<K>> extends HashMap<K,
 
 	private transient IBusinessKeySet<K, V> _valueSet;
 
+	public static <K, V extends IBusinessKey<K>> BusinessKeyHashMap<K, V> newMap(Class<V> cls) {
+		return new BusinessKeyHashMap<K, V>();
+	}
+
 	public static <K, V extends IBusinessKey<K>> BusinessKeyHashMap<K, V> newMap(Iterable<V> c) {
 		BusinessKeyHashMap<K, V> map = newMap();
 		map.putAll(c);

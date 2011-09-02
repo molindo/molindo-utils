@@ -24,6 +24,10 @@ public class BusinessKeyTreeMap<K, V extends IBusinessKey<K>> extends TreeMap<K,
 
 	private transient IBusinessKeySet<K, V> _valueSet;
 
+	public static <K, V extends IBusinessKey<K>> BusinessKeyTreeMap<K, V> newMap(Class<V> cls) {
+		return new BusinessKeyTreeMap<K, V>();
+	}
+
 	public static <K, V extends IBusinessKey<K>> BusinessKeyTreeMap<K, V> newMap(Iterable<V> c) {
 		BusinessKeyTreeMap<K, V> map = newMap();
 		map.putAll(c);
