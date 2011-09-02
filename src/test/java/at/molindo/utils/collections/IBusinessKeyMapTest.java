@@ -22,6 +22,7 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import java.util.Arrays;
+import java.util.Iterator;
 
 import org.junit.Test;
 
@@ -40,7 +41,7 @@ public class IBusinessKeyMapTest {
 	}
 
 	private void test(final IBusinessKeyMap<String, Foo> map) {
-		IBusinessKeySet<String, Foo> set = map.values();
+		IBusinessKeySet<String, Foo> set = map.valueSet();
 
 		assertNull(map.put(new Foo("k1", "foo")));
 		assertTrue(set.add(new Foo("k2", "bar")));
@@ -53,9 +54,21 @@ public class IBusinessKeyMapTest {
 		assertTrue(set.contains(new Foo("k1", "foo")));
 		assertFalse(set.contains(new Foo("k1", "foobar")));
 
+		assertEquals(4, set.toArray().length);
+
 		assertTrue(set.removeKey("k2"));
 		assertFalse(set.remove(new Foo("k3", "foobar")));
+		assertEquals(3, map.size());
 
+		int count = 0;
+		Iterator<Foo> iter = map.iterator();
+		while (iter.hasNext()) {
+			count++;
+			iter.next();
+		}
+		assertEquals(3, count);
+		iter.remove();
+		assertEquals(2, set.size());
 	}
 
 	/**

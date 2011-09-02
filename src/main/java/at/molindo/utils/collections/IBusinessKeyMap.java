@@ -24,7 +24,6 @@ public interface IBusinessKeyMap<K, V extends IBusinessKey<K>> extends Map<K, V>
 
 	void putAll(Iterable<V> c);
 
-	@Override
-	IBusinessKeySet<K, V> values();
+	IBusinessKeySet<K, V> valueSet();
 
 }

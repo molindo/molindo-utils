@@ -52,7 +52,7 @@ public class BusinessKeyHashMap<K, V extends IBusinessKey<K>> extends HashMap<K,
 	}
 
 	@Override
-	public IBusinessKeySet<K, V> values() {
+	public IBusinessKeySet<K, V> valueSet() {
 		if (_valueSet == null) {
 			_valueSet = BusinessKeySet.newSet(this);
 		}

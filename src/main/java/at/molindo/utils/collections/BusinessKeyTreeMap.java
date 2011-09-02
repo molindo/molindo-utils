@@ -52,7 +52,7 @@ public class BusinessKeyTreeMap<K, V extends IBusinessKey<K>> extends TreeMap<K,
 	}
 
 	@Override
-	public IBusinessKeySet<K, V> values() {
+	public IBusinessKeySet<K, V> valueSet() {
 		if (_valueSet == null) {
 			_valueSet = BusinessKeySet.newSet(this);
 		}
