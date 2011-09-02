@@ -17,6 +17,7 @@
 package at.molindo.utils.collections;
 
 import java.util.HashMap;
+import java.util.Iterator;
 
 public class BusinessKeyHashMap<K, V extends IBusinessKey<K>> extends HashMap<K, V> implements IBusinessKeyMap<K, V> {
 
@@ -56,6 +57,11 @@ public class BusinessKeyHashMap<K, V extends IBusinessKey<K>> extends HashMap<K,
 			_valueSet = BusinessKeySet.newSet(this);
 		}
 		return _valueSet;
+	}
+
+	@Override
+	public Iterator<V> iterator() {
+		return values().iterator();
 	}
 
 }

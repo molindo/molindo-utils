@@ -16,6 +16,7 @@
 
 package at.molindo.utils.collections;
 
+import java.util.Iterator;
 import java.util.TreeMap;
 
 public class BusinessKeyTreeMap<K, V extends IBusinessKey<K>> extends TreeMap<K, V> implements IBusinessKeyMap<K, V> {
@@ -56,6 +57,11 @@ public class BusinessKeyTreeMap<K, V extends IBusinessKey<K>> extends TreeMap<K,
 			_valueSet = BusinessKeySet.newSet(this);
 		}
 		return _valueSet;
+	}
+
+	@Override
+	public Iterator<V> iterator() {
+		return values().iterator();
 	}
 
 }

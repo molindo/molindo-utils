@@ -18,7 +18,7 @@ package at.molindo.utils.collections;
 
 import java.util.Map;
 
-public interface IBusinessKeyMap<K, V extends IBusinessKey<K>> extends Map<K, V> {
+public interface IBusinessKeyMap<K, V extends IBusinessKey<K>> extends Map<K, V>, Iterable<V> {
 
 	V put(V v);
 
