@@ -17,6 +17,7 @@
 package at.molindo.utils.reflect;
 
 import java.lang.reflect.Type;
+import java.util.Set;
 
 import at.molindo.thirdparty.org.springframework.core.GenericTypeResolver;
 import at.molindo.utils.collections.ArrayUtils;
@@ -45,5 +46,37 @@ public class ClassUtils {
 
 	public static Class<?> toClass(Class<?> declaringCls, Type type) {
 		return GenericTypeResolver.extractClass(declaringCls, type);
+	}
+
+	/**
+	 * @return <code>true</code> if <code>cls</code> is assignable to at least
+	 *         one class in <code>classes</code>
+	 */
+	public static boolean isAssignable(Class<?> cls, Set<Class<?>> classes) {
+		if (cls == null || classes.isEmpty()) {
+			return false;
+		}
+		for (Class<?> c : classes) {
+			if (c.isAssignableFrom(cls)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	/**
+	 * @return <code>true</code> if <code>cls</code> is assignable to all
+	 *         <code>classes</code>
+	 */
+	public static boolean isAssignableToAll(Class<?> cls, Set<Class<?>> classes) {
+		if (cls == null) {
+			return false;
+		}
+		for (Class<?> c : classes) {
+			if (!c.isAssignableFrom(cls)) {
+				return false;
+			}
+		}
+		return true;
 	}
 }

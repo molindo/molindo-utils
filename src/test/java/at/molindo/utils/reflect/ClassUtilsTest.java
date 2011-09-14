@@ -17,8 +17,15 @@
 package at.molindo.utils.reflect;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
+import java.io.Serializable;
+import java.util.Set;
 
 import org.junit.Test;
+
+import at.molindo.utils.collections.CollectionUtils;
 
 public class ClassUtilsTest {
 
@@ -27,6 +34,23 @@ public class ClassUtilsTest {
 		assertEquals(String.class, ClassUtils.getTypeArgument(Bar.class, Doable.class));
 		assertEquals(String.class, ClassUtils.getTypeArgument(Baz.class, Doable.class));
 		assertEquals(Integer.class, ClassUtils.getTypeArgument(Baz.class, Foo.class));
+	}
+
+	@Test
+	public void isAssignable() {
+		assertTrue(ClassUtils.isAssignable(String.class, set(Comparable.class, Integer.class)));
+		assertFalse(ClassUtils.isAssignable(null, set(Comparable.class, Integer.class)));
+		assertFalse(ClassUtils.isAssignable(String.class, set(Long.class, Integer.class)));
+		assertFalse(ClassUtils.isAssignable(String.class, set()));
+
+		assertFalse(ClassUtils.isAssignableToAll(String.class, set(Comparable.class, Integer.class)));
+		assertTrue(ClassUtils.isAssignableToAll(String.class, set(Comparable.class, Serializable.class)));
+		assertFalse(ClassUtils.isAssignableToAll(null, set(Comparable.class, Integer.class)));
+		assertTrue(ClassUtils.isAssignableToAll(String.class, set()));
+	}
+
+	protected Set<Class<?>> set(Class<?>... classes) {
+		return CollectionUtils.set(classes);
 	}
 
 	public interface Doable<T> {
