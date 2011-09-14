@@ -16,6 +16,9 @@
 
 package at.molindo.utils.collections;
 
+import java.lang.reflect.Array;
+import java.util.Iterator;
+
 public class ArrayUtils {
 	public static boolean equals(byte[] a, byte[] a2, int off, int len) {
 		if (off < 0 || len < 0 || len > length(a) - off || len > length(a2) - off) {
@@ -191,5 +194,46 @@ public class ArrayUtils {
 	 */
 	public static int length(char[] a) {
 		return a == null ? 0 : a.length;
+	}
+
+	public static Iterable<Object> toIterable(final Object array) {
+		if (array == null) {
+			return IteratorUtils.emptyIterable();
+		}
+
+		if (!array.getClass().isArray()) {
+			throw new IllegalArgumentException("object not of type array, was " + array.getClass().getName());
+		}
+
+		if (Array.getLength(array) == 0) {
+			return IteratorUtils.emptyIterable();
+		}
+
+		return new Iterable<Object>() {
+
+			@Override
+			public Iterator<Object> iterator() {
+				return new Iterator<Object>() {
+
+					private int _i = 0;
+					private final int _length = Array.getLength(array);
+
+					@Override
+					public boolean hasNext() {
+						return _i < _length;
+					}
+
+					@Override
+					public Object next() {
+						return Array.get(array, _i++);
+					}
+
+					@Override
+					public void remove() {
+						throw new UnsupportedOperationException();
+					}
+				};
+			}
+		};
 	}
 }

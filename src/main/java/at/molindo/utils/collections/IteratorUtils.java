@@ -43,6 +43,14 @@ public class IteratorUtils {
 
 	};
 
+	public static final Iterable<?> EMPTY_ITERABLE = new Iterable<Object>() {
+
+		@Override
+		public Iterator<Object> iterator() {
+			return empty();
+		}
+	};
+
 	private IteratorUtils() {
 
 	}
@@ -128,6 +136,17 @@ public class IteratorUtils {
 	@SuppressWarnings("unchecked")
 	public static <T> Iterator<T> empty() {
 		return (Iterator<T>) EMPTY_ITERATOR;
+	}
+
+	/**
+	 * type save access to {@link #EMPTY_ITERABLE}
+	 * 
+	 * @param <T>
+	 * @return
+	 */
+	@SuppressWarnings("unchecked")
+	public static <T> Iterable<T> emptyIterable() {
+		return (Iterable<T>) EMPTY_ITERABLE;
 	}
 
 	/**
