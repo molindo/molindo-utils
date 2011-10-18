@@ -21,14 +21,56 @@ import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ConcurrentHashMap;
 
+/**
+ * concurrency utility that locks execution of callable by a key, i.e. not using
+ * key's identity but equality.
+ * 
+ * 
+ * @param <K>
+ *            key type
+ * @param <V>
+ *            return type of {@link Callable}
+ * 
+ * @author stf@molindo.at
+ */
 public class KeyLock<K, V> {
 
 	private final ConcurrentHashMap<K, Task> _map = new ConcurrentHashMap<K, Task>();
+	private boolean _wait;
 
 	public static <K, V> KeyLock<K, V> newKeyLock() {
 		return new KeyLock<K, V>();
 	}
 
+	public KeyLock() {
+		this(true);
+	}
+
+	/**
+	 * @param wait
+	 *            should {@link #withLock(Object, Callable)} calls wait for
+	 *            concurrent calls to finish or should they fail fast
+	 */
+	public KeyLock(boolean wait) {
+		_wait = wait;
+	}
+
+	/**
+	 * execute <code>callable</code> while locking concurrent execution for
+	 * <code>key</code>
+	 * 
+	 * @param key
+	 * @param callable
+	 * @return
+	 * @throws KeyLockedException
+	 *             only if key lock configured not to wait and key locked by
+	 *             other thread
+	 * @throws Exception
+	 *             any exception thrown by <code>callable.call()</code>
+	 * @throws NullPointerException
+	 *             if <code>key</code> or <code>callable</code> are
+	 *             <code>null</code>
+	 */
 	public V withLock(final K key, final Callable<V> callable) throws Exception {
 		if (key == null) {
 			throw new NullPointerException("key");
@@ -37,29 +79,26 @@ public class KeyLock<K, V> {
 			throw new NullPointerException("callable");
 		}
 
+		Task t = new Task(callable);
 		try {
-			Task t = new Task(callable);
 			final Task prev = _map.putIfAbsent(key, t);
 			if (prev != null) {
-				t = prev;
-				onExisting(key);
+				if (_wait) {
+					t = prev;
+				} else {
+					t = null;
+					throw new KeyLockedException(key);
+				}
 			}
 			return t.perform();
 		} finally {
 			// first thread removes mapping
-			_map.remove(key);
-
+			if (t != null) {
+				_map.remove(key);
+			} else {
+				// only with KeyLockedException
+			}
 		}
-	}
-
-	/**
-	 * hook that's called if key is already known. does nothing by default
-	 * 
-	 * @throws Exception
-	 *             throw an exception to prevent waiting
-	 */
-	protected void onExisting(final K key) throws Exception {
-		// do nothing
 	}
 
 	/**
@@ -85,8 +124,8 @@ public class KeyLock<K, V> {
 
 	/**
 	 * @return a newly created {@link List} of all active keys. Changes to this
-	 *         list don't have any effect to this {@link KeyLock} (changes to the
-	 *         values will have an undefined effect though).
+	 *         list don't have any effect to this {@link KeyLock} (changes to
+	 *         the values will have an undefined effect though).
 	 */
 	public List<K> activeKeys() {
 		return new ArrayList<K>(_map.keySet());
@@ -118,5 +157,20 @@ public class KeyLock<K, V> {
 				return replace(_result, _ex);
 			}
 		}
+	}
+
+	public static final class KeyLockedException extends Exception {
+		private static final long serialVersionUID = 1L;
+		private final Object _key;
+
+		private KeyLockedException(Object key) {
+			super("key locked by different thread");
+			_key = key;
+		}
+
+		public Object getKey() {
+			return _key;
+		}
+
 	}
 }
