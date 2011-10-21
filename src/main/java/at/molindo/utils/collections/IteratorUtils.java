@@ -22,6 +22,8 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
+import at.molindo.utils.data.Function;
+
 public class IteratorUtils {
 
 	public static final Iterator<?> EMPTY_ITERATOR = new Iterator<Object>() {
@@ -276,6 +278,63 @@ public class IteratorUtils {
 			@Override
 			public void remove() {
 				throw new UnsupportedOperationException();
+			}
+
+		};
+	}
+
+	public static <T> Iterable<T> filter(final Iterable<T> iterable, final Function<T, Boolean> filter) {
+		return new Iterable<T>() {
+
+			@Override
+			public Iterator<T> iterator() {
+				return filter(iterable.iterator(), filter);
+			}
+
+		};
+	}
+
+	/**
+	 * 
+	 * @param <T>
+	 * @param iter
+	 * @param filter
+	 *            function that returns true if object is allowed
+	 * @return
+	 */
+	public static <T> Iterator<T> filter(final Iterator<T> iter, final Function<T, Boolean> filter) {
+		return new Iterator<T>() {
+
+			private T _next = findNext();
+			private boolean _hasNext;
+
+			private T findNext() {
+				while (iter.hasNext()) {
+					T next = iter.next();
+					if (Boolean.TRUE.equals(filter.apply(next))) {
+						_hasNext = true;
+						return next;
+					}
+				}
+				_hasNext = false;
+				return null;
+			}
+
+			@Override
+			public boolean hasNext() {
+				return _hasNext;
+			}
+
+			@Override
+			public T next() {
+				T next = _next;
+				_next = findNext();
+				return next;
+			}
+
+			@Override
+			public void remove() {
+				iter.remove();
 			}
 
 		};

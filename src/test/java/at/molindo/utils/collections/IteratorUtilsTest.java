@@ -21,10 +21,14 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+import java.util.Arrays;
 import java.util.Iterator;
+import java.util.List;
 import java.util.NoSuchElementException;
 
 import org.junit.Test;
+
+import at.molindo.utils.data.Function;
 
 public class IteratorUtilsTest {
 
@@ -46,5 +50,36 @@ public class IteratorUtilsTest {
 			fail();
 		} catch (NoSuchElementException e) {
 		}
+	}
+
+	@Test
+	public void testFilter() {
+		List<Integer> list = Arrays.asList(1, 2, 3, null, 5);
+
+		assertEquals(Arrays.asList(1, 3, 5),
+				CollectionUtils.list(IteratorUtils.filter(list, new Function<Integer, Boolean>() {
+
+					@Override
+					public Boolean apply(Integer input) {
+						return input != null && input % 2 == 1;
+					}
+				})));
+
+		assertEquals(Arrays.asList(2, null),
+				CollectionUtils.list(IteratorUtils.filter(list, new Function<Integer, Boolean>() {
+
+					@Override
+					public Boolean apply(Integer input) {
+						return input == null || input % 2 == 0;
+					}
+				})));
+
+		assertEquals(Arrays.asList(), CollectionUtils.list(IteratorUtils.filter(list, new Function<Integer, Boolean>() {
+
+			@Override
+			public Boolean apply(Integer input) {
+				return false;
+			}
+		})));
 	}
 }
