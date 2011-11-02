@@ -251,6 +251,10 @@ public class StringUtils {
 	}
 
 	public static Iterable<String> split(final String string, final String split) {
+		return split(string, split, Integer.MAX_VALUE);
+	}
+
+	public static Iterable<String> split(final String string, final String split, final int max) {
 		if (string == null) {
 			throw new NullPointerException("string");
 		}
@@ -260,6 +264,9 @@ public class StringUtils {
 		if (split.isEmpty()) {
 			throw new IllegalArgumentException("split must not be empty");
 		}
+		if (max <= 0) {
+			throw new IllegalArgumentException("max must be >= 1, was " + max);
+		}
 
 		return new Iterable<String>() {
 
@@ -267,6 +274,7 @@ public class StringUtils {
 			public Iterator<String> iterator() {
 				return new Iterator<String>() {
 
+					private int _count = 0;
 					private int _pos = 0;
 
 					@Override
@@ -280,7 +288,7 @@ public class StringUtils {
 							throw new NoSuchElementException();
 						}
 
-						int next = string.indexOf(split, _pos);
+						int next = ++_count == max ? -1 : string.indexOf(split, _pos);
 
 						String str;
 

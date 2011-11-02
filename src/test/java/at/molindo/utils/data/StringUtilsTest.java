@@ -67,6 +67,16 @@ public class StringUtilsTest {
 		assertEquals("", iter.next());
 		assertFalse(iter.hasNext());
 
+		iter = StringUtils.split("foo;bar;baz;qux;", ";", 3).iterator();
+
+		assertTrue(iter.hasNext());
+		assertEquals("foo", iter.next());
+		assertTrue(iter.hasNext());
+		assertEquals("bar", iter.next());
+		assertTrue(iter.hasNext());
+		assertEquals("baz;qux;", iter.next());
+		assertFalse(iter.hasNext());
+
 		String[] split = new String[5];
 		assertEquals(3, StringUtils.split("foo,bar,baz", ",", split));
 		assertEquals("foo", split[0]);
