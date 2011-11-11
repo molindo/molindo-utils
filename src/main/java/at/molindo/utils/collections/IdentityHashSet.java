@@ -143,7 +143,7 @@ public class IdentityHashSet<E> extends AbstractSet<E> implements Set<E>, Clonea
 	 */
 	@Override
 	@SuppressWarnings("unchecked")
-	public Object clone() {
+	public IdentityHashSet<E> clone() {
 		try {
 			IdentityHashSet<E> newSet = (IdentityHashSet<E>) super.clone();
 			newSet.map = (IdentityHashMap<E, Object>) map.clone();

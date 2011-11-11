@@ -82,4 +82,18 @@ public class IteratorUtilsTest {
 			}
 		})));
 	}
+
+	@Test
+	public void testEquals() {
+		final Iterable<String> l1, l2, l3;
+
+		l1 = Arrays.asList("foo", "bar");
+		l2 = Arrays.asList("foo", "bar");
+		l3 = Arrays.asList("foo");
+
+		assertTrue(IteratorUtils.equals(l1, l1));
+		assertTrue(IteratorUtils.equals(l1, l2));
+		assertFalse(IteratorUtils.equals(l1, l3));
+		assertFalse(IteratorUtils.equals(l2, l3));
+	}
 }

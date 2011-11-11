@@ -216,10 +216,8 @@ public class StringUtils {
 	 * 
 	 * @param s1
 	 * @param s2
-	 * @deprecated use {@link ObjectUtils#equals(Object, Object)} instead
 	 * @return
 	 */
-	@Deprecated
 	public static boolean equals(String s1, String s2) {
 		return ObjectUtils.equals(s1, s2);
 	}

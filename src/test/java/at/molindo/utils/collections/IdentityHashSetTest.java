@@ -21,6 +21,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.util.Arrays;
+import java.util.HashSet;
 
 import org.junit.Test;
 
@@ -60,6 +61,10 @@ public class IdentityHashSetTest {
 		assertEquals(3, copy.size());
 
 		// can't use equals as identity is different
-		assertTrue(IteratorUtils.equals(set, copy));
+		assertEquals(new HashSet<String>(set), new HashSet<Object>(copy));
+
+		IdentityHashSet<String> clone = set.clone();
+		assertEquals(3, clone.size());
+		assertEquals(new HashSet<String>(set), new HashSet<String>(clone));
 	}
 }
