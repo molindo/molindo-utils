@@ -23,6 +23,7 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 import at.molindo.utils.data.Function;
+import at.molindo.utils.data.ObjectUtils;
 
 public class IteratorUtils {
 
@@ -338,5 +339,18 @@ public class IteratorUtils {
 			}
 
 		};
+	}
+
+	public static boolean equals(Iterable<?> iterable1, Iterable<?> iterable2) {
+		return equals(iterable1.iterator(), iterable2.iterator());
+	}
+
+	public static boolean equals(Iterator<?> iter1, Iterator<?> iter2) {
+		while (iter1.hasNext() && iter2.hasNext()) {
+			if (!ObjectUtils.equals(iter1.next(), iter2.next())) {
+				return false;
+			}
+		}
+		return iter1.hasNext() == iter2.hasNext();
 	}
 }
