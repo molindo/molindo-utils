@@ -110,13 +110,16 @@ public class CollectionUtilsTest {
 	@Test
 	public void resize() {
 		List<String> list = new ArrayList<String>();
+		Set<String> obsolete = new HashSet<String>();
+
 		assertEquals(0, list.size());
 		CollectionUtils.resize(list, 5, "foo");
 		assertEquals(5, list.size());
 		assertTrue(list.contains("foo"));
-		CollectionUtils.resize(list, 3, "bar");
+		CollectionUtils.resize(list, 3, "bar", obsolete);
 		assertEquals(3, list.size());
 		assertFalse(list.contains("bar"));
+		assertTrue(obsolete.contains("foo"));
 		CollectionUtils.resize(list, 5, null);
 		assertEquals(5, list.size());
 		assertTrue(list.contains(null));

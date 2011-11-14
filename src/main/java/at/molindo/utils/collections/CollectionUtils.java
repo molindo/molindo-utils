@@ -188,13 +188,20 @@ public class CollectionUtils {
 	}
 
 	public static <T> List<T> resize(List<T> list, int size) {
-		return resize(list, size, null);
+		return resize(list, size, null, null);
 	}
 
 	public static <T> List<T> resize(List<T> list, int size, T defaultValue) {
+		return resize(list, size, defaultValue, null);
+	}
+
+	public static <T> List<T> resize(List<T> list, int size, T defaultValue, Collection<T> obsolete) {
 		int currentSize = list.size();
 		while (currentSize > size) {
-			list.remove(--currentSize);
+			T old = list.remove(--currentSize);
+			if (old != null && obsolete != null) {
+				obsolete.add(old);
+			}
 		}
 		while (currentSize++ < size) {
 			list.add(defaultValue);
