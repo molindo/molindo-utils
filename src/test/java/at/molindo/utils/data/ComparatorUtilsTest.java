@@ -15,6 +15,7 @@
  */
 package at.molindo.utils.data;
 
+import static java.lang.Integer.signum;
 import static org.junit.Assert.assertEquals;
 
 import java.util.Collections;
@@ -27,15 +28,32 @@ import at.molindo.utils.collections.CollectionUtils;
 public class ComparatorUtilsTest {
 
 	@Test
-	public void testCompareTo() {
-		assertEquals(0, ComparatorUtils.compareTo("foo", "foo"));
-		assertEquals(0, ComparatorUtils.compareTo(null, null));
+	public void testNullHighCompareTo() {
+		assertEquals(0, ComparatorUtils.nullHighCompareTo("foo", "foo"));
+		assertEquals(0, ComparatorUtils.nullHighCompareTo(null, null));
+		assertEquals(-1, signum(ComparatorUtils.nullHighCompareTo("foo", null)));
+		assertEquals(1, signum(ComparatorUtils.nullHighCompareTo(null, "foo")));
 	}
 
 	@Test
-	public void testComparator() {
+	public void testNullHighComparator() {
 		List<String> list = CollectionUtils.list("foo", "bar", null, "baz", null);
-		Collections.sort(list, ComparatorUtils.comparable());
+		Collections.sort(list, ComparatorUtils.nullHighComparable());
 		assertEquals(CollectionUtils.list("bar", "baz", "foo", null, null), list);
+	}
+
+	@Test
+	public void testNullLowCompareTo() {
+		assertEquals(0, ComparatorUtils.nullLowCompareTo("foo", "foo"));
+		assertEquals(0, ComparatorUtils.nullLowCompareTo(null, null));
+		assertEquals(1, signum(ComparatorUtils.nullLowCompareTo("foo", null)));
+		assertEquals(-1, signum(ComparatorUtils.nullLowCompareTo(null, "foo")));
+	}
+
+	@Test
+	public void testNullLowComparator() {
+		List<String> list = CollectionUtils.list("foo", "bar", null, "baz", null);
+		Collections.sort(list, ComparatorUtils.nullLowComparable());
+		assertEquals(CollectionUtils.list(null, null, "bar", "baz", "foo"), list);
 	}
 }
