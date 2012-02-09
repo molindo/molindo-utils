@@ -136,7 +136,7 @@ public final class Time extends AbstractTime {
 	// synchronized (calendar) {
 	// // Set time to midnight today
 	// calendar.setTimeInMillis(System.currentTimeMillis());
-	// calendar.set(Calendar.HOUR_OF_DAY, 0); // ï»¿WICKET-2349
+	// calendar.set(Calendar.HOUR_OF_DAY, 0); // WICKET-2349
 	// calendar.set(Calendar.MINUTE, 0);
 	// calendar.set(Calendar.SECOND, 0);
 	// calendar.set(Calendar.MILLISECOND, 0); // WICKET-1670
