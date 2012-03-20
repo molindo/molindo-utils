@@ -18,24 +18,76 @@ package at.molindo.utils.collections;
 import java.util.Map;
 import java.util.WeakHashMap;
 
+/**
+ * A specialized {@link WeakHashMap} that ads the {@link #find(Class)} method to
+ * find mappings for superclasses.
+ * 
+ * @param <V>
+ *            value type
+ * 
+ * @author stf
+ */
 public class ClassMap<V> extends WeakHashMap<Class<?>, V> {
 
+	/**
+	 * @see #ClassMap()
+	 */
+	public static <V> ClassMap<V> create() {
+		return new ClassMap<V>();
+	}
+
+	/**
+	 * @see #ClassMap(int, float)
+	 */
+	public static <V> ClassMap<V> create(int initialCapacity, float loadFactor) {
+		return new ClassMap<V>(initialCapacity, loadFactor);
+	}
+
+	/**
+	 * @see #ClassMap(int)
+	 */
+	public static <V> ClassMap<V> create(int initialCapacity) {
+		return new ClassMap<V>(initialCapacity);
+	}
+
+	/**
+	 * @see #ClassMap(Map)
+	 */
+	public static <V> ClassMap<V> create(Map<? extends Class<?>, ? extends V> m) {
+		return new ClassMap<V>(m);
+	}
+
+	/**
+	 * @see WeakHashMap#WeakHashMap()
+	 */
 	public ClassMap() {
 		super();
 	}
 
+	/**
+	 * @see WeakHashMap#WeakHashMap(int, float)
+	 */
 	public ClassMap(int initialCapacity, float loadFactor) {
 		super(initialCapacity, loadFactor);
 	}
 
+	/**
+	 * @see WeakHashMap#WeakHashMap(int)
+	 */
 	public ClassMap(int initialCapacity) {
 		super(initialCapacity);
 	}
 
+	/**
+	 * @see WeakHashMap#WeakHashMap(Map)
+	 */
 	public ClassMap(Map<? extends Class<?>, ? extends V> m) {
 		super(m);
 	}
 
+	/**
+	 * @return first mapping for <code>cls</code> or one of its superclasses.
+	 */
 	public V find(Class<?> cls) {
 		if (cls == null) {
 			throw new NullPointerException("cls");
