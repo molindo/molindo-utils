@@ -236,4 +236,20 @@ public class ArrayUtils {
 			}
 		};
 	}
+
+	/**
+	 * appends an object to an array
+	 * 
+	 * @param <T>
+	 * @param a
+	 * @param o
+	 * @return
+	 */
+	public static <T> T[] append(T[] a, T o) {
+		@SuppressWarnings("unchecked")
+		T[] copy = (T[]) Array.newInstance(a.getClass().getComponentType(), a.length + 1);
+		System.arraycopy(a, 0, copy, 0, a.length);
+		copy[a.length] = o;
+		return copy;
+	}
 }

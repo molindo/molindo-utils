@@ -16,16 +16,45 @@
 
 package at.molindo.utils.collections;
 
+import static at.molindo.utils.collections.ArrayUtils.empty;
+import static at.molindo.utils.collections.ArrayUtils.first;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import java.util.Iterator;
 
 import org.junit.Test;
 
+import at.molindo.utils.data.HexUtils;
+
 public class ArrayUtilsTest {
+
+	@Test
+	public void testEqualsBytes() {
+		byte[] b1 = HexUtils.bytes("0123456789abcdef");
+		byte[] b2 = HexUtils.bytes("0023456789abcd00");
+
+		assertTrue(ArrayUtils.equals(b1, b2, 1, 6));
+		assertTrue(!ArrayUtils.equals(b1, b2, 0, 6));
+		assertTrue(!ArrayUtils.equals(b1, b2, 1, 7));
+	}
+
+	@Test
+	public void testEmpty() {
+		assertTrue(empty((Object[]) null));
+		assertTrue(empty(new Object[0]));
+		assertFalse(empty(new Object[1]));
+	}
+
+	@Test
+	public void testFirst() {
+		assertNull(first((Object[]) null));
+		assertNull(first(new Object[0]));
+		assertEquals("foo", first(new Object[] { "foo" }));
+	}
 
 	@Test
 	public void testToIterable() {
@@ -49,5 +78,17 @@ public class ArrayUtilsTest {
 			assertTrue(o instanceof Integer);
 			assertEquals(next++, o);
 		}
+	}
+
+	@Test
+	public void testAppend() {
+		String[] orig = { "foo", "bar", "baz" };
+		String[] appended = ArrayUtils.append(orig, "qux");
+		assertFalse(orig == appended);
+		assertEquals(orig.length + 1, appended.length);
+		for (int i = 0; i < orig.length; i++) {
+			assertEquals(orig[i], appended[i]);
+		}
+		assertEquals("qux", appended[orig.length]);
 	}
 }
