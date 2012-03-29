@@ -85,6 +85,34 @@ public class IteratorUtils {
 	}
 
 	/**
+	 * transforms an {@link Iterator} of {@link Iterable}s to an
+	 * {@link Iterator} of {@link Iterator}s
+	 */
+	public static <T> Iterator<Iterator<T>> iterators(Iterator<? extends Iterable<T>> iterables) {
+		return transform(iterables, new Function<Iterable<T>, Iterator<T>>() {
+
+			@Override
+			public Iterator<T> apply(Iterable<T> input) {
+				return iterator(input);
+			}
+		});
+	}
+
+	/**
+	 * transforms an {@link Iterable} of {@link Iterable}s to an
+	 * {@link Iterable} of {@link Iterator}s
+	 */
+	public static <T> Iterable<Iterator<T>> iterators(Iterable<? extends Iterable<T>> iterables) {
+		return transform(iterables, new Function<Iterable<T>, Iterator<T>>() {
+
+			@Override
+			public Iterator<T> apply(Iterable<T> input) {
+				return iterator(input);
+			}
+		});
+	}
+
+	/**
 	 * 
 	 * @param <T>
 	 * @param iter
@@ -338,6 +366,36 @@ public class IteratorUtils {
 				iter.remove();
 			}
 
+		};
+	}
+
+	public static <F, T> Iterator<T> transform(final Iterator<? extends F> iter, final Function<F, T> f) {
+		return new Iterator<T>() {
+
+			@Override
+			public boolean hasNext() {
+				return iter.hasNext();
+			}
+
+			@Override
+			public T next() {
+				return f.apply(iter.next());
+			}
+
+			@Override
+			public void remove() {
+				iter.remove();
+			}
+		};
+	}
+
+	public static <F, T> Iterable<T> transform(final Iterable<? extends F> iterable, final Function<F, T> f) {
+		return new Iterable<T>() {
+
+			@Override
+			public Iterator<T> iterator() {
+				return transform(iterable.iterator(), f);
+			}
 		};
 	}
 
