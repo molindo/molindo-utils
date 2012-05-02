@@ -116,4 +116,21 @@ public class FileUtils {
 		return Compression.NONE;
 	}
 
+	/**
+	 * deletes files and directories
+	 * 
+	 * @return true if file does not exist (anymore)
+	 */
+	public static boolean delete(File file) {
+		if (file != null && file.exists()) {
+			if (file.isDirectory()) {
+				for (File child : file.listFiles()) {
+					delete(child);
+				}
+			}
+			return file.delete();
+		} else {
+			return true;
+		}
+	}
 }
