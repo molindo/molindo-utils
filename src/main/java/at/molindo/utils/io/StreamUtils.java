@@ -16,6 +16,8 @@
 
 package at.molindo.utils.io;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.Closeable;
 import java.io.EOFException;
@@ -225,13 +227,13 @@ public class StreamUtils {
 			}
 		}
 
-		in = new CBZip2InputStream(in);
+		in = new CBZip2InputStream(new BufferedInputStream(in));
 		return in;
 	}
 
 	private static OutputStream newBz2OutputStream(OutputStream out) throws IOException {
 		// TODO linux compatibility?
-		return new CBZip2OutputStream(out);
+		return new CBZip2OutputStream(new BufferedOutputStream(out));
 	}
 
 }
