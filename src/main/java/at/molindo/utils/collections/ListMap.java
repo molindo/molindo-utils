@@ -49,6 +49,10 @@ public class ListMap<T, E> implements Map<T, List<E>> {
 		return new HashMap<T, List<E>>();
 	}
 
+	protected List<E> newList() {
+		return new LinkedList<E>();
+	}
+
 	protected Map<T, List<E>> getMap() {
 		return _map;
 	}
@@ -148,9 +152,10 @@ public class ListMap<T, E> implements Map<T, List<E>> {
 	public List<E> getList(final T key) {
 		List<E> list = _map.get(key);
 		if (list == null) {
-			list = new LinkedList<E>();
+			list = newList();
 			_map.put(key, list);
 		}
 		return list;
 	}
+
 }
