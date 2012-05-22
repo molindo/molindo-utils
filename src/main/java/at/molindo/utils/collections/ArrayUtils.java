@@ -66,6 +66,13 @@ public class ArrayUtils {
 	/**
 	 * @return <code>true</code> if a is not null and a.length > 0
 	 */
+	public static boolean empty(short[] a) {
+		return a == null || a.length == 0;
+	}
+
+	/**
+	 * @return <code>true</code> if a is not null and a.length > 0
+	 */
 	public static boolean empty(long[] a) {
 		return a == null || a.length == 0;
 	}
@@ -119,6 +126,14 @@ public class ArrayUtils {
 	 * @return a[0] if array isn't empty
 	 * @see #empty(Object[])
 	 */
+	public static short first(short[] a) {
+		return empty(a) ? 0 : a[0];
+	}
+
+	/**
+	 * @return a[0] if array isn't empty
+	 * @see #empty(Object[])
+	 */
 	public static long first(long[] a) {
 		return empty(a) ? 0L : a[0];
 	}
@@ -148,6 +163,70 @@ public class ArrayUtils {
 	}
 
 	/**
+	 * @return a[0] if array isn't empty
+	 * @see #empty(Object[])
+	 */
+	public static <T> T last(T[] a) {
+		return empty(a) ? null : a[0];
+	}
+
+	/**
+	 * @return a[0] if array isn't empty
+	 * @see #empty(Object[])
+	 */
+	public static byte last(byte[] a) {
+		return empty(a) ? 0x00 : a[a.length - 1];
+	}
+
+	/**
+	 * @return a[0] if array isn't empty
+	 * @see #empty(Object[])
+	 */
+	public static int last(int[] a) {
+		return empty(a) ? 0 : a[a.length - 1];
+	}
+
+	/**
+	 * @return a[0] if array isn't empty
+	 * @see #empty(Object[])
+	 */
+	public static short last(short[] a) {
+		return empty(a) ? 0 : a[a.length - 1];
+	}
+
+	/**
+	 * @return a[0] if array isn't empty
+	 * @see #empty(Object[])
+	 */
+	public static long last(long[] a) {
+		return empty(a) ? 0L : a[a.length - 1];
+	}
+
+	/**
+	 * @return a[0] if array isn't empty
+	 * @see #empty(Object[])
+	 */
+	public static float last(float[] a) {
+		return empty(a) ? 0.0F : a[a.length - 1];
+	}
+
+	/**
+	 * @return a[0] if array isn't empty
+	 * @see #empty(Object[])
+	 */
+	public static double last(double[] a) {
+		return empty(a) ? 0.0 : a[a.length - 1];
+	}
+
+	/**
+	 * @return a[0] if array isn't empty
+	 * @see #empty(Object[])
+	 */
+	public static char last(char[] a) {
+		return empty(a) ? 0x00 : a[a.length - 1];
+	}
+
+	/**
 	 * @return null-safe length of array
 	 */
 	public static <T> int length(T[] a) {
@@ -165,6 +244,13 @@ public class ArrayUtils {
 	 * @return null-safe length of array
 	 */
 	public static int length(int[] a) {
+		return a == null ? 0 : a.length;
+	}
+
+	/**
+	 * @return null-safe length of array
+	 */
+	public static int length(short[] a) {
 		return a == null ? 0 : a.length;
 	}
 
