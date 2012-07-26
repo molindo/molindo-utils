@@ -126,6 +126,41 @@ public class IteratorUtils {
 	 * 
 	 * @param <T>
 	 * @param iter
+	 * @return the first element if available, <code>null</code> otherwise
+	 */
+	public static <T> T first(final Iterable<T> iter) {
+		return iter == null ? null : next(iter.iterator());
+	}
+
+	/**
+	 * 
+	 * @param <T>
+	 * @param iter
+	 * @return an {@link ArrayList} containing all elements
+	 */
+	public static <T> ArrayList<T> list(final Iterable<T> iter) {
+		if (iter instanceof Collection<?>) {
+			// use collection size for initial capacity
+			return list(iterator(iter), ((Collection<?>) iter).size());
+		} else {
+			return list(iterator(iter));
+		}
+	}
+
+	/**
+	 * 
+	 * @param <T>
+	 * @param iter
+	 * @return an {@link ArrayList} containing all elements
+	 */
+	public static <T> ArrayList<T> list(final Iterable<T> iter, final int initialCapacity) {
+		return list(iterator(iter), initialCapacity);
+	}
+
+	/**
+	 * 
+	 * @param <T>
+	 * @param iter
 	 * @return an {@link ArrayList} containing all elements
 	 */
 	public static <T> ArrayList<T> list(final Iterator<T> iter) {

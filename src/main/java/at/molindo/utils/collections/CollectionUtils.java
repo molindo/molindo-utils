@@ -104,20 +104,20 @@ public class CollectionUtils {
 		return c == null || c.isEmpty();
 	}
 
-	public static <T> T first(Collection<T> c) {
+	public static <T> T first(Iterable<T> c) {
 		return c == null ? null : IteratorUtils.next(IteratorUtils.iterator(c));
 	}
 
 	public static <K, V> Map.Entry<K, V> first(Map<K, V> c) {
-		return c == null ? null : IteratorUtils.next(IteratorUtils.iterator(c.entrySet()));
+		return c == null ? null : first(c.entrySet());
 	}
 
 	public static <K> K firstKey(Map<K, ?> c) {
-		return c == null ? null : IteratorUtils.next(IteratorUtils.iterator(c.keySet()));
+		return c == null ? null : first(c.keySet());
 	}
 
 	public static <V> V firstValue(Map<?, V> c) {
-		return c == null ? null : IteratorUtils.next(IteratorUtils.iterator(c.values()));
+		return c == null ? null : first(c.values());
 	}
 
 	public static <K, V> V putIfAbsent(ConcurrentMap<K, V> map, K key, V value) {
