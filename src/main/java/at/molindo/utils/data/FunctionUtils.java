@@ -26,13 +26,27 @@ public class FunctionUtils {
 		return (Function<T, String>) ToString.INSTANCE;
 	}
 
+	public static Function<String, String> trimFunction() {
+		return Trim.INSTANCE;
+	}
+
 	// enum singleton
-	private enum ToString implements Function<Object, String> {
+	public enum ToString implements Function<Object, String> {
 		INSTANCE;
 
 		@Override
 		public String apply(Object input) {
-			return input == null ? null : input.toString();
+			return StringUtils.string(input);
+		}
+
+	}
+
+	public enum Trim implements Function<String, String> {
+		INSTANCE;
+
+		@Override
+		public String apply(String input) {
+			return StringUtils.trim(input);
 		}
 
 	}

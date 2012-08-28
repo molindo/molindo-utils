@@ -220,5 +220,6 @@ public class StringUtilsTest {
 		assertEquals("foo, bar", StringUtils.join(", ", "foo", null, "bar"));
 		assertEquals("foo, bar", StringUtils.join(", ", "foo", "bar", ""));
 		assertEquals("foo- -bar", StringUtils.join("-", "foo", " ", "bar"));
+		assertEquals("foo-bar", StringUtils.join("-", FunctionUtils.trimFunction(), "foo ", " ", " bar "));
 	}
 }

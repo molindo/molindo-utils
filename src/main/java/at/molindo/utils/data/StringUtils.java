@@ -313,19 +313,31 @@ public class StringUtils {
 		return join(separator, Arrays.asList(fragments));
 	}
 
+	public static <F> String join(String separator, Function<F, String> f, F... fragments) {
+		return join(separator, f, Arrays.asList(fragments));
+	}
+
 	public static String join(String separator, Collection<?> fragments) {
+		return join(separator, null, fragments);
+	}
+
+	public static <F, T> String join(String separator, Function<F, String> f, Collection<F> fragments) {
+		if (f == null) {
+			f = FunctionUtils.toStringFunction();
+		}
+
 		if (CollectionUtils.empty(fragments)) {
 			return "";
 		} else if (fragments.size() == 1) {
-			return string(CollectionUtils.first(fragments));
+			return f.apply(CollectionUtils.first(fragments));
 		} else {
 			if (separator == null) {
 				separator = "";
 			}
 
 			StringBuffer buf = new StringBuffer(128);
-			for (Object fragment : fragments) {
-				String frag = string(fragment);
+			for (F fragment : fragments) {
+				String frag = f.apply(fragment);
 				if (!empty(frag)) {
 					buf.append(frag).append(separator);
 				}
