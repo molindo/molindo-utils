@@ -17,12 +17,11 @@
 package at.molindo.utils.data;
 
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Iterator;
 import java.util.Locale;
 import java.util.NoSuchElementException;
 
-import at.molindo.utils.collections.CollectionUtils;
+import at.molindo.utils.collections.IteratorUtils;
 
 public class StringUtils {
 	private StringUtils() {
@@ -313,38 +312,31 @@ public class StringUtils {
 		return join(separator, Arrays.asList(fragments));
 	}
 
-	public static <F> String join(String separator, Function<F, String> f, F... fragments) {
-		return join(separator, f, Arrays.asList(fragments));
+	public static String join(String separator, Iterable<?> fragments) {
+		return join(separator, IteratorUtils.iterator(fragments));
 	}
 
-	public static String join(String separator, Collection<?> fragments) {
-		return join(separator, null, fragments);
-	}
-
-	public static <F, T> String join(String separator, Function<F, String> f, Collection<F> fragments) {
-		if (f == null) {
-			f = FunctionUtils.toStringFunction();
-		}
-
-		if (CollectionUtils.empty(fragments)) {
+	public static String join(String separator, Iterator<?> fragments) {
+		if (!fragments.hasNext()) {
 			return "";
-		} else if (fragments.size() == 1) {
-			return f.apply(CollectionUtils.first(fragments));
-		} else {
-			if (separator == null) {
-				separator = "";
-			}
-
-			StringBuffer buf = new StringBuffer(128);
-			for (F fragment : fragments) {
-				String frag = f.apply(fragment);
-				if (!empty(frag)) {
-					buf.append(frag).append(separator);
-				}
-			}
-			buf.setLength(buf.length() - separator.length());
-			return buf.toString();
 		}
+
+		if (separator == null) {
+			separator = "";
+		}
+
+		StringBuffer buf = new StringBuffer(128);
+		do {
+			String fragment = string(fragments.next());
+			if (!empty(fragment)) {
+				buf.append(fragment).append(separator);
+			}
+		} while (fragments.hasNext());
+
+		if (buf.length() > 0) {
+			buf.setLength(buf.length() - separator.length());
+		}
+		return buf.toString();
 	}
 
 	public static String string(Object o) {

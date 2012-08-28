@@ -16,6 +16,9 @@
 
 package at.molindo.utils.data;
 
+import static at.molindo.utils.collections.IteratorUtils.transform;
+import static at.molindo.utils.data.FunctionUtils.toStringFunction;
+import static java.util.Arrays.asList;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
@@ -220,6 +223,6 @@ public class StringUtilsTest {
 		assertEquals("foo, bar", StringUtils.join(", ", "foo", null, "bar"));
 		assertEquals("foo, bar", StringUtils.join(", ", "foo", "bar", ""));
 		assertEquals("foo- -bar", StringUtils.join("-", "foo", " ", "bar"));
-		assertEquals("foo-bar", StringUtils.join("-", FunctionUtils.trimFunction(), "foo ", " ", " bar "));
+		assertEquals("1-2-3", StringUtils.join("-", transform(asList(1, 2, 3), toStringFunction()))); // compiles?
 	}
 }
