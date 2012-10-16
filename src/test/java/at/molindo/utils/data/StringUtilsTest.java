@@ -49,6 +49,32 @@ public class StringUtilsTest {
 	}
 
 	@Test
+	public void testTrimLeading() {
+		assertEquals(null, StringUtils.trimLeading(null));
+		assertEquals("", StringUtils.trimLeading(""));
+		assertEquals("", StringUtils.trimLeading(" "));
+		assertEquals("", StringUtils.trimLeading("  "));
+		assertEquals("", StringUtils.trimLeading("   "));
+		assertEquals("foo", StringUtils.trimLeading(" foo"));
+		assertEquals("foo", StringUtils.trimLeading("  foo"));
+		assertEquals("foo", StringUtils.trimLeading("   foo"));
+		assertEquals("foo ", StringUtils.trimLeading("foo "));
+	}
+
+	@Test
+	public void testTrimTrailing() {
+		assertEquals(null, StringUtils.trimTrailing(null));
+		assertEquals("", StringUtils.trimTrailing(""));
+		assertEquals("", StringUtils.trimTrailing(" "));
+		assertEquals("", StringUtils.trimTrailing("  "));
+		assertEquals("", StringUtils.trimTrailing("   "));
+		assertEquals("foo", StringUtils.trimTrailing("foo "));
+		assertEquals("foo", StringUtils.trimTrailing("foo  "));
+		assertEquals("foo", StringUtils.trimTrailing("foo   "));
+		assertEquals(" foo", StringUtils.trimTrailing(" foo"));
+	}
+
+	@Test
 	public void testSplit() {
 		Iterator<String> iter = StringUtils.split("foo\nbar\nbaz", "\n").iterator();
 

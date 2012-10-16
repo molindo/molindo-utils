@@ -36,6 +36,29 @@ public class StringUtils {
 		return string == null ? null : string.trim();
 	}
 
+	public static String trimLeading(String string) {
+		if (string == null) {
+			return null;
+		}
+		int length = string.length();
+		int i = 0;
+		while (i < length && string.charAt(i) == ' ') {
+			i++;
+		}
+		return string.substring(i);
+	}
+
+	public static String trimTrailing(String string) {
+		if (string == null) {
+			return null;
+		}
+		int i = string.length() - 1;
+		while (i >= 0 && string.charAt(i) == ' ') {
+			i--;
+		}
+		return string.substring(0, i + 1);
+	}
+
 	public static String sub(String s, int length) {
 		return sub(s, "", length);
 	}
