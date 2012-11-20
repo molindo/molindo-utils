@@ -23,8 +23,10 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 import org.junit.Test;
 
@@ -77,6 +79,22 @@ public class ArrayUtilsTest {
 		for (Object o : iterable) {
 			assertTrue(o instanceof Integer);
 			assertEquals(next++, o);
+		}
+
+	}
+
+	@Test
+	public void testIterator() {
+		Iterator<String> iter = ArrayUtils.iterator("foo", "bar");
+		assertTrue(iter.hasNext());
+		assertEquals("foo", iter.next());
+		assertTrue(iter.hasNext());
+		assertEquals("bar", iter.next());
+		assertFalse(iter.hasNext());
+		try {
+			fail(iter.next());
+		} catch (NoSuchElementException e) {
+			// expected
 		}
 	}
 

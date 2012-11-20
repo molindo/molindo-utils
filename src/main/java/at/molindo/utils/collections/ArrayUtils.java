@@ -18,6 +18,7 @@ package at.molindo.utils.collections;
 
 import java.lang.reflect.Array;
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 public class ArrayUtils {
 	public static boolean equals(byte[] a, byte[] a2, int off, int len) {
@@ -280,6 +281,51 @@ public class ArrayUtils {
 	 */
 	public static int length(char[] a) {
 		return a == null ? 0 : a.length;
+	}
+
+	public static <T> Iterable<T> iterable(final T... a) {
+		if (empty(a)) {
+			return IteratorUtils.emptyIterable();
+		} else {
+			return new Iterable<T>() {
+
+				@Override
+				public Iterator<T> iterator() {
+					return ArrayUtils.iterator(a);
+				}
+			};
+		}
+	}
+
+	public static <T> Iterator<T> iterator(final T... a) {
+		if (empty(a)) {
+			return IteratorUtils.empty();
+		} else {
+			return new Iterator<T>() {
+
+				private int _i = 0;
+
+				@Override
+				public boolean hasNext() {
+					return _i < a.length;
+				}
+
+				@Override
+				public T next() {
+					try {
+						return a[_i++];
+					} catch (ArrayIndexOutOfBoundsException e) {
+						throw new NoSuchElementException();
+					}
+				}
+
+				@Override
+				public void remove() {
+					throw new UnsupportedOperationException();
+				}
+
+			};
+		}
 	}
 
 	public static Iterable<Object> toIterable(final Object array) {
