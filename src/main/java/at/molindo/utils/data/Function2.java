@@ -19,10 +19,8 @@ package at.molindo.utils.data;
 import javax.annotation.Nullable;
 
 /**
- * {@link Function2} implementation that does not throw exceptions (that is
- * {@link RuntimeException} only)
+ * TODO bad name!
  */
-public interface Function<F, T> extends Function2<F, T, RuntimeException> {
-	@Override
-	T apply(@Nullable F input);
+public interface Function2<F, T, E extends Exception> {
+	T apply(@Nullable F input) throws E;
 }
