@@ -22,6 +22,8 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
+import javax.annotation.Nonnull;
+
 import at.molindo.utils.data.Function;
 import at.molindo.utils.data.ObjectUtils;
 
@@ -213,6 +215,22 @@ public class IteratorUtils {
 	@SuppressWarnings("unchecked")
 	public static <T> Iterable<T> emptyIterable() {
 		return (Iterable<T>) EMPTY_ITERABLE;
+	}
+
+	public static <T> Iterator<T> notNull(Iterator<T> iter) {
+		if (iter == null) {
+			return empty();
+		} else {
+			return iter;
+		}
+	}
+
+	public static <T> Iterable<T> notNull(Iterable<T> iter) {
+		if (iter == null) {
+			return emptyIterable();
+		} else {
+			return iter;
+		}
 	}
 
 	/**
@@ -445,5 +463,35 @@ public class IteratorUtils {
 			}
 		}
 		return iter1.hasNext() == iter2.hasNext();
+	}
+
+	public static <T> Iterable<T> readOnly(@Nonnull final Iterable<T> iter) {
+		return new Iterable<T>() {
+
+			@Override
+			public Iterator<T> iterator() {
+				return readOnly(iter.iterator());
+			}
+		};
+	}
+
+	public static <T> Iterator<T> readOnly(@Nonnull final Iterator<T> iter) {
+		return new Iterator<T>() {
+
+			@Override
+			public boolean hasNext() {
+				return iter.hasNext();
+			}
+
+			@Override
+			public T next() {
+				return iter.next();
+			}
+
+			@Override
+			public void remove() {
+				throw new UnsupportedOperationException("read-only");
+			}
+		};
 	}
 }
