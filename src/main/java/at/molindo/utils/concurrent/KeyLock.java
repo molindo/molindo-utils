@@ -71,7 +71,7 @@ public class KeyLock<K, V> {
 	 *             if <code>key</code> or <code>callable</code> are
 	 *             <code>null</code>
 	 */
-	public V withLock(final K key, final Callable<V> callable) throws Exception {
+	public V withLock(final K key, final Callable<? extends V> callable) throws Exception {
 		if (key == null) {
 			throw new NullPointerException("key");
 		}
@@ -133,12 +133,12 @@ public class KeyLock<K, V> {
 
 	private final class Task {
 
-		private final Callable<V> _callable;
+		private final Callable<? extends V> _callable;
 		private Exception _ex;
 		private boolean _done = false;
 		private V _result;
 
-		public Task(final Callable<V> callable) {
+		public Task(final Callable<? extends V> callable) {
 			_callable = callable;
 		}
 
