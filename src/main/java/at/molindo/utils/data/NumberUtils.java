@@ -61,4 +61,28 @@ public class NumberUtils {
 		}
 		return (int) n;
 	}
+
+	public static Short toShort(Long n) {
+		return n == null ? null : toShort(n.longValue());
+	}
+
+	public static Short toShort(Integer n) {
+		return n == null ? null : toShort(n.intValue());
+	}
+
+	public static Integer toInteger(Long n) {
+		return n == null ? null : toInteger(n.longValue());
+	}
+
+	public static Integer toInteger(Short n) {
+		return n == null ? null : n.intValue();
+	}
+
+	public static Long toLong(Short n) {
+		return n == null ? null : n.longValue();
+	}
+
+	public static Long toLong(Integer n) {
+		return n == null ? null : n.longValue();
+	}
 }
