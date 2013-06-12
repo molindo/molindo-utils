@@ -42,6 +42,10 @@ public class KeyLock<K, V> {
 		return new KeyLock<K, V>();
 	}
 
+	public static <K, V> KeyLock<K, V> newKeyLock(boolean wait) {
+		return new KeyLock<K, V>(wait);
+	}
+
 	public KeyLock() {
 		this(true);
 	}
