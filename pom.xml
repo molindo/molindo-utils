@@ -10,7 +10,7 @@
 
 	<groupId>at.molindo</groupId>
 	<artifactId>molindo-utils</artifactId>
-	<version>1.0-SNAPSHOT</version>
+	<version>1.0-alpha-2</version>
 	<packaging>jar</packaging>
 
 	<name>Molindo Utils</name>
