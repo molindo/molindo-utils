@@ -57,8 +57,8 @@ public class MapBuilderTest {
 		assertEquals(expected, map);
 
 		// generic elements
-		TreeMap<List<String>, Map<String, Object>> genericsMap = builder(
-				new TreeMap<List<String>, Map<String, Object>>()).put(Arrays.asList("foo"),
+		HashMap<List<String>, Map<String, Object>> genericsMap = builder(
+				new HashMap<List<String>, Map<String, Object>>()).put(Arrays.asList("foo"),
 				new HashMap<String, Object>()).get();
 		assertEquals(1, genericsMap.size());
 	}
