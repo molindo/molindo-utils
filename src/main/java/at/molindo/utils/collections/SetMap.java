@@ -87,12 +87,12 @@ public class SetMap<T, E> implements Map<T, Set<E>> {
 		return _map.keySet();
 	}
 
-	public void put(final T key, final E value) {
+	public void add(final T key, final E value) {
 		getSet(key).add(value);
 	}
 
-	public void putAll(final T key, final Collection<E> values) {
-		getSet(key).addAll(values);
+	public boolean addAll(final T key, final Collection<E> values) {
+		return getSet(key).addAll(values);
 	}
 
 	@Override
@@ -105,18 +105,19 @@ public class SetMap<T, E> implements Map<T, Set<E>> {
 		_map.putAll(m);
 	}
 
-	public void addAll(final T key, final Set<E> values) {
-		getSet(key).addAll(values);
-	}
-
 	@Override
 	public Set<E> remove(final Object key) {
 		return _map.remove(key);
 	}
 
 	public boolean remove(final T key, final E value) {
-		final Set<E> list = _map.get(key);
-		return list == null ? false : list.remove(value);
+		final Set<E> set = _map.get(key);
+		return set == null ? false : set.remove(value);
+	}
+
+	public boolean removeAll(final T key, final Collection<E> values) {
+		final Set<E> set = _map.get(key);
+		return set == null ? false : set.removeAll(values);
 	}
 
 	@Override
@@ -135,11 +136,11 @@ public class SetMap<T, E> implements Map<T, Set<E>> {
 	}
 
 	public Set<E> getSet(final T key) {
-		Set<E> list = _map.get(key);
-		if (list == null) {
-			list = new LinkedHashSet<E>();
-			_map.put(key, list);
+		Set<E> set = _map.get(key);
+		if (set == null) {
+			set = new LinkedHashSet<E>();
+			_map.put(key, set);
 		}
-		return list;
+		return set;
 	}
 }

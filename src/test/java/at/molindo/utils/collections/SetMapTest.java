@@ -31,8 +31,8 @@ public class SetMapTest {
 	public void test() {
 		SetMap<String, String> map = SetMap.newSetMap();
 
-		map.put("foo", "bar");
-		map.putAll("foo", Arrays.asList("bar", "baz", "cux"));
+		map.add("foo", "bar");
+		map.addAll("foo", Arrays.asList("bar", "baz", "cux"));
 
 		Set<String> set = map.get("foo");
 		assertNotNull(set);
