@@ -36,7 +36,7 @@ public class ListMap<T, E> implements Map<T, List<E>> {
 	public static <T, E> ListMap<T, E> build(Iterable<E> c, Function<E, T> f) {
 		ListMap<T, E> map = newListMap();
 		for (E e : c) {
-			map.put(f.apply(e), e);
+			map.add(f.apply(e), e);
 		}
 		return map;
 	}
@@ -102,12 +102,12 @@ public class ListMap<T, E> implements Map<T, List<E>> {
 		return _map.keySet();
 	}
 
-	public void put(final T key, final E value) {
-		getList(key).add(value);
+	public boolean add(final T key, final E value) {
+		return getList(key).add(value);
 	}
 
-	public void putAll(final T key, final Collection<E> values) {
-		getList(key).addAll(values);
+	public boolean addAll(final T key, final Collection<E> values) {
+		return getList(key).addAll(values);
 	}
 
 	@Override
@@ -118,10 +118,6 @@ public class ListMap<T, E> implements Map<T, List<E>> {
 	@Override
 	public void putAll(final Map<? extends T, ? extends List<E>> m) {
 		_map.putAll(m);
-	}
-
-	public void addAll(final T key, final List<E> values) {
-		getList(key).addAll(values);
 	}
 
 	@Override
