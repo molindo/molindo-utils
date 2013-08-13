@@ -12,11 +12,16 @@ branches:
 # checkout settings
 before_install: 
   - "git clone -b master https://github.com/molindo/travis-settings.git target/travis-settings"
-  - "diff -wu ~/.m2/settings.xml target/travis-settings/defaultSettings.xml || ( cat ~/.m2/settings.xml && false )"
+  - "target/travis-settings/tasks/before_install.sh"
 
 # install and deploy
-install: "mvn --settings=target/travis-settings/settings.xml -B -DskipTests=true install"
-script:  "mvn --settings=target/travis-settings/settings.xml -B clean deploy"
+install: "target/travis-settings/tasks/install.sh"
+script:  "target/travis-settings/tasks/script.sh"
+
+# travis encrypt 'HIPCHAT=token@room'
+notifications:
+  hipchat: 
+    - secure: "LeMjfmz+RwpYQ4RYMogYqaqFdnrt8HExCG4ybnN+eBPGRIj600bilZfJFdEHquj8njR+pSMIARyOCgUNbWu4i2mtDuVvNmtPwk7mqSwnnJ3yhMqZzioJYO9wEM9KTc42lD/ElfGzkxHpPA0QTSO5M62pfTJjLw9k7hNfyXkD4uE="
 
 # travis encrypt 'CI_DEPLOY_USERNAME=username'
 # travis encrypt 'CI_DEPLOY_PASSWORD=password'
