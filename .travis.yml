@@ -18,10 +18,10 @@ before_install:
 install: "target/travis-settings/tasks/install.sh"
 script:  "target/travis-settings/tasks/script.sh"
 
-# travis encrypt 'HIPCHAT=token@room'
+# travis encrypt 'token@room'
 notifications:
   hipchat: 
-    - secure: "LeMjfmz+RwpYQ4RYMogYqaqFdnrt8HExCG4ybnN+eBPGRIj600bilZfJFdEHquj8njR+pSMIARyOCgUNbWu4i2mtDuVvNmtPwk7mqSwnnJ3yhMqZzioJYO9wEM9KTc42lD/ElfGzkxHpPA0QTSO5M62pfTJjLw9k7hNfyXkD4uE="
+    - secure: "CQYrf5T7Fjb0QvmC5ushZNvNC/3FqhmC5IREAcbK5Sb9cLztT2YKC3b+IM8fjoSqWOD0/ht4aXtYfWVqN4vstfu9DxpUP67kLmYuZbkb7KNjMjrFJ0/CcqXPIZPCbwT1fEvttqyAZjwtzZY19KvHAdj47VvYeOnxm7OmKwDzpBM="
 
 # travis encrypt 'CI_DEPLOY_USERNAME=username'
 # travis encrypt 'CI_DEPLOY_PASSWORD=password'
