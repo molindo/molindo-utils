@@ -79,6 +79,26 @@ public class StringUtils {
 		return s.substring(0, maxLength - suffix.length()) + suffix;
 	}
 
+	public static String subPre(String s, int length) {
+		return subPre(s, "", length);
+	}
+
+	public static String subPre(String s, String prefix, int maxLength) {
+		if (prefix == null) {
+			prefix = "";
+		}
+		if (maxLength < prefix.length()) {
+			throw new IllegalArgumentException("prefix ('" + prefix + "') must not be longer than maxLength ("
+					+ maxLength + ")");
+		}
+
+		if (s == null || s.length() <= maxLength) {
+			return s;
+		}
+
+		return prefix + s.substring(s.length() - maxLength + prefix.length(), s.length());
+	}
+
 	public static String afterFirst(final String string, final String delim) {
 		if (string == null) {
 			return null;

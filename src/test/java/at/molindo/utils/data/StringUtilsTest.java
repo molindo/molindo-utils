@@ -128,6 +128,18 @@ public class StringUtilsTest {
 	}
 
 	@Test
+	public void testSubPre() {
+		assertEquals("foobar", StringUtils.subPre("foobar", "...", 6));
+		assertEquals("...ar", StringUtils.subPre("foobar", "...", 5));
+		try {
+			assertEquals("", StringUtils.subPre("foobar", "...", 2));
+			fail();
+		} catch (IllegalArgumentException e) {
+			// expected
+		}
+	}
+
+	@Test
 	public void testBeforeLast() {
 		assertEquals("fooXYbar", StringUtils.beforeLast("fooXYbarXYbaz", "XY"));
 		assertEquals("", StringUtils.beforeLast("fooXbarYbaz", "XY"));
