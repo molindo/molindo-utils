@@ -30,8 +30,19 @@ public class FunctionUtils {
 		return Trim.INSTANCE;
 	}
 
-	public static Function<String, Integer> parseInt() {
+	public static Function<String, Integer> parseIntFunction() {
 		return ParseInt.INSTANCE;
+	}
+
+	public static <F, T, I> Function<F, T> chain(final Function<F, I> first, final Function<I, T> second) {
+		return new Function<F, T>() {
+
+			@Override
+			public T apply(F input) {
+				return second.apply(first.apply(input));
+			}
+
+		};
 	}
 
 	// enum singleton
