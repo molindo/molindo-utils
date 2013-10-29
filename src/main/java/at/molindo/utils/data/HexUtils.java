@@ -39,6 +39,16 @@ public abstract class HexUtils {
 	}
 
 	/**
+	 * transform an integer into an 8 character hex string
+	 * 
+	 * @param bytes
+	 * @return
+	 */
+	public static String string(final int bytes) {
+		return string(ConversionUtils.bytes(bytes));
+	}
+
+	/**
 	 * transform a hex string into a byte array
 	 * 
 	 * @param hex

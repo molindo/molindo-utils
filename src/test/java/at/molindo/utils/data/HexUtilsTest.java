@@ -16,7 +16,8 @@
 
 package at.molindo.utils.data;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
@@ -33,6 +34,11 @@ public class HexUtilsTest {
 	@Test
 	public void testBytes() {
 		assertArrayEquals(BYTES, HexUtils.bytes(HEX));
+	}
+
+	@Test
+	public void testStringInt() {
+		assertEquals("0000002a", HexUtils.string(42));
 	}
 
 }
