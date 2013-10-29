@@ -30,6 +30,10 @@ public class FunctionUtils {
 		return Trim.INSTANCE;
 	}
 
+	public static Function<String, Integer> parseInt() {
+		return ParseInt.INSTANCE;
+	}
+
 	// enum singleton
 	public enum ToString implements Function<Object, String> {
 		INSTANCE;
@@ -50,4 +54,15 @@ public class FunctionUtils {
 		}
 
 	}
+
+	public enum ParseInt implements Function<String, Integer> {
+		INSTANCE;
+
+		@Override
+		public Integer apply(String input) {
+			return Integer.parseInt(input);
+		}
+
+	}
+
 }
