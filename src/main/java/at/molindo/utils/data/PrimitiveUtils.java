@@ -15,6 +15,7 @@
  */
 package at.molindo.utils.data;
 
+
 public class PrimitiveUtils {
 
 	public static short primitive(Short value) {
@@ -87,6 +88,112 @@ public class PrimitiveUtils {
 
 	public static byte primitive(Byte value, byte nullValue) {
 		return value == null ? nullValue : value;
+	}
+
+	// arrays
+
+	public static short[] primitive(Short[] values) {
+		return primitive(values, (short) 0);
+	}
+
+	public static short[] primitive(Short[] values, int nullValue) {
+		return primitive(values, (short) nullValue);
+	}
+
+	public static short[] primitive(Short[] values, short nullValue) {
+		short[] a = new short[values.length];
+		for (int i = 0; i < values.length; i++) {
+			a[i] = primitive(values[i], nullValue);
+		}
+		return a;
+	}
+
+	public static int[] primitive(Integer[] values) {
+		return primitive(values, 0);
+	}
+
+	public static int[] primitive(Integer[] values, int nullValue) {
+		int[] a = new int[values.length];
+		for (int i = 0; i < values.length; i++) {
+			a[i] = primitive(values[i], nullValue);
+		}
+		return a;
+	}
+
+	public static long[] primitive(Long[] values) {
+		return primitive(values, 0L);
+	}
+
+	public static long[] primitive(Long[] values, long nullValue) {
+		long[] a = new long[values.length];
+		for (int i = 0; i < values.length; i++) {
+			a[i] = primitive(values[i], nullValue);
+		}
+		return a;
+	}
+
+	public static float[] primitive(Float[] values) {
+		return primitive(values, 0F);
+	}
+
+	public static float[] primitive(Float[] values, float nullValue) {
+		float[] a = new float[values.length];
+		for (int i = 0; i < values.length; i++) {
+			a[i] = primitive(values[i], nullValue);
+		}
+		return a;
+	}
+
+	public static double[] primitive(Double[] values) {
+		return primitive(values, 0.0);
+	}
+
+	public static double[] primitive(Double[] values, double nullValue) {
+		double[] a = new double[values.length];
+		for (int i = 0; i < values.length; i++) {
+			a[i] = primitive(values[i], nullValue);
+		}
+		return a;
+	}
+
+	public static boolean[] primitive(Boolean[] values) {
+		return primitive(values, false);
+	}
+
+	public static boolean[] primitive(Boolean[] values, boolean nullValue) {
+		boolean[] a = new boolean[values.length];
+		for (int i = 0; i < values.length; i++) {
+			a[i] = primitive(values[i], nullValue);
+		}
+		return a;
+	}
+
+	public static char[] primitive(Character[] values) {
+		return primitive(values, '\0');
+	}
+
+	public static char[] primitive(Character[] values, char nullValue) {
+		char[] a = new char[values.length];
+		for (int i = 0; i < values.length; i++) {
+			a[i] = primitive(values[i], nullValue);
+		}
+		return a;
+	}
+
+	public static byte[] primitive(Byte[] values) {
+		return primitive(values, (byte) 0x00);
+	}
+
+	public static byte[] primitive(Byte[] values, int nullValue) {
+		return primitive(values, (byte) nullValue);
+	}
+
+	public static byte[] primitive(Byte[] values, byte nullValue) {
+		byte[] a = new byte[values.length];
+		for (int i = 0; i < values.length; i++) {
+			a[i] = primitive(values[i], nullValue);
+		}
+		return a;
 	}
 
 }
