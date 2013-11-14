@@ -16,7 +16,8 @@
 
 package at.molindo.utils.data;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
@@ -27,8 +28,6 @@ public class ConversionUtilsTest {
 
 	@Test
 	public void testBytes() {
-		System.out.println(HexUtils.string(BYTES));
-
 		assertArrayEquals(BYTES, ConversionUtils.bytes(INTS));
 	}
 
@@ -37,4 +36,17 @@ public class ConversionUtilsTest {
 		assertArrayEquals(INTS, ConversionUtils.ints(BYTES));
 	}
 
+	@Test
+	public void testSimpleInt() {
+		int value = 0x2348f03e;
+		byte[] bytes = ConversionUtils.bytes(value);
+		assertEquals(4, bytes.length);
+
+		assertEquals(HexUtils.string(bytes), Integer.toHexString(value));
+
+		int[] values = ConversionUtils.ints(bytes);
+		assertEquals(1, values.length);
+
+		assertEquals(value, values[0]);
+	}
 }
