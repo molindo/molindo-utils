@@ -96,4 +96,18 @@ public class IteratorUtilsTest {
 		assertFalse(IteratorUtils.equals(l1, l3));
 		assertFalse(IteratorUtils.equals(l2, l3));
 	}
+
+	@Test
+	public void testChain() {
+		final Iterator<String> l1, l2, l3;
+
+		l1 = Arrays.asList("foo", "bar").iterator();
+		l2 = IteratorUtils.empty();
+		l3 = Arrays.asList("foo").iterator();
+
+		@SuppressWarnings("unchecked")
+		Iterator<String> chained = IteratorUtils.chain(l1, l2, l3);
+
+		assertEquals(Arrays.asList("foo", "bar", "foo"), IteratorUtils.list(chained));
+	}
 }

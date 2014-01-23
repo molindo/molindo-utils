@@ -494,4 +494,58 @@ public class IteratorUtils {
 			}
 		};
 	}
+
+	public static <T> Iterator<T> chain(final Iterator<? extends T>... iterators) {
+		return chain(Arrays.asList(iterators));
+	}
+
+	public static <T> Iterator<T> chain(final Iterable<Iterator<? extends T>> iterable) {
+		return chain(iterator(iterable));
+	}
+
+	public static <T> Iterator<T> chain(final Iterator<Iterator<? extends T>> iter) {
+		return new Iterator<T>() {
+
+			private final Iterator<Iterator<? extends T>> _iter;
+			private Iterator<? extends T> _current;
+			private Iterator<? extends T> _previous;
+
+			{
+				_iter = iter;
+				if (_iter.hasNext()) {
+					_current = _iter.next();
+					_previous = empty();
+					findNext();
+				} else {
+					_current = empty();
+				}
+			}
+
+			private void findNext() {
+				while (!_current.hasNext() && _iter.hasNext()) {
+					_current = _iter.next();
+				}
+			}
+
+			@Override
+			public boolean hasNext() {
+				return _current.hasNext();
+			}
+
+			@Override
+			public T next() {
+				T next = _current.next();
+				_previous = _current;
+				findNext();
+				return next;
+			}
+
+			@Override
+			public void remove() {
+				_previous.remove();
+			}
+
+		};
+
+	}
 }
