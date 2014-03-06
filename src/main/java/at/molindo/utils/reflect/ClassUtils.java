@@ -79,4 +79,56 @@ public class ClassUtils {
 		}
 		return true;
 	}
+
+	public static Class<?> forName(String classname) throws ClassNotFoundException {
+		return forName(classname, false, null, null);
+	}
+
+	public static Class<?> forName(String classname, boolean init) throws ClassNotFoundException {
+		return forName(classname, init, null, null);
+	}
+
+	public static Class<?> forName(String classname, boolean init, Thread thread) throws ClassNotFoundException {
+		return forName(classname, init, thread, null);
+	}
+
+	public static Class<?> forName(String classname, boolean init, Class<?> fallback) throws ClassNotFoundException {
+		return forName(classname, init, null, fallback);
+	}
+
+	/**
+	 * @param
+	 * @param classname
+	 *            fully qualified name of the desired class
+	 * @param init
+	 *            whether the class must be initialized
+	 * @param thread
+	 *            thread to use for context classloader or <code>null</code> for
+	 *            current thread
+	 * @param fallback
+	 *            {@link ClassLoader} providing class if no context classloader
+	 *            or <code>null</code> for this class
+	 * @return class object representing the desired class
+	 * @throws ClassNotFoundException
+	 *             if the class cannot be located by the specified class loader
+	 * 
+	 * @see Thread#currentThread()
+	 * @see Thread#getContextClassLoader()
+	 * @see Class#getClassLoader()
+	 * @see Class#forName(String, boolean, ClassLoader)
+	 */
+	public static Class<?> forName(String classname, boolean init, Thread thread, Class<?> fallback)
+			throws ClassNotFoundException {
+
+		if (thread == null) {
+			thread = Thread.currentThread();
+		}
+
+		ClassLoader loader = thread.getContextClassLoader();
+		if (loader == null) {
+			loader = fallback != null ? fallback.getClassLoader() : ClassUtils.class.getClassLoader();
+		}
+
+		return Class.forName(classname, init, loader);
+	}
 }
