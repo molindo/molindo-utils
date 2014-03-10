@@ -84,6 +84,13 @@ public class FileUtils {
 		return new BufferedWriter(new OutputStreamWriter(out(file, compression), CharsetUtils.UTF_8));
 	}
 
+	public static void write(File file, Compression compression, String string) throws FileNotFoundException,
+			IOException {
+		BufferedWriter w = write(file, compression);
+		w.write(string);
+		StreamUtils.close(w);
+	}
+
 	public static byte[] bytes(File file) throws FileNotFoundException, IOException {
 		return bytes(file, compression(file));
 	}
