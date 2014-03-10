@@ -27,9 +27,9 @@ public class FactoryThreadTest {
 
 	@Test
 	public void testRun() throws InterruptedException {
-		
-		final int[] count = {0};
-		
+
+		final int[] count = { 0 };
+
 		FactoryThread t = new FactoryThread(new IRunnableFactory() {
 
 			@Override
@@ -54,7 +54,7 @@ public class FactoryThreadTest {
 				}
 			}
 		}.setMaxErrors(2);
-		
+
 		t.start();
 		t.join();
 
@@ -63,26 +63,27 @@ public class FactoryThreadTest {
 
 	@Test
 	public void testGroup() throws InterruptedException {
-		final int[] count = {0};
-		FactoryThreadGroup group = new FactoryThreadGroup(FactoryThreadTest.class.getSimpleName(), 4, new IRunnableFactory() {
-			
-			@Override
-			public Runnable newRunnable() {
-				return new Runnable() {
+		final int[] count = { 0 };
+		FactoryThreadGroup group = new FactoryThreadGroup(FactoryThreadTest.class.getSimpleName(), 4,
+				new IRunnableFactory() {
 
 					@Override
-					public void run() {
-						synchronized (count) {
-							if (count[0] >= 10) {
-								throw new RuntimeException();
+					public Runnable newRunnable() {
+						return new Runnable() {
+
+							@Override
+							public void run() {
+								synchronized (count) {
+									if (count[0] >= 10) {
+										throw new RuntimeException();
+									}
+									count[0]++;
+								}
 							}
-							count[0]++;
-						}
+						};
 					}
-				};
-			}
-		}) {
-			
+				}) {
+
 			protected void handleException(Throwable t, int consecutiveErrors, boolean terminate) {
 				if (terminate) {
 					assertEquals(2, consecutiveErrors);
@@ -90,9 +91,9 @@ public class FactoryThreadTest {
 					assertEquals(1, consecutiveErrors);
 				}
 			}
-			
+
 		}.setMaxErrors(2).start().join();
-		
+
 		assertEquals(10, count[0]);
 		assertEquals(group.activeCount(), 0);
 	}

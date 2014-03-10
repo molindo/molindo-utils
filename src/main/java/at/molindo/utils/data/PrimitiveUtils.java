@@ -15,7 +15,6 @@
  */
 package at.molindo.utils.data;
 
-
 public class PrimitiveUtils {
 
 	public static short primitive(Short value) {
