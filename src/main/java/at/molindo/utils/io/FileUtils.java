@@ -140,4 +140,26 @@ public class FileUtils {
 			return true;
 		}
 	}
+
+	/**
+	 * creates directory if it does not exist and returns true if exists now
+	 * 
+	 * @param assetDirectory
+	 * @return true if d is a directory
+	 */
+	public static boolean mkdir(File d) {
+		d.mkdir();
+		return d.isDirectory();
+	}
+
+	/**
+	 * creates directory if it does not exist and returns true if exists now
+	 * 
+	 * @param assetDirectory
+	 * @return true if d is a directory
+	 */
+	public static boolean mkdirs(File d) {
+		d.mkdirs();
+		return d.isDirectory();
+	}
 }
