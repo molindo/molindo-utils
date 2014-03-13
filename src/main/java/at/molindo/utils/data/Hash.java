@@ -16,6 +16,10 @@
 
 package at.molindo.utils.data;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.nio.ByteBuffer;
 import java.nio.charset.Charset;
 import java.security.MessageDigest;
@@ -23,11 +27,15 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 
 import at.molindo.utils.io.CharsetUtils;
+import at.molindo.utils.io.Compression;
+import at.molindo.utils.io.FileUtils;
 
 public class Hash {
 
+	private static final int STREAM_BUFFER_SIZE = 4096;
+
 	private final byte[] _bytes;
-	private IAlgorithm _algorithm;
+	private final IAlgorithm _algorithm;
 
 	public static Hash md5(String content) {
 		return hash(Algorithm.MD5, content);
@@ -109,27 +117,33 @@ public class Hash {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((_algorithm == null) ? 0 : _algorithm.hashCode());
+		result = prime * result + (_algorithm == null ? 0 : _algorithm.hashCode());
 		result = prime * result + Arrays.hashCode(_bytes);
 		return result;
 	}
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj) {
 			return true;
-		if (obj == null)
+		}
+		if (obj == null) {
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		if (getClass() != obj.getClass()) {
 			return false;
+		}
 		Hash other = (Hash) obj;
 		if (_algorithm == null) {
-			if (other._algorithm != null)
+			if (other._algorithm != null) {
 				return false;
-		} else if (!_algorithm.equals(other._algorithm))
+			}
+		} else if (!_algorithm.equals(other._algorithm)) {
 			return false;
-		if (!Arrays.equals(_bytes, other._bytes))
+		}
+		if (!Arrays.equals(_bytes, other._bytes)) {
 			return false;
+		}
 		return true;
 	}
 
@@ -140,7 +154,15 @@ public class Hash {
 
 		IHashBuilder add(byte[] bytes);
 
+		IHashBuilder add(byte[] bytes, int offset, int len);
+
 		IHashBuilder add(ByteBuffer bytes);
+
+		IHashBuilder add(InputStream stream) throws IOException;
+
+		IHashBuilder add(File file) throws IOException;
+
+		IHashBuilder add(File file, Compression compression) throws IOException;
 
 		Hash hash();
 
@@ -160,6 +182,7 @@ public class Hash {
 			return _name;
 		}
 
+		@Override
 		public IHashBuilder builder() {
 			return new IHashBuilder() {
 				private final MessageDigest _md = newMessageDigest();
@@ -167,6 +190,12 @@ public class Hash {
 				@Override
 				public IHashBuilder add(final byte[] bytes) {
 					_md.update(bytes);
+					return this;
+				}
+
+				@Override
+				public IHashBuilder add(final byte[] bytes, int offset, int len) {
+					_md.update(bytes, offset, len);
 					return this;
 				}
 
@@ -185,6 +214,26 @@ public class Hash {
 				public IHashBuilder add(final String string, final Charset charset) {
 					_md.update(string.getBytes(charset));
 					return this;
+				}
+
+				@Override
+				public IHashBuilder add(InputStream stream) throws IOException {
+					byte[] buffer = new byte[STREAM_BUFFER_SIZE];
+					int n;
+					while ((n = stream.read(buffer)) > 0) {
+						add(buffer, 0, n);
+					}
+					return this;
+				}
+
+				@Override
+				public IHashBuilder add(File file) throws IOException {
+					return add(file, Compression.NONE);
+				}
+
+				@Override
+				public IHashBuilder add(File file, Compression compression) throws FileNotFoundException, IOException {
+					return add(FileUtils.in(file, compression));
 				}
 
 				@Override
