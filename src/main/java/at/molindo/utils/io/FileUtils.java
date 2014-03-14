@@ -142,6 +142,23 @@ public class FileUtils {
 	}
 
 	/**
+	 * deletes files and directories inside a directory
+	 * 
+	 * @return true if directory exists and is empty
+	 */
+	public static boolean deleteContents(File file) {
+		if (file != null && file.isDirectory()) {
+			boolean empty = true;
+			for (File child : file.listFiles()) {
+				empty &= delete(child);
+			}
+			return empty;
+		} else {
+			return false;
+		}
+	}
+
+	/**
 	 * creates directory if it does not exist and returns true if exists now
 	 * 
 	 * @param assetDirectory
