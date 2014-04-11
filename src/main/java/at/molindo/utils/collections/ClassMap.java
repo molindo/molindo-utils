@@ -101,4 +101,20 @@ public class ClassMap<V> extends WeakHashMap<Class<?>, V> {
 		return v;
 	}
 
+	/**
+	 * @return a new map containing all keys that are assignabel from cls
+	 */
+	public Map<Class<?>, V> findAssignable(Class<?> cls) {
+		if (cls == null) {
+			throw new NullPointerException("cls");
+		}
+
+		Map<Class<?>, V> map = new WeakHashMap<Class<?>, V>();
+		for (Map.Entry<Class<?>, V> e : entrySet()) {
+			if (cls.isAssignableFrom(e.getKey())) {
+				map.put(e.getKey(), e.getValue());
+			}
+		}
+		return map;
+	}
 }
