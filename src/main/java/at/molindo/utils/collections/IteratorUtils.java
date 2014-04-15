@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.Map;
 import java.util.NoSuchElementException;
 
 import javax.annotation.Nonnull;
@@ -193,6 +194,44 @@ public class IteratorUtils {
 			collection.add(iter.next());
 		}
 		return collection;
+	}
+
+	/**
+	 * adds all elements from iter to map, generating values using function
+	 * 
+	 * @param <K>
+	 * @param <V>
+	 * @param <M>
+	 * @param map
+	 * @param iter
+	 * @param func
+	 * @return
+	 */
+	public static <K, V, M extends Map<K, V>> M putKeys(final M map, final Iterator<K> iter, Function<K, V> func) {
+		while (iter.hasNext()) {
+			K key = iter.next();
+			map.put(key, func.apply(key));
+		}
+		return map;
+	}
+
+	/**
+	 * adds all elements from iter to map, generating keys using function
+	 * 
+	 * @param <K>
+	 * @param <V>
+	 * @param <M>
+	 * @param map
+	 * @param iter
+	 * @param func
+	 * @return
+	 */
+	public static <K, V, M extends Map<K, V>> M putValues(final M map, final Iterator<V> iter, Function<V, K> func) {
+		while (iter.hasNext()) {
+			V value = iter.next();
+			map.put(func.apply(value), value);
+		}
+		return map;
 	}
 
 	/**

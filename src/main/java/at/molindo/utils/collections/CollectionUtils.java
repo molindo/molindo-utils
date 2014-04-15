@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -107,6 +108,14 @@ public class CollectionUtils {
 
 	public static <E, T> ArrayList<E> list(Iterable<T> e, Function<T, E> f) {
 		return IteratorUtils.addAll(new ArrayList<E>(), IteratorUtils.transform(IteratorUtils.iterator(e), f));
+	}
+
+	public static <K, V> HashMap<K, V> mapKeys(Iterable<K> e, Function<K, V> f) {
+		return IteratorUtils.putKeys(new HashMap<K, V>(), IteratorUtils.iterator(e), f);
+	}
+
+	public static <K, V> HashMap<K, V> mapValues(Iterable<V> e, Function<V, K> f) {
+		return IteratorUtils.putValues(new HashMap<K, V>(), IteratorUtils.iterator(e), f);
 	}
 
 	/**
