@@ -45,6 +45,17 @@ public class FunctionUtils {
 		};
 	}
 
+	public static <F, T> Function<F, T> value(final T value) {
+		return new Function<F, T>() {
+
+			@Override
+			public T apply(F input) {
+				return value;
+			}
+
+		};
+	}
+
 	// enum singleton
 	public enum ToString implements Function<Object, String> {
 		INSTANCE;

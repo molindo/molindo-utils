@@ -120,15 +120,47 @@ public class ClassUtils {
 	public static Class<?> forName(String classname, boolean init, Thread thread, Class<?> fallback)
 			throws ClassNotFoundException {
 
+		return Class.forName(classname, init, getClassLoader(thread, fallback));
+	}
+
+	public static ClassLoader getClassLoader() {
+		return getClassLoader(null, null);
+	}
+
+	public static ClassLoader getClassLoader(Class<?> fallback) {
+		return getClassLoader(null, fallback);
+	}
+
+	public static ClassLoader getClassLoader(Thread thread) {
+		return getClassLoader(thread, null);
+	}
+
+	/**
+	 * @param thread
+	 *            {@link Thread} to use for
+	 *            {@link Thread#getContextClassLoader() context ClassLoader} or
+	 *            <code>null</code> for {@link Thread#currentThread() current
+	 *            thread}
+	 * @param fallback
+	 *            {@link ClassLoader} providing class if no context classloader
+	 *            or <code>null</code> for this class
+	 * @return never <code>null</code>
+	 */
+	public static ClassLoader getClassLoader(Thread thread, Class<?> fallback) {
 		if (thread == null) {
 			thread = Thread.currentThread();
 		}
-
 		ClassLoader loader = thread.getContextClassLoader();
+
 		if (loader == null) {
-			loader = fallback != null ? fallback.getClassLoader() : ClassUtils.class.getClassLoader();
+			loader = (fallback != null ? fallback : ClassUtils.class).getClassLoader();
 		}
 
-		return Class.forName(classname, init, loader);
+		if (loader == null) {
+			ClassLoader.getSystemClassLoader();
+		}
+
+		return loader;
 	}
+
 }
