@@ -61,4 +61,21 @@ public class UrlBuilderTest {
 		builder.addParams("key", "foo bar", "foo+bar");
 		assertEquals("http://example.com/?key=foo%20bar&key=foo%2Bbar", builder.toString());
 	}
+
+	@Test
+	public void resolve() {
+		UrlBuilder b = new UrlBuilder().setPath("/foo/bar");
+
+		String host = "http://example.com";
+		assertEquals(host + "/foo/bar", b.toUrlString());
+		assertEquals(host + "/foo/baz", b.clone().resolve("baz").toUrlString());
+		assertEquals(host + "/qux", b.clone().resolve("../qux").toUrlString());
+		assertEquals(host + "/quux", b.clone().resolve("/quux").toUrlString());
+		assertEquals(host + "/foo/baz", b.clone().resolve("./baz").toUrlString());
+		assertEquals(host + "/foo/", b.clone().resolve(".").toUrlString());
+		assertEquals(host + "/qux", b.clone().resolve("../../../../qux").toUrlString());
+		assertEquals(host + "/foo/bar?a=b", b.clone().resolve("?a=b").toUrlString());
+		assertEquals(host + "/foo/qux?a=b", b.clone().resolve("qux?a=b").toUrlString());
+		assertEquals("http://example.org/", b.clone().resolve("http://example.org:80").toUrlString());
+	}
 }

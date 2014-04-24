@@ -18,6 +18,7 @@ package at.molindo.utils.tools;
 
 import java.io.Serializable;
 import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -28,6 +29,7 @@ import java.util.Map;
 import java.util.TreeMap;
 import java.util.regex.Pattern;
 
+import at.molindo.thirdparty.org.apache.http.client.utils.URIUtils;
 import at.molindo.utils.collections.MapBuilder;
 import at.molindo.utils.data.StringUtils;
 
@@ -72,6 +74,9 @@ public class UrlBuilder implements Serializable, Cloneable {
 	private LinkedHashMap<String, List<String>> _params;
 	private String _fragment;
 
+	/*
+	 * currently unused
+	 */
 	private Map<String, Integer> _defaultPorts;
 
 	public static UrlBuilder parse(String url) throws MalformedURLException {
@@ -139,7 +144,39 @@ public class UrlBuilder implements Serializable, Cloneable {
 		return decoded;
 	}
 
+	/**
+	 * http://example.com/
+	 */
+	public UrlBuilder() {
+		this("example.com");
+	}
+
+	/**
+	 * http://{host}/
+	 */
+	public UrlBuilder(String host) {
+		this(HTTP, host);
+	}
+
+	/**
+	 * {protocol}://{host}/
+	 */
+	public UrlBuilder(String protocol, String host) {
+		this(protocol, host, "/");
+	}
+
+	/**
+	 * {protocol}://{host}{path}
+	 */
+	public UrlBuilder(String protocol, String host, String path) {
+		setProtocol(protocol).setHost(host).setPath(path);
+	}
+
 	public UrlBuilder(URL url) {
+		setUrl(url);
+	}
+
+	protected UrlBuilder setUrl(URL url) {
 		setProtocol(url.getProtocol());
 		String userInfo = url.getUserInfo();
 		String[] credentials = StringUtils.empty(userInfo) ? EMPTY_STRINGS : userInfo.split(":", 2);
@@ -152,22 +189,7 @@ public class UrlBuilder implements Serializable, Cloneable {
 		setPath(StringUtils.empty(path) ? "/" : path);
 		setQuery(url.getQuery());
 		setFragment(url.getRef());
-	}
-
-	public UrlBuilder() {
-		this("example.com");
-	}
-
-	public UrlBuilder(String host) {
-		this(HTTP, host);
-	}
-
-	public UrlBuilder(String protocol, String host) {
-		this(protocol, host, "/");
-	}
-
-	public UrlBuilder(String protocol, String host, String path) {
-		setProtocol(protocol).setHost(host).setPath(path);
+		return this;
 	}
 
 	public UrlBuilder setProtocol(String protocol) {
@@ -347,6 +369,16 @@ public class UrlBuilder implements Serializable, Cloneable {
 		return this;
 	}
 
+	public UrlBuilder resolve(String relativePath) {
+		try {
+			return setUrl(URIUtils.resolve(toURL().toURI(), relativePath).toURL());
+		} catch (MalformedURLException e) {
+			throw new RuntimeException("failed to resolve URL", e);
+		} catch (URISyntaxException e) {
+			throw new RuntimeException("failed to resolve URL", e);
+		}
+	}
+
 	public String toUrlString() {
 		return toUrlString(false);
 	}
@@ -414,6 +446,23 @@ public class UrlBuilder implements Serializable, Cloneable {
 	@Override
 	public String toString() {
 		return toUrlString();
+	}
+
+	@Override
+	public UrlBuilder clone() {
+		try {
+			UrlBuilder clone = (UrlBuilder) super.clone();
+			if (clone._params != null) {
+				clone._params = new LinkedHashMap<String, List<String>>(clone._params);
+			}
+			if (clone._defaultPorts != null) {
+				clone._defaultPorts = new LinkedHashMap<String, Integer>(clone._defaultPorts);
+			}
+			return clone;
+		} catch (CloneNotSupportedException e) {
+			throw new RuntimeException("failed to clone UrlBuilder", e);
+		}
+
 	}
 
 }
