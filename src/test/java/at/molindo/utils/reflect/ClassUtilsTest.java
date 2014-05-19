@@ -18,16 +18,24 @@ package at.molindo.utils.reflect;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.Serializable;
+import java.net.URL;
+import java.util.Enumeration;
 import java.util.Set;
 
 import org.junit.Test;
 
 import at.molindo.utils.collections.CollectionUtils;
+import at.molindo.utils.io.StreamUtils;
 
 public class ClassUtilsTest {
+
+	private static final String TEST_RESOURCE = "ClassUtilsTest.txt";
 
 	@Test
 	public void getTypeArgument() {
@@ -47,6 +55,38 @@ public class ClassUtilsTest {
 		assertTrue(ClassUtils.isAssignableToAll(String.class, set(Comparable.class, Serializable.class)));
 		assertFalse(ClassUtils.isAssignableToAll(null, set(Comparable.class, Integer.class)));
 		assertTrue(ClassUtils.isAssignableToAll(String.class, set()));
+	}
+
+	@Test
+	public void getPackageResourcePath() {
+		assertEquals("at/molindo/utils/reflect/ClassUtilsTest.txt",
+				ClassUtils.getPackageResourcePath(this.getClass(), TEST_RESOURCE));
+	}
+
+	@Test
+	public void getClasspathResource() {
+		URL url = ClassUtils.getClasspathResource(this.getClass(), TEST_RESOURCE);
+		assertNotNull("resource not found", url);
+	}
+
+	@Test
+	public void getClasspathResources() throws IOException {
+		Enumeration<URL> urls = ClassUtils.getClasspathResources(this.getClass(), TEST_RESOURCE);
+		assertNotNull("resource not found", urls);
+		assertTrue(urls.hasMoreElements());
+
+		URL url = urls.nextElement();
+		assertNotNull(url);
+
+		assertFalse(urls.hasMoreElements());
+
+	}
+
+	@Test
+	public void getClasspathResourceAsStream() throws IOException {
+		InputStream in = ClassUtils.getClasspathResourceAsStream(this.getClass(), TEST_RESOURCE);
+		assertNotNull("resource not found", in);
+		assertEquals("test", StreamUtils.string(in));
 	}
 
 	protected Set<Class<?>> set(Class<?>... classes) {

@@ -16,7 +16,11 @@
 
 package at.molindo.utils.reflect;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.lang.reflect.Type;
+import java.net.URL;
+import java.util.Enumeration;
 import java.util.Set;
 
 import at.molindo.thirdparty.org.springframework.core.GenericTypeResolver;
@@ -161,6 +165,37 @@ public class ClassUtils {
 		}
 
 		return loader;
+	}
+
+	/**
+	 * @see #getPackageResourcePath(Class, String)
+	 * @see ClassLoader#getResource(String)
+	 */
+	public static URL getClasspathResource(Class<?> scope, String resource) {
+		return getClassLoader(scope).getResource(getPackageResourcePath(scope, resource));
+	}
+
+	/**
+	 * @see #getPackageResourcePath(Class, String)
+	 * @see ClassLoader#getResourceAsStream(String)
+	 */
+	public static InputStream getClasspathResourceAsStream(Class<?> scope, String resource) {
+		return getClassLoader(scope).getResourceAsStream(getPackageResourcePath(scope, resource));
+	}
+
+	/**
+	 * @see #getPackageResourcePath(Class, String)
+	 * @see ClassLoader#getResources(String)
+	 */
+	public static Enumeration<URL> getClasspathResources(Class<?> scope, String resource) throws IOException {
+		return getClassLoader(scope).getResources(getPackageResourcePath(scope, resource));
+	}
+
+	/**
+	 * @return the full classpath for the resource in the same package as scope
+	 */
+	public static String getPackageResourcePath(Class<?> scope, String resource) {
+		return scope.getPackage().getName().replace('.', '/') + '/' + resource;
 	}
 
 }
