@@ -22,8 +22,10 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.NoSuchElementException;
 
 import org.junit.Test;
@@ -109,5 +111,45 @@ public class IteratorUtilsTest {
 		Iterator<String> chained = IteratorUtils.chain(l1, l2, l3);
 
 		assertEquals(Arrays.asList("foo", "bar", "foo"), IteratorUtils.list(chained));
+	}
+
+	@Test
+	public void testPutKeys() {
+
+		Map<String, Integer> map = new HashMap<String, Integer>();
+		Iterator<String> iter = CollectionUtils.list("1", "2", "3").iterator();
+		Function<String, Integer> func = new Function<String, Integer>() {
+
+			@Override
+			public Integer apply(String input) {
+				return Integer.parseInt(input);
+			}
+		};
+
+		IteratorUtils.putKeys(map, iter, func);
+
+		assertEquals(1, (int) map.get("1"));
+		assertEquals(2, (int) map.get("2"));
+		assertEquals(3, (int) map.get("3"));
+	}
+
+	@Test
+	public void testPutValues() {
+
+		Map<Integer, String> map = new HashMap<Integer, String>();
+		Iterator<String> iter = CollectionUtils.list("1", "2", "3").iterator();
+		Function<String, Integer> func = new Function<String, Integer>() {
+
+			@Override
+			public Integer apply(String input) {
+				return Integer.parseInt(input);
+			}
+		};
+
+		IteratorUtils.putValues(map, iter, func);
+
+		assertEquals("1", map.get(1));
+		assertEquals("2", map.get(2));
+		assertEquals("3", map.get(3));
 	}
 }
