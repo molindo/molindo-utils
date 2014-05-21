@@ -17,12 +17,14 @@ package at.molindo.utils.collections;
 
 import static org.junit.Assert.assertEquals;
 
+import java.util.Map;
+
 import org.junit.Test;
 
 public class ClassMapTest {
 
 	@Test
-	public void test() {
+	public void find() {
 		ClassMap<String> map = new ClassMap<String>();
 		map.put(Object.class, "foo");
 		map.put(Number.class, "bar");
@@ -30,5 +32,19 @@ public class ClassMapTest {
 		assertEquals("foo", map.find(String.class));
 		assertEquals("bar", map.find(Number.class));
 		assertEquals("bar", map.find(Double.class));
+	}
+
+	@Test
+	@SuppressWarnings("unchecked")
+	public void findAssignable() {
+		ClassMap<String> map = new ClassMap<String>();
+		map.put(Object.class, "foo");
+		map.put(Integer.class, "bar");
+		map.put(Float.class, "baz");
+		map.put(String.class, "qux");
+
+		Map<Class<?>, String> assignable = map.findAssignable(Number.class);
+		assertEquals(CollectionUtils.set(Integer.class, Float.class), assignable.keySet());
+		assertEquals(CollectionUtils.set("bar", "baz"), CollectionUtils.set(assignable.values()));
 	}
 }
