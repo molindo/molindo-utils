@@ -16,8 +16,10 @@
 
 package at.molindo.utils.collections;
 
+import static at.molindo.utils.collections.CollectionUtils.list;
 import static at.molindo.utils.collections.CollectionUtils.putIfAbsent;
 import static at.molindo.utils.collections.CollectionUtils.subList;
+import static at.molindo.utils.collections.CollectionUtils.unmodifiableList;
 import static java.util.Collections.emptyList;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -143,5 +145,21 @@ public class CollectionUtilsTest {
 		assertEquals("foo", list.get(2));
 		assertNull(list.get(1));
 		assertNull(list.get(0));
+	}
+
+	@Test
+	public void transformList() {
+		List<Integer> v = unmodifiableList(1, 2, 3, 4);
+		Function<Integer, String> f = FunctionUtils.toStringFunction();
+
+		assertEquals(list("1", "2", "3", "4"), CollectionUtils.transformList(v, f));
+	}
+
+	@Test
+	public void transformSet() {
+		List<Integer> v = unmodifiableList(1, 2, 3, 4);
+		Function<Integer, String> f = FunctionUtils.toStringFunction();
+
+		assertEquals(CollectionUtils.set("1", "2", "3", "4"), CollectionUtils.transformSet(v, f));
 	}
 }

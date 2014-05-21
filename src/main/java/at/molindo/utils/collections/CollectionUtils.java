@@ -46,8 +46,8 @@ public class CollectionUtils {
 		return Collections.unmodifiableSet(set(e));
 	}
 
-	public static <E, T> Set<E> unmodifiableSet(Iterable<T> e, Function<T, E> f) {
-		return Collections.unmodifiableSet(set(e, f));
+	public static <E, T> Set<E> transformUnmodifiableSet(Iterable<T> e, Function<T, E> f) {
+		return Collections.unmodifiableSet(transformSet(e, f));
 	}
 
 	public static <E> HashSet<E> set(E... e) {
@@ -58,7 +58,7 @@ public class CollectionUtils {
 		return IteratorUtils.addAll(new HashSet<E>(), IteratorUtils.iterator(e));
 	}
 
-	public static <E, T> HashSet<E> set(Iterable<T> e, Function<T, E> f) {
+	public static <E, T> HashSet<E> transformSet(Iterable<T> e, Function<T, E> f) {
 		return IteratorUtils.addAll(new HashSet<E>(), IteratorUtils.transform(IteratorUtils.iterator(e), f));
 	}
 
@@ -70,8 +70,8 @@ public class CollectionUtils {
 		return Collections.unmodifiableSortedSet(sortedSet(e));
 	}
 
-	public static <E, T> SortedSet<E> unmodifiableSortedSet(Iterable<T> e, Function<T, E> f) {
-		return Collections.unmodifiableSortedSet(sortedSet(e, f));
+	public static <E, T> SortedSet<E> transformUnmodifiableSortedSet(Iterable<T> e, Function<T, E> f) {
+		return Collections.unmodifiableSortedSet(transformSortedSet(e, f));
 	}
 
 	public static <E> TreeSet<E> sortedSet(E... e) {
@@ -82,7 +82,7 @@ public class CollectionUtils {
 		return IteratorUtils.addAll(new TreeSet<E>(), IteratorUtils.iterator(e));
 	}
 
-	public static <E, T> TreeSet<E> sortedSet(Iterable<T> e, Function<T, E> f) {
+	public static <E, T> TreeSet<E> transformSortedSet(Iterable<T> e, Function<T, E> f) {
 		return IteratorUtils.addAll(new TreeSet<E>(), IteratorUtils.transform(IteratorUtils.iterator(e), f));
 	}
 
@@ -94,8 +94,8 @@ public class CollectionUtils {
 		return Collections.unmodifiableList(list(e));
 	}
 
-	public static <E, T> List<E> unmodifiableList(Iterable<T> e, Function<T, E> f) {
-		return Collections.unmodifiableList(list(e, f));
+	public static <E, T> List<E> transformUnmodifiableList(Iterable<T> e, Function<T, E> f) {
+		return Collections.unmodifiableList(transformList(e, f));
 	}
 
 	public static <E> ArrayList<E> list(E... e) {
@@ -106,7 +106,7 @@ public class CollectionUtils {
 		return IteratorUtils.addAll(new ArrayList<E>(), IteratorUtils.iterator(e));
 	}
 
-	public static <E, T> ArrayList<E> list(Iterable<T> e, Function<T, E> f) {
+	public static <E, T> ArrayList<E> transformList(Iterable<T> e, Function<T, E> f) {
 		return IteratorUtils.addAll(new ArrayList<E>(), IteratorUtils.transform(IteratorUtils.iterator(e), f));
 	}
 
