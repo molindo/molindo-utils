@@ -9,7 +9,7 @@
 	</parent>
 
 	<artifactId>molindo-utils</artifactId>
-	<version>1.1.3-SNAPSHOT</version>
+	<version>1.1.3</version>
 	<packaging>bundle</packaging>
 
 	<name>Molindo Utils</name>
