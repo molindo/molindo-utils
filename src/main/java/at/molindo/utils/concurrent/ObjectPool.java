@@ -75,7 +75,7 @@ public abstract class ObjectPool<T> {
 	 * @return object from stack or newly created one
 	 */
 	public T get() {
-		T o = _stack.peekFirst();
+		T o = _stack.poll();
 		return o == null ? create() : o;
 	}
 
