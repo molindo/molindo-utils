@@ -17,7 +17,11 @@ package at.molindo.utils.collections;
 
 import static at.molindo.utils.collections.IteratorUtils.iterators;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Iterator;
+import java.util.List;
 import java.util.NoSuchElementException;
 
 public class IteratorChain<T> implements Iterator<T> {
@@ -26,6 +30,30 @@ public class IteratorChain<T> implements Iterator<T> {
 
 	private Iterator<T> _next;
 	private Iterator<T> _last;
+
+	public static <T> Builder<T> builder() {
+		return new Builder<T>();
+	}
+
+	public static <T> Builder<T> builder(Class<T> cls) {
+		return builder();
+	}
+
+	public static <T> Builder<T> builder(Iterator<T> iter) {
+		return new Builder<T>().add(iter);
+	}
+
+	public static <T> Builder<T> builder(Iterable<T> iter) {
+		return new Builder<T>().add(iter);
+	}
+
+	public static <T> Builder<T> builder(T o) {
+		return new Builder<T>().add(o);
+	}
+
+	public static <T> Builder<T> builder(T... o) {
+		return new Builder<T>().add(o);
+	}
 
 	public static <T> IteratorChain<T> chainIterables(Iterable<? extends Iterable<T>> iterables) {
 		return new IteratorChain<T>(iterators(iterables));
@@ -82,4 +110,37 @@ public class IteratorChain<T> implements Iterator<T> {
 		_last.remove();
 	}
 
+	public static class Builder<T> implements Iterable<T> {
+
+		private final List<Iterator<T>> _iterators = new ArrayList<Iterator<T>>();
+
+		private Builder() {
+		}
+
+		public Builder<T> add(Iterator<T> iter) {
+			_iterators.add(iter);
+			return this;
+		}
+
+		public Builder<T> add(Iterable<T> iter) {
+			return add(iter.iterator());
+		}
+
+		public Builder<T> add(T o) {
+			return add(Collections.singleton(o).iterator());
+		}
+
+		public Builder<T> add(T... o) {
+			return add(Arrays.asList(o).iterator());
+		}
+
+		public IteratorChain<T> build() {
+			return new IteratorChain<T>(_iterators);
+		}
+
+		@Override
+		public Iterator<T> iterator() {
+			return build();
+		}
+	}
 }
