@@ -465,4 +465,32 @@ public class UrlBuilder implements Serializable, Cloneable {
 
 	}
 
+	public String getProtocol() {
+		return _protocol;
+	}
+
+	public String getUser() {
+		return _user;
+	}
+
+	public String getPassword() {
+		return _password;
+	}
+
+	public String getHost() {
+		return _host;
+	}
+
+	public Integer getPort() {
+		return _port;
+	}
+
+	public String getPath() {
+		return _path;
+	}
+
+	public LinkedHashMap<String, List<String>> getParams() {
+		return _params;
+	}
+
 }
