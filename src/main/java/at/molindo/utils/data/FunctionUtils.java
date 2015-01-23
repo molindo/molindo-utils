@@ -26,6 +26,14 @@ public class FunctionUtils {
 		return (Function<T, String>) ToString.INSTANCE;
 	}
 
+	public static Function<String, String> toUpperCaseFunction() {
+		return ToUpperCase.INSTANCE;
+	}
+
+	public static Function<String, String> toLowerCaseFunction() {
+		return ToLowerCase.INSTANCE;
+	}
+
 	public static Function<String, String> trimFunction() {
 		return Trim.INSTANCE;
 	}
@@ -63,6 +71,26 @@ public class FunctionUtils {
 		@Override
 		public String apply(Object input) {
 			return StringUtils.string(input);
+		}
+
+	}
+
+	public enum ToLowerCase implements Function<String, String> {
+		INSTANCE;
+
+		@Override
+		public String apply(String input) {
+			return StringUtils.lower(input);
+		}
+
+	}
+
+	public enum ToUpperCase implements Function<String, String> {
+		INSTANCE;
+
+		@Override
+		public String apply(String input) {
+			return StringUtils.upper(input);
 		}
 
 	}

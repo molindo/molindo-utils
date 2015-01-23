@@ -17,9 +17,12 @@ package at.molindo.utils.data;
 
 import static at.molindo.utils.data.FunctionUtils.chain;
 import static at.molindo.utils.data.FunctionUtils.parseIntFunction;
+import static at.molindo.utils.data.FunctionUtils.toLowerCaseFunction;
 import static at.molindo.utils.data.FunctionUtils.toStringFunction;
+import static at.molindo.utils.data.FunctionUtils.toUpperCaseFunction;
 import static at.molindo.utils.data.FunctionUtils.trimFunction;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 import org.junit.Test;
 
@@ -33,6 +36,18 @@ public class FunctionUtilsTest {
 	@Test
 	public void testTrimFunction() {
 		assertEquals("42", trimFunction().apply(" 42 "));
+	}
+
+	@Test
+	public void testUpperFunction() {
+		assertEquals("FOO", toUpperCaseFunction().apply("foo"));
+		assertNull(toUpperCaseFunction().apply(null));
+	}
+
+	@Test
+	public void testLowerFunction() {
+		assertEquals("foo", toLowerCaseFunction().apply("FOO"));
+		assertNull(toLowerCaseFunction().apply(null));
 	}
 
 	@Test

@@ -264,6 +264,14 @@ public class StringUtils {
 		return ObjectUtils.equals(s1, s2);
 	}
 
+	public static String upper(String s) {
+		return upper(s, Locale.getDefault());
+	}
+
+	private static String upper(String s, Locale locale) {
+		return s == null ? null : s.toUpperCase(locale);
+	}
+
 	public static String upperFirst(String s) {
 		return upperFirst(s, Locale.getDefault());
 	}
@@ -274,6 +282,14 @@ public class StringUtils {
 		} else {
 			return s.substring(0, 1).toUpperCase(locale) + s.substring(1);
 		}
+	}
+
+	public static String lower(String s) {
+		return lower(s, Locale.getDefault());
+	}
+
+	private static String lower(String s, Locale locale) {
+		return s == null ? null : s.toLowerCase(locale);
 	}
 
 	public static String lowerFirst(String s) {

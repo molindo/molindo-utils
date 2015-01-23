@@ -233,6 +233,16 @@ public class StringUtilsTest {
 	}
 
 	@Test
+	public void testUpper() {
+		assertNull(StringUtils.upper(null));
+		assertEquals("", StringUtils.upper(""));
+		assertEquals("A", StringUtils.upper("a"));
+		assertEquals("A", StringUtils.upper("A"));
+		assertEquals("FOO", StringUtils.upper("foo"));
+		assertEquals("FOO", StringUtils.upper("Foo"));
+	}
+
+	@Test
 	public void testUpperFirst() {
 		assertNull(StringUtils.upperFirst(null));
 		assertEquals("", StringUtils.upperFirst(""));
@@ -240,6 +250,16 @@ public class StringUtilsTest {
 		assertEquals("A", StringUtils.upperFirst("A"));
 		assertEquals("Foo", StringUtils.upperFirst("foo"));
 		assertEquals("Foo", StringUtils.upperFirst("Foo"));
+	}
+
+	@Test
+	public void testLower() {
+		assertNull(StringUtils.lower(null));
+		assertEquals("", StringUtils.lower(""));
+		assertEquals("a", StringUtils.lower("a"));
+		assertEquals("a", StringUtils.lower("A"));
+		assertEquals("foo", StringUtils.lower("foo"));
+		assertEquals("foo", StringUtils.lower("FOO"));
 	}
 
 	@Test
