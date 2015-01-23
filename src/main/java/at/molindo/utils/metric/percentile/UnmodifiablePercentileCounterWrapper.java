@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package at.molindo.utils.percentile;
+package at.molindo.utils.metric.percentile;
 
 import java.util.Iterator;
 import java.util.List;

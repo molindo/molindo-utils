@@ -20,7 +20,7 @@ import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;
 
-import at.molindo.utils.percentile.IIntervalPercentileCounter;
+import at.molindo.utils.metric.percentile.IIntervalPercentileCounter;
 
 public class Statistics implements Serializable {
 	private static final long serialVersionUID = 1L;
