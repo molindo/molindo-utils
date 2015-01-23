@@ -15,6 +15,10 @@
  */
 package at.molindo.utils.data;
 
+import java.util.Collection;
+
+import at.molindo.utils.collections.CollectionUtils;
+
 public class PrimitiveUtils {
 
 	public static short primitive(Short value) {
@@ -107,6 +111,21 @@ public class PrimitiveUtils {
 		return a;
 	}
 
+	public static short[] primitive(Collection<Short> values, short nullValue) {
+		if (CollectionUtils.empty(values)) {
+			return new short[0];
+		}
+
+		short[] a = new short[values.size()];
+
+		int i = 0;
+		for (Short value : values) {
+			a[i++] = primitive(value, nullValue);
+		}
+
+		return a;
+	}
+
 	public static int[] primitive(Integer[] values) {
 		return primitive(values, 0);
 	}
@@ -116,6 +135,21 @@ public class PrimitiveUtils {
 		for (int i = 0; i < values.length; i++) {
 			a[i] = primitive(values[i], nullValue);
 		}
+		return a;
+	}
+
+	public static int[] primitive(Collection<Integer> values, int nullValue) {
+		if (CollectionUtils.empty(values)) {
+			return new int[0];
+		}
+
+		int[] a = new int[values.size()];
+
+		int i = 0;
+		for (Integer value : values) {
+			a[i++] = primitive(value, nullValue);
+		}
+
 		return a;
 	}
 
@@ -131,6 +165,21 @@ public class PrimitiveUtils {
 		return a;
 	}
 
+	public static long[] primitive(Collection<Long> values, long nullValue) {
+		if (CollectionUtils.empty(values)) {
+			return new long[0];
+		}
+
+		long[] a = new long[values.size()];
+
+		int i = 0;
+		for (Long value : values) {
+			a[i++] = primitive(value, nullValue);
+		}
+
+		return a;
+	}
+
 	public static float[] primitive(Float[] values) {
 		return primitive(values, 0F);
 	}
@@ -140,6 +189,21 @@ public class PrimitiveUtils {
 		for (int i = 0; i < values.length; i++) {
 			a[i] = primitive(values[i], nullValue);
 		}
+		return a;
+	}
+
+	public static float[] primitive(Collection<Float> values, float nullValue) {
+		if (CollectionUtils.empty(values)) {
+			return new float[0];
+		}
+
+		float[] a = new float[values.size()];
+
+		int i = 0;
+		for (Float value : values) {
+			a[i++] = primitive(value, nullValue);
+		}
+
 		return a;
 	}
 
@@ -155,6 +219,21 @@ public class PrimitiveUtils {
 		return a;
 	}
 
+	public static double[] primitive(Collection<Double> values, double nullValue) {
+		if (CollectionUtils.empty(values)) {
+			return new double[0];
+		}
+
+		double[] a = new double[values.size()];
+
+		int i = 0;
+		for (Double value : values) {
+			a[i++] = primitive(value, nullValue);
+		}
+
+		return a;
+	}
+
 	public static boolean[] primitive(Boolean[] values) {
 		return primitive(values, false);
 	}
@@ -167,6 +246,21 @@ public class PrimitiveUtils {
 		return a;
 	}
 
+	public static boolean[] primitive(Collection<Boolean> values, boolean nullValue) {
+		if (CollectionUtils.empty(values)) {
+			return new boolean[0];
+		}
+
+		boolean[] a = new boolean[values.size()];
+
+		int i = 0;
+		for (Boolean value : values) {
+			a[i++] = primitive(value, nullValue);
+		}
+
+		return a;
+	}
+
 	public static char[] primitive(Character[] values) {
 		return primitive(values, '\0');
 	}
@@ -176,6 +270,21 @@ public class PrimitiveUtils {
 		for (int i = 0; i < values.length; i++) {
 			a[i] = primitive(values[i], nullValue);
 		}
+		return a;
+	}
+
+	public static char[] primitive(Collection<Character> values, char nullValue) {
+		if (CollectionUtils.empty(values)) {
+			return new char[0];
+		}
+
+		char[] a = new char[values.size()];
+
+		int i = 0;
+		for (Character value : values) {
+			a[i++] = primitive(value, nullValue);
+		}
+
 		return a;
 	}
 
@@ -192,6 +301,21 @@ public class PrimitiveUtils {
 		for (int i = 0; i < values.length; i++) {
 			a[i] = primitive(values[i], nullValue);
 		}
+		return a;
+	}
+
+	public static byte[] primitive(Collection<Byte> values, byte nullValue) {
+		if (CollectionUtils.empty(values)) {
+			return new byte[0];
+		}
+
+		byte[] a = new byte[values.size()];
+
+		int i = 0;
+		for (Byte value : values) {
+			a[i++] = primitive(value, nullValue);
+		}
+
 		return a;
 	}
 
