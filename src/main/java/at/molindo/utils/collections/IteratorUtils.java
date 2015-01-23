@@ -245,6 +245,10 @@ public class IteratorUtils {
 		return (Iterator<T>) EMPTY_ITERATOR;
 	}
 
+	public static <T> Iterator<T> empty(Class<T> cls) {
+		return empty();
+	}
+
 	/**
 	 * type save access to {@link #EMPTY_ITERABLE}
 	 * 
@@ -254,6 +258,10 @@ public class IteratorUtils {
 	@SuppressWarnings("unchecked")
 	public static <T> Iterable<T> emptyIterable() {
 		return (Iterable<T>) EMPTY_ITERABLE;
+	}
+
+	public static <T> Iterable<T> emptyIterable(Class<T> cls) {
+		return emptyIterable();
 	}
 
 	public static <T> Iterator<T> notNull(Iterator<T> iter) {
