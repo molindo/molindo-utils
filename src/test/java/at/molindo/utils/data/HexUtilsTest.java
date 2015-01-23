@@ -41,4 +41,8 @@ public class HexUtilsTest {
 		assertEquals("0000002a", HexUtils.string(42));
 	}
 
+	@Test
+	public void testPad() {
+		assertEquals("000000000000002a", HexUtils.pad(HexUtils.string(42), 8));
+	}
 }

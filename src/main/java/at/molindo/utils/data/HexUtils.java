@@ -39,12 +39,12 @@ public abstract class HexUtils {
 	}
 
 	/**
-	 * transform an integer into a hex string
+	 * transform an array of integers into a hex string
 	 * 
 	 * @param bytes
 	 * @return
 	 */
-	public static String string(final int bytes) {
+	public static String string(final int... bytes) {
 		return string(ConversionUtils.bytes(bytes));
 	}
 
@@ -60,6 +60,10 @@ public abstract class HexUtils {
 			bytes[i] = (byte) Integer.parseInt(hex.substring(i * 2, i * 2 + 2), 16);
 		}
 		return bytes;
+	}
+
+	public static String pad(String hex, int bytes) {
+		return StringUtils.padLeft(hex, "0", bytes * 2);
 	}
 
 }
