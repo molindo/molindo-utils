@@ -20,6 +20,7 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.Locale;
 import java.util.NoSuchElementException;
+import java.util.regex.Pattern;
 
 import at.molindo.utils.collections.IteratorUtils;
 
@@ -210,7 +211,7 @@ public class StringUtils {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param string
 	 * @param delim
 	 * @param a
@@ -235,7 +236,7 @@ public class StringUtils {
 
 	/**
 	 * splits a string into a pair at the first occurence of delim
-	 * 
+	 *
 	 * @param string
 	 * @param delim
 	 * @return
@@ -255,7 +256,7 @@ public class StringUtils {
 
 	/**
 	 * null-safe equals
-	 * 
+	 *
 	 * @param s1
 	 * @param s2
 	 * @return
@@ -349,6 +350,54 @@ public class StringUtils {
 				};
 			}
 		};
+	}
+
+	public static int[] splitInts(final String value, final String delim) {
+		final String[] split = splitRE(value, delim);
+		final int[] array = new int[split.length];
+		for (int i = 0; i < split.length; i++) {
+			array[i] = Integer.valueOf(split[i]);
+		}
+		return array;
+	}
+
+	public static String[] splitRE(final String value, final String delim) {
+		return value.split(Pattern.quote(delim));
+	}
+
+	public static String join(final int[] array, final String delim) {
+		if (array == null || array.length == 0) {
+			return "";
+		}
+
+		final StringBuilder buf = new StringBuilder();
+		for (int i = 0; i < array.length - 1; i++) {
+			buf.append(array[i]).append(delim);
+		}
+		buf.append(array[array.length - 1]);
+
+		return buf.toString();
+	}
+
+	public static String join(final Iterable<?> o, final String delim) {
+		return o == null ? "" : join(o.iterator(), delim);
+	}
+
+	private static String join(final Iterator<?> iter, String delim) {
+		if (iter == null || !iter.hasNext()) {
+			return "";
+		}
+		if (delim == null) {
+			delim = "";
+		}
+		final StringBuilder buf = new StringBuilder();
+		do {
+			final Object o = iter.next();
+			buf.append(o == null ? "" : o.toString());
+			buf.append(delim);
+		} while (iter.hasNext());
+		buf.setLength(buf.length() - delim.length());
+		return buf.toString();
 	}
 
 	public static String join(String separator, Object... fragments) {
