@@ -39,7 +39,7 @@ public abstract class HexUtils {
 	}
 
 	/**
-	 * transform an integer into an 8 character hex string
+	 * transform an integer into a hex string
 	 * 
 	 * @param bytes
 	 * @return
