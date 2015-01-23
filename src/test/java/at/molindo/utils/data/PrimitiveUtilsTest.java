@@ -19,6 +19,8 @@ import static at.molindo.utils.data.PrimitiveUtils.primitive;
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 
+import java.util.Arrays;
+
 import org.junit.Test;
 
 public class PrimitiveUtilsTest {
@@ -45,6 +47,15 @@ public class PrimitiveUtilsTest {
 		assertArrayEquals(new char[] { '1' }, primitive(new Character[] { '1' }));
 		// assertArrayEquals(new boolean[] { false }, primitive(new Boolean[] {
 		// false }));
-	}
 
+		// collections
+		// arrays
+		assertArrayEquals(new short[] { 1 }, primitive(Arrays.asList((short) 1), (short) 0));
+		assertArrayEquals(new int[] { 1 }, primitive(Arrays.asList(1), 0));
+		assertArrayEquals(new long[] { 1L }, primitive(Arrays.asList(1L), 0));
+		assertArrayEquals(new double[] { 1.0 }, primitive(Arrays.asList(1.0), 0.00), 0.01);
+		assertArrayEquals(new float[] { 1.0f }, primitive(Arrays.asList(1.0f), 0.00f), 0.01f);
+		assertArrayEquals(new byte[] { 0x01 }, primitive(Arrays.asList((byte) 0x01), (byte) 0x00));
+		assertArrayEquals(new char[] { '1' }, primitive(Arrays.asList('1'), '\0'));
+	}
 }
