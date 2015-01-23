@@ -16,6 +16,7 @@
 package at.molindo.utils.reflect;
 
 import java.io.InputStream;
+import java.util.Iterator;
 import java.util.Locale;
 
 /**
@@ -30,70 +31,90 @@ public class AssociatedFileLoader {
 		// no hay objetos
 	}
 
-	private static String find(final Class<?> clazz, Class<?> baseClass, final String fileExtension, final Locale locale) {
+	public static AssociatedFile load(final Class<?> clazz, final String fileExtension, final Locale locale) {
+		return load(clazz, null, suffix(fileExtension, locale));
+	}
 
+	public static AssociatedFile load(final Class<?> clazz, final Class<?> baseClass, final String fileExtension,
+			final Locale locale) {
+		return load(clazz, baseClass, suffix(fileExtension, locale));
+	}
+
+	public static AssociatedFile load(final Class<?> clazz, final String suffix) {
+		return load(clazz, null, suffix);
+	}
+
+	public static AssociatedFile load(final Class<?> clazz, Class<?> baseClass, String suffix) {
 		if (baseClass == null) {
 			baseClass = Object.class;
 		}
 
-		String template;
+		Iterator<Class<?>> iter = ClassUtils.hierarchy(clazz);
 
-		Class<?> c = clazz;
-		final StringBuilder buf = new StringBuilder();
-		boolean exists = false;
+		Class<?> c;
 		do {
-			buf.append(c.getSimpleName().replace(".", "/"));
-			if (locale != null) {
-				buf.append("_").append(locale.getLanguage());
+			c = iter.next();
+
+			String template = c.getSimpleName() + suffix;
+			if (ClassUtils.getClasspathResource(c, template) != null) {
+				return new AssociatedFile(c, template);
 			}
-			if (fileExtension != null) {
-				if (!fileExtension.startsWith(".")) {
-					buf.append(".");
-				}
-				buf.append(fileExtension);
-			}
-			template = buf.toString();
-			exists = ClassUtils.getClasspathResource(c, template) != null;
 
-			// if (!exists) {
-			buf.setLength(0);
-			c = c.getSuperclass();
+		} while (c != baseClass);
 
-		} while (!exists && c != baseClass);
-
-		if (exists) {
-			return template;
-		}
 		return null;
 	}
 
-	public static InputStream load(final Class<?> clazz, final String fileExtension) {
-		return load(clazz, null, fileExtension, null);
-	}
-
-	public static InputStream load(final Class<?> clazz, final String fileExtension, final Locale locale) {
-		return load(clazz, null, fileExtension, locale);
-	}
-
-	public static InputStream load(final Class<?> clazz, final Class<?> baseClass, final String fileExtension,
-			final Locale locale) {
-		final String name = find(clazz, baseClass, fileExtension, locale);
-		if (name == null) {
-			return null;
+	private static String suffix(final String fileExtension, final Locale locale) {
+		final StringBuilder buf = new StringBuilder();
+		if (locale != null) {
+			buf.append("_").append(locale.getLanguage());
 		}
-		return ClassUtils.getClasspathResourceAsStream(clazz, name);
+		if (fileExtension != null) {
+			if (!fileExtension.startsWith(".")) {
+				buf.append(".");
+			}
+			buf.append(fileExtension);
+		}
+		String suffix = buf.toString();
+		return suffix;
 	}
 
-	public static boolean exists(final Class<?> clazz, final String fileExtension) {
-		return exists(clazz, null, fileExtension, null);
-	}
+	public static final class AssociatedFile {
 
-	public static boolean exists(final Class<?> clazz, final String fileExtension, final Locale locale) {
-		return exists(clazz, null, fileExtension, locale);
-	}
+		private final Class<?> _owner;
+		private final String _name;
 
-	public static boolean exists(final Class<?> clazz, final Class<?> baseClass, final String fileExtension,
-			final Locale locale) {
-		return find(clazz, baseClass, fileExtension, locale) != null;
+		private AssociatedFile(Class<?> owner, String name) {
+			if (owner == null) {
+				throw new NullPointerException("owner");
+			}
+			if (name == null) {
+				throw new NullPointerException("name");
+			}
+			_owner = owner;
+			_name = name;
+		}
+
+		public Class<?> getOwner() {
+			return _owner;
+		}
+
+		public String getName() {
+			return _name;
+		}
+
+		public String getPath() {
+			return ClassUtils.getPackageResourcePath(_owner, _name);
+		}
+
+		public InputStream open() {
+			InputStream in = ClassUtils.getClasspathResourceAsStream(_owner, _name);
+			if (in == null) {
+				throw new IllegalStateException("AssociatedFile not available: " + getPath());
+			}
+			return in;
+		}
+
 	}
 }

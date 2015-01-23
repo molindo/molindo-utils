@@ -19,13 +19,17 @@ package at.molindo.utils.reflect;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
 import java.net.URL;
 import java.util.Enumeration;
+import java.util.Iterator;
+import java.util.NoSuchElementException;
 import java.util.Set;
 
 import org.junit.Test;
@@ -92,6 +96,35 @@ public class ClassUtilsTest {
 
 	protected Set<Class<?>> set(Class<?>... classes) {
 		return CollectionUtils.set(classes);
+	}
+
+	@Test
+	public void testHierarchy() {
+		Iterator<Class<?>> iter = ClassUtils.hierarchy(Integer.class);
+		assertNotNull(iter);
+		assertTrue(iter.hasNext());
+
+		assertSame(Integer.class, iter.next());
+		assertTrue(iter.hasNext());
+
+		try {
+			iter.remove();
+			fail();
+		} catch (UnsupportedOperationException e) {
+			// expected
+		}
+
+		assertSame(Number.class, iter.next());
+		assertTrue(iter.hasNext());
+		assertSame(Object.class, iter.next());
+		assertFalse(iter.hasNext());
+
+		try {
+			iter.next();
+			fail();
+		} catch (NoSuchElementException e) {
+			// expected
+		}
 	}
 
 	public interface Doable<T> {

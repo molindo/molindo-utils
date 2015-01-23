@@ -16,40 +16,40 @@
 package at.molindo.utils.reflect;
 
 import static at.molindo.utils.io.StreamUtils.close;
-import static at.molindo.utils.reflect.AssociatedFileLoader.exists;
 import static at.molindo.utils.reflect.AssociatedFileLoader.load;
-import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
 
 import java.io.InputStream;
 
 import org.junit.Test;
 
+import at.molindo.utils.reflect.AssociatedFileLoader.AssociatedFile;
+
 public class AssociatedFileLoaderTest {
 
 	@Test
-	public void testExists() {
-		assertTrue(exists(ClassUtilsTest.class, ".txt"));
-		assertFalse(exists(ClassUtilsTest.class, ".xml"));
+	public void testLoad() {
+		AssociatedFile file = load(ClassUtilsTest.class, ".txt");
+		assertNotNull(file);
+
+		assertEquals(ClassUtilsTest.class, file.getOwner());
+		assertEquals("ClassUtilsTest.txt", file.getName());
+		assertEquals("at/molindo/utils/reflect/ClassUtilsTest.txt", file.getPath());
+		assertNull(load(ClassUtilsTest.class, ".xml"));
 	}
 
 	@Test
-	public void testLoad() {
+	public void testOpen() {
+		AssociatedFile file = load(ClassUtilsTest.class, ".txt");
+		assertNotNull(file);
 
-		InputStream txt = load(ClassUtilsTest.class, ".txt");
+		InputStream txt = file.open();
 		try {
 			assertNotNull(txt);
 		} finally {
 			close(txt);
-		}
-
-		InputStream xml = load(ClassUtilsTest.class, ".xml");
-		try {
-			assertNull(xml);
-		} finally {
-			close(xml);
 		}
 	}
 }

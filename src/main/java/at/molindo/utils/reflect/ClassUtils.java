@@ -21,10 +21,13 @@ import java.io.InputStream;
 import java.lang.reflect.Type;
 import java.net.URL;
 import java.util.Enumeration;
+import java.util.Iterator;
+import java.util.NoSuchElementException;
 import java.util.Set;
 
 import at.molindo.thirdparty.org.springframework.core.GenericTypeResolver;
 import at.molindo.utils.collections.ArrayUtils;
+import at.molindo.utils.collections.IteratorUtils;
 
 public class ClassUtils {
 	private ClassUtils() {
@@ -198,4 +201,49 @@ public class ClassUtils {
 		return scope.getPackage().getName().replace('.', '/') + '/' + resource;
 	}
 
+	/**
+	 * @return an {@link Iterator} over the {@link Class} hierarchy
+	 * 
+	 * @see Class#getSuperclass()
+	 */
+	public static Iterator<Class<?>> hierarchy(Class<?> cls) {
+		if (cls == null) {
+			return IteratorUtils.empty();
+		}
+
+		class ClassHierarchyIterator implements Iterator<Class<?>> {
+
+			private Class<?> _next;
+
+			private ClassHierarchyIterator(Class<?> cls) {
+				if (cls == null) {
+					throw new NullPointerException("cls");
+				}
+				_next = cls;
+			}
+
+			@Override
+			public boolean hasNext() {
+				return _next != null;
+			}
+
+			@Override
+			public Class<?> next() {
+				if (!hasNext()) {
+					throw new NoSuchElementException();
+				}
+
+				Class<?> next = _next;
+				_next = _next.getSuperclass();
+				return next;
+			}
+
+			@Override
+			public void remove() {
+				throw new UnsupportedOperationException("read-only");
+			}
+		}
+
+		return new ClassHierarchyIterator(cls);
+	}
 }
