@@ -401,4 +401,39 @@ public class StringUtils {
 	public static String string(Object o) {
 		return o == null ? null : o.toString();
 	}
+
+	public static String padLeft(String str, char pad, int length) {
+		return padLeft(str, Character.toString(pad), length);
+	}
+
+	public static String padLeft(String str, String pad, int length) {
+		if (empty(str) || str.length() >= length) {
+			return str;
+		}
+		int padding = length - str.length();
+		StringBuilder buf = new StringBuilder(length);
+		while (buf.length() < padding) {
+			buf.append(pad);
+		}
+		buf.setLength(padding);
+		buf.append(str);
+		return buf.toString();
+	}
+
+	public static String padRight(String str, char pad, int length) {
+		return padRight(str, Character.toString(pad), length);
+	}
+
+	public static String padRight(String str, String pad, int length) {
+		if (empty(str) || str.length() >= length) {
+			return str;
+		}
+		StringBuilder buf = new StringBuilder(length);
+		buf.append(str);
+		while (buf.length() < length) {
+			buf.append(pad);
+		}
+		buf.setLength(length);
+		return buf.toString();
+	}
 }

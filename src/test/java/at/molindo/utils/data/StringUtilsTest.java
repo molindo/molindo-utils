@@ -283,4 +283,20 @@ public class StringUtilsTest {
 		assertEquals("foo- -bar", StringUtils.join("-", "foo", " ", "bar"));
 		assertEquals("1-2-3", StringUtils.join("-", transform(asList(1, 2, 3), toStringFunction()))); // compiles?
 	}
+
+	@Test
+	public void testPadLeft() {
+		assertEquals("foo", StringUtils.padLeft("foo", '-', 3));
+		assertEquals("--foo", StringUtils.padLeft("foo", '-', 5));
+		assertEquals("foo", StringUtils.padLeft("foo", '-', -1));
+		assertEquals("-/foo", StringUtils.padLeft("foo", "-/-", 5));
+	}
+
+	@Test
+	public void testPadRight() {
+		assertEquals("foo", StringUtils.padRight("foo", '-', 3));
+		assertEquals("foo--", StringUtils.padRight("foo", '-', 5));
+		assertEquals("foo", StringUtils.padRight("foo", '-', -1));
+		assertEquals("foo-/", StringUtils.padRight("foo", "-/-", 5));
+	}
 }
