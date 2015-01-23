@@ -16,10 +16,15 @@
 
 package at.molindo.utils.metric;
 
+import java.util.Arrays;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlTransient;
 
+import at.molindo.utils.collections.IteratorUtils;
+import at.molindo.utils.data.Function;
+import at.molindo.utils.data.PrimitiveUtils;
 import at.molindo.utils.data.StringUtils;
 
 @XmlAccessorType(XmlAccessType.PROPERTY)
@@ -31,6 +36,20 @@ public class HourlyCounterBean {
 	private int _hours;
 	private int _max;
 	private int _min;
+
+	private static int[] splitInts(String valueString, String delim) {
+		Iterable<Integer> values = IteratorUtils.transform(StringUtils.split(valueString, delim),
+				new Function<String, Integer>() {
+
+					@Override
+					public Integer apply(String input) throws NumberFormatException {
+						return StringUtils.empty(input) ? 0 : Integer.valueOf(input);
+					}
+
+				});
+
+		return PrimitiveUtils.primitive(IteratorUtils.list(values), 0);
+	}
 
 	public HourlyCounterBean() {
 	}
@@ -55,7 +74,7 @@ public class HourlyCounterBean {
 	}
 
 	public String getValues() {
-		return _array == null ? null : StringUtils.join(_array, DELIM);
+		return _array == null ? null : StringUtils.join(DELIM, Arrays.asList(_array));
 	}
 
 	public int getCurrentIndex() {
@@ -83,7 +102,7 @@ public class HourlyCounterBean {
 	}
 
 	public void setValues(final String values) {
-		setArray(values == null ? null : StringUtils.splitInts(values, DELIM));
+		setArray(values == null ? null : splitInts(values, DELIM));
 	}
 
 	public void setCurrentIndex(final int currentIndex) {
