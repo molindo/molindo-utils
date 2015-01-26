@@ -115,7 +115,7 @@ public class MapMap<K1, K2, V> implements Map<K1, Map<K2, V>> {
 		return _map.remove(key);
 	}
 
-	public V remove(final K1 key, final K2 value) {
+	public V removeValue(final K1 key, final K2 value) {
 		final Map<K2, V> map = _map.get(key);
 		return map == null ? null : map.remove(value);
 	}

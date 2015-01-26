@@ -125,7 +125,7 @@ public class ListMap<T, E> implements Map<T, List<E>> {
 		return _map.remove(key);
 	}
 
-	public boolean remove(final T key, final E value) {
+	public boolean removeValue(final T key, final E value) {
 		final List<E> list = _map.get(key);
 		return list == null ? false : list.remove(value);
 	}

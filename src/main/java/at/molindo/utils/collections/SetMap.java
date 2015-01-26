@@ -110,7 +110,7 @@ public class SetMap<T, E> implements Map<T, Set<E>> {
 		return _map.remove(key);
 	}
 
-	public boolean remove(final T key, final E value) {
+	public boolean removeValue(final T key, final E value) {
 		final Set<E> set = _map.get(key);
 		return set == null ? false : set.remove(value);
 	}
