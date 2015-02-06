@@ -16,34 +16,30 @@
 
 package at.molindo.utils.reflect;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 import java.util.ServiceLoader;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * add class implementing {@link IProxyStripper} to
+ * META-INF/services/at.molindo.utils.reflect.IProxyStripper and let
+ * implementations detect if a class is proxied
+ *
+ */
 public class ProxyUtil {
 
 	private static final Logger log = LoggerFactory.getLogger(ProxyUtil.class);
 
-	private static final List<IProxyStripper> PROXY_STRIPPERS;
-
 	private ProxyUtil() {
 	}
 
-	static {
-		List<IProxyStripper> strippers = new ArrayList<IProxyStripper>();
-		final ServiceLoader<IProxyStripper> stripperImpls = ServiceLoader.load(IProxyStripper.class);
-		for (final IProxyStripper stripperImpl : stripperImpls) {
-			strippers.add(stripperImpl);
-		}
-		PROXY_STRIPPERS = Collections.unmodifiableList(strippers);
+	public static Class<?> getClassWithoutProxy(final Object obj) {
+		return getClassWithoutProxy(Object.class, obj, null);
 	}
 
-	public static Class<?> getClassWithoutProxy(final Object obj) {
-		return getClassWithoutProxy(Object.class, obj);
+	public static Class<?> getClassWithoutProxy(final Object obj, ClassLoader cl) {
+		return getClassWithoutProxy(Object.class, obj, cl);
 	}
 
 	/**
@@ -53,20 +49,27 @@ public class ProxyUtil {
 	 * @param obj
 	 * @return
 	 */
-	@SuppressWarnings("unchecked")
 	public static <T> Class<? extends T> getClassWithoutProxy(final Class<T> cls, final T obj) {
+		return getClassWithoutProxy(cls, obj, null);
+	}
+
+	@SuppressWarnings("unchecked")
+	public static <T> Class<? extends T> getClassWithoutProxy(final Class<T> cls, final T obj, ClassLoader cl) {
 		if (cls == null) {
 			throw new NullPointerException("cls");
 		}
 		if (obj == null) {
 			return null;
 		}
+		if (cl == null) {
+			cl = ClassUtils.getClassLoader();
+		}
 
 		if (!cls.isInstance(obj)) {
 			throw new IllegalArgumentException("object must be an instance of class " + cls.getName());
 		}
 
-		for (final IProxyStripper stripper : PROXY_STRIPPERS) {
+		for (final IProxyStripper stripper : ServiceLoader.load(IProxyStripper.class, cl)) {
 			final Class<?> stripped = stripper.stripProxyClass(obj);
 			if (stripped != null) {
 				if (!stripped.isInstance(obj)) {
@@ -82,9 +85,5 @@ public class ProxyUtil {
 		}
 
 		return (Class<? extends T>) obj.getClass();
-	}
-
-	public static interface IProxyStripper {
-		Class<?> stripProxyClass(Object obj);
 	}
 }
