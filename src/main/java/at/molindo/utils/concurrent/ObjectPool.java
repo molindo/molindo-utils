@@ -92,8 +92,7 @@ public abstract class ObjectPool<T> {
 	/**
 	 * @return a newly created object
 	 */
-	protected abstract @Nonnull
-	T create();
+	protected abstract @Nonnull T create();
 
 	/**
 	 * reset an object, e.g. call {@link Collection#clear()}
