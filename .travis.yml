@@ -5,10 +5,8 @@ jdk:
   - openjdk6
   - openjdk7
 
-# whitelist
-branches:
-  only:
-    - master
+addons:
+  ssh_known_hosts: bitbucket.org
 
 # checkout settings
 before_install: 
