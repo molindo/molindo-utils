@@ -6,11 +6,6 @@ jdk:
   - openjdk7
   - openjdk6
 
-# whitelist
-branches:
-  only:
-    - master
-
 # checkout settings
 before_install: 
   - "git clone -b master https://github.com/molindo/travis-settings.git target/travis-settings"
