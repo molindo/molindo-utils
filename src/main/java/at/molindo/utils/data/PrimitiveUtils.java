@@ -319,4 +319,70 @@ public class PrimitiveUtils {
 		return a;
 	}
 
+	// arrays - primitives to objects
+
+	public static Short[] object(short[] values) {
+		Short[] a = new Short[values.length];
+		for (int i = 0; i < values.length; i++) {
+			a[i] = values[i];
+		}
+		return a;
+	}
+
+	public static Integer[] object(int[] values) {
+		Integer[] a = new Integer[values.length];
+		for (int i = 0; i < values.length; i++) {
+			a[i] = values[i];
+		}
+		return a;
+	}
+
+	public static Long[] object(long[] values) {
+		Long[] a = new Long[values.length];
+		for (int i = 0; i < values.length; i++) {
+			a[i] = values[i];
+		}
+		return a;
+	}
+
+	public static Float[] object(float[] values) {
+		Float[] a = new Float[values.length];
+		for (int i = 0; i < values.length; i++) {
+			a[i] = values[i];
+		}
+		return a;
+	}
+
+	public static Double[] object(double[] values) {
+		Double[] a = new Double[values.length];
+		for (int i = 0; i < values.length; i++) {
+			a[i] = values[i];
+		}
+		return a;
+	}
+
+	public static Boolean[] object(boolean[] values) {
+		Boolean[] a = new Boolean[values.length];
+		for (int i = 0; i < values.length; i++) {
+			a[i] = values[i];
+		}
+		return a;
+	}
+
+	public static Character[] object(char[] values) {
+		Character[] a = new Character[values.length];
+		for (int i = 0; i < values.length; i++) {
+			a[i] = values[i];
+		}
+		return a;
+	}
+
+	public static Byte[] object(byte[] values) {
+		Byte[] a = new Byte[values.length];
+		for (int i = 0; i < values.length; i++) {
+			a[i] = values[i];
+		}
+		return a;
+	}
+
 }

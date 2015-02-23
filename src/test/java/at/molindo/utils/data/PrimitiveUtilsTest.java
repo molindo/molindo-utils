@@ -15,6 +15,7 @@
  */
 package at.molindo.utils.data;
 
+import static at.molindo.utils.data.PrimitiveUtils.object;
 import static at.molindo.utils.data.PrimitiveUtils.primitive;
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
@@ -57,5 +58,14 @@ public class PrimitiveUtilsTest {
 		assertArrayEquals(new float[] { 1.0f }, primitive(Arrays.asList(1.0f), 0.00f), 0.01f);
 		assertArrayEquals(new byte[] { 0x01 }, primitive(Arrays.asList((byte) 0x01), (byte) 0x00));
 		assertArrayEquals(new char[] { '1' }, primitive(Arrays.asList('1'), '\0'));
+
+		// primitives to object
+		assertArrayEquals(new Short[] { 1 }, object(new short[] { 1 }));
+		assertArrayEquals(new Integer[] { 1 }, object(new int[] { 1 }));
+		assertArrayEquals(new Long[] { 1L }, object(new long[] { 1L }));
+		assertArrayEquals(new Double[] { 1.0 }, object(new double[] { 1.0 }));
+		assertArrayEquals(new Float[] { 1.0f }, object(new float[] { 1.0f }));
+		assertArrayEquals(new Byte[] { 0x01 }, object(new byte[] { 0x01 }));
+		assertArrayEquals(new Character[] { '1' }, object(new char[] { '1' }));
 	}
 }
