@@ -6,9 +6,6 @@ jdk:
   - openjdk7
   - openjdk6
 
-addons:
-  ssh_known_hosts: bitbucket.org
-
 # checkout settings
 before_install: 
   - "git clone -b master https://github.com/molindo/travis-settings.git target/travis-settings"
