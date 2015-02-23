@@ -74,7 +74,7 @@ public class HourlyCounterBean {
 	}
 
 	public String getValues() {
-		return _array == null ? null : StringUtils.join(DELIM, Arrays.asList(_array));
+		return _array == null ? null : StringUtils.join(DELIM, Arrays.asList(PrimitiveUtils.object(_array)));
 	}
 
 	public int getCurrentIndex() {
