@@ -18,6 +18,7 @@ package at.molindo.utils.collections;
 
 import static at.molindo.utils.collections.ArrayUtils.empty;
 import static at.molindo.utils.collections.ArrayUtils.first;
+import static at.molindo.utils.collections.ArrayUtils.get;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
@@ -56,6 +57,13 @@ public class ArrayUtilsTest {
 		assertNull(first((Object[]) null));
 		assertNull(first(new Object[0]));
 		assertEquals("foo", first(new Object[] { "foo" }));
+	}
+
+	@Test
+	public void testGet() {
+		assertNull(get((Object[]) null, 0, null));
+		assertNull(get(new Object[0], 0, null));
+		assertEquals("foo", get(new Object[] { "foo" }, 0));
 	}
 
 	@Test

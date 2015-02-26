@@ -168,7 +168,7 @@ public class ArrayUtils {
 	 * @see #empty(Object[])
 	 */
 	public static <T> T last(T[] a) {
-		return empty(a) ? null : a[0];
+		return empty(a) ? null : a[a.length - 1];
 	}
 
 	/**
@@ -283,6 +283,134 @@ public class ArrayUtils {
 		return a == null ? 0 : a.length;
 	}
 
+	/**
+	 * @return a[i] if it exists null
+	 * @see #get(Object[], int, Object)
+	 */
+	public static <T> T get(T[] a, int i) {
+		return get(a, i, null);
+	}
+
+	/**
+	 * @return a[i] if it exists, defaultValue otherwise
+	 * @see #length(Object[])
+	 */
+	public static <T> T get(T[] a, int i, T defaultValue) {
+		return length(a) < i + 1 ? defaultValue : a[i];
+	}
+
+	/**
+	 * @return a[i] if it exists null
+	 * @see #get(byte[], int, byte)
+	 */
+	public static byte get(byte[] a, int i) {
+		return get(a, i, (byte) 0x00);
+	}
+
+	/**
+	 * @return a[i] if it exists, defaultValue otherwise
+	 * @see #length(Object[])
+	 */
+	public static byte get(byte[] a, int i, byte defaultValue) {
+		return length(a) < i + 1 ? defaultValue : a[i];
+	}
+
+	/**
+	 * @return a[i] if it exists null
+	 * @see #get(int[], int, int)
+	 */
+	public static int get(int[] a, int i) {
+		return get(a, i, 0);
+	}
+
+	/**
+	 * @return a[i] if it exists, defaultValue otherwise
+	 * @see #length(Object[])
+	 */
+	public static int get(int[] a, int i, int defaultValue) {
+		return length(a) < i + 1 ? defaultValue : a[i];
+	}
+
+	/**
+	 * @return a[i] if it exists null
+	 * @see #get(short[], int, byte)
+	 */
+	public static short get(short[] a, int i) {
+		return get(a, i, (short) 0);
+	}
+
+	/**
+	 * @return a[i] if it exists, defaultValue otherwise
+	 * @see #length(Object[])
+	 */
+	public static short get(short[] a, int i, short defaultValue) {
+		return length(a) < i + 1 ? defaultValue : a[i];
+	}
+
+	/**
+	 * @return a[i] if it exists null
+	 * @see #get(long[], int, byte)
+	 */
+	public static long get(long[] a, int i) {
+		return get(a, i, 0L);
+	}
+
+	/**
+	 * @return a[i] if it exists, defaultValue otherwise
+	 * @see #length(Object[])
+	 */
+	public static long get(long[] a, int i, long defaultValue) {
+		return length(a) < i + 1 ? defaultValue : a[i];
+	}
+
+	/**
+	 * @return a[i] if it exists null
+	 * @see #get(float[], int, byte)
+	 */
+	public static float get(float[] a, int i) {
+		return get(a, i, 0.0f);
+	}
+
+	/**
+	 * @return a[i] if it exists, defaultValue otherwise
+	 * @see #length(Object[])
+	 */
+	public static float get(float[] a, int i, float defaultValue) {
+		return length(a) < i + 1 ? defaultValue : a[i];
+	}
+
+	/**
+	 * @return a[i] if it exists null
+	 * @see #get(double[], int, byte)
+	 */
+	public static double get(double[] a, int i) {
+		return get(a, i, 0.0);
+	}
+
+	/**
+	 * @return a[i] if it exists, defaultValue otherwise
+	 * @see #length(Object[])
+	 */
+	public static double get(double[] a, int i, double defaultValue) {
+		return length(a) < i + 1 ? defaultValue : a[i];
+	}
+
+	/**
+	 * @return a[i] if it exists null
+	 * @see #get(char[], int, byte)
+	 */
+	public static char get(char[] a, int i) {
+		return get(a, i, (char) 0x00);
+	}
+
+	/**
+	 * @return a[i] if it exists, defaultValue otherwise
+	 * @see #length(Object[])
+	 */
+	public static char get(char[] a, int i, char defaultValue) {
+		return length(a) < i + 1 ? defaultValue : a[i];
+	}
+
 	public static <T> Iterable<T> iterable(final T... a) {
 		if (empty(a)) {
 			return IteratorUtils.emptyIterable();
@@ -371,7 +499,7 @@ public class ArrayUtils {
 
 	/**
 	 * appends an object to an array
-	 * 
+	 *
 	 * @param <T>
 	 * @param a
 	 * @param o
