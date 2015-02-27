@@ -40,4 +40,22 @@ public class ExceptionUtils {
 	public static <T> T unexpected(Throwable t) {
 		throw new RuntimeException("unexpected exception", t);
 	}
+
+	public static <T extends Throwable> void throwCause(Class<T> throwableType, Throwable t) throws T {
+		T cause = findCause(throwableType, t);
+		if (cause != null) {
+			throw cause;
+		}
+	}
+
+	public static <T extends Throwable> T findCause(Class<T> throwableType, Throwable t) {
+		while (t != null) {
+			if (throwableType.isInstance(t)) {
+				return throwableType.cast(t);
+			} else {
+				t = t.getCause();
+			}
+		}
+		return null;
+	}
 }

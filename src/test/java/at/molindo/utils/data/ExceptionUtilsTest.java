@@ -27,4 +27,13 @@ public class ExceptionUtilsTest {
 		Exception e = new Exception("foo", new Exception("bar"));
 		assertEquals("foo, caused by bar", ExceptionUtils.getAllMessages(e));
 	}
+
+	@Test(expected = Cause.class)
+	public void throwCause() throws Exception {
+		ExceptionUtils.throwCause(Cause.class, new RuntimeException(new Exception(new Cause())));
+	}
+
+	private static final class Cause extends Exception {
+
+	}
 }
