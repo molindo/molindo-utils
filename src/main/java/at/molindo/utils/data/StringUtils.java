@@ -210,7 +210,7 @@ public class StringUtils {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param string
 	 * @param delim
 	 * @param a
@@ -235,7 +235,7 @@ public class StringUtils {
 
 	/**
 	 * splits a string into a pair at the first occurence of delim
-	 * 
+	 *
 	 * @param string
 	 * @param delim
 	 * @return
@@ -255,7 +255,7 @@ public class StringUtils {
 
 	/**
 	 * null-safe equals
-	 * 
+	 *
 	 * @param s1
 	 * @param s2
 	 * @return
@@ -435,5 +435,17 @@ public class StringUtils {
 		}
 		buf.setLength(length);
 		return buf.toString();
+	}
+
+	public static int length(String string) {
+		return string == null ? 0 : string.length();
+	}
+
+	public static int length(String... strings) {
+		int length = 0;
+		for (int i = 0; i < strings.length; i++) {
+			length += length(strings[i]);
+		}
+		return length;
 	}
 }

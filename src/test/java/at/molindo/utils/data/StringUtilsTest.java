@@ -299,4 +299,13 @@ public class StringUtilsTest {
 		assertEquals("foo", StringUtils.padRight("foo", '-', -1));
 		assertEquals("foo-/", StringUtils.padRight("foo", "-/-", 5));
 	}
+
+	@Test
+	public void testLength() {
+		assertEquals(0, StringUtils.length((String) null));
+		assertEquals(0, StringUtils.length(""));
+		assertEquals(1, StringUtils.length(" "));
+		assertEquals(3, StringUtils.length("foo"));
+		assertEquals(6, StringUtils.length("foo", "bar"));
+	}
 }
