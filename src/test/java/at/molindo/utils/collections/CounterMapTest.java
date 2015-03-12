@@ -62,17 +62,42 @@ public class CounterMapTest {
 
 		int count = 0;
 		for (Pair<String, Integer> p : map) {
-			count++;
 
 			if ("foo".equals(p.getKey())) {
 				assertEquals(1, (int) p.getValue());
+				assertEquals(0, count);
 			} else if ("bar".equals(p.getKey())) {
 				assertEquals(1, (int) p.getValue());
+				assertEquals(1, count);
 			} else {
 				fail("unexpected key " + p);
 			}
+			count++;
 		}
 
 		assertEquals(2, count);
+	}
+
+	@Test
+	public void getGet() {
+		CounterMap<String> map = new CounterMap<String>(asList("foo", "bar"), 1);
+		assertEquals(UNKNOWN, (int) map.get("baz").getValue());
+		assertEquals(Pair.pair("foo", 1), map.get("foo"));
+		assertEquals(Pair.pair("bar", 1), map.get("bar"));
+	}
+
+	@Test
+	public void getGetMax() {
+		CounterMap<String> map = new CounterMap<String>();
+		assertEquals(Pair.pair(null, UNKNOWN), map.getMax());
+
+		map.increment("foo");
+		assertEquals(Pair.pair("foo", 1), map.getMax());
+
+		map.increment("bar");
+		assertEquals(Pair.pair("foo", 1), map.getMax());
+
+		map.increment("bar");
+		assertEquals(Pair.pair("bar", 2), map.getMax());
 	}
 }

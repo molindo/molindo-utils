@@ -16,16 +16,18 @@
 package at.molindo.utils.collections;
 
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.Map;
+
+import org.omg.CORBA.UNKNOWN;
 
 import at.molindo.utils.data.Pair;
 
 public class CounterMap<T> implements Iterable<Pair<T, Integer>> {
 
 	public static final int UNKNOWN = -1;
-	private final Map<T, Counter> _counters = new HashMap<T, Counter>();
+	private final Map<T, Counter> _counters = new LinkedHashMap<T, Counter>();
 
 	public CounterMap() {
 
@@ -44,6 +46,10 @@ public class CounterMap<T> implements Iterable<Pair<T, Integer>> {
 	public int getCount(final T obj) {
 		final Counter inc = _counters.get(obj);
 		return inc != null ? inc.get() : UNKNOWN;
+	}
+
+	public Pair<T, Integer> get(T obj) {
+		return new Pair<T, Integer>(obj, getCount(obj));
 	}
 
 	public int increment(final T obj) {
@@ -105,6 +111,9 @@ public class CounterMap<T> implements Iterable<Pair<T, Integer>> {
 
 	}
 
+	/**
+	 * @return an {@link Iterator} in insertion order
+	 */
 	@Override
 	public Iterator<Pair<T, Integer>> iterator() {
 		return new Iterator<Pair<T, Integer>>() {
@@ -128,5 +137,28 @@ public class CounterMap<T> implements Iterable<Pair<T, Integer>> {
 			}
 
 		};
+	}
+
+	/**
+	 * @return the {@link Pair} with the hightes count. If multiple keys have
+	 *         the same count, the first one encountered (insertion order) is
+	 *         returned. If the map is empty, a {@link Pair} with an empty key
+	 *         and {@link UNKNOWN} count is returned
+	 */
+	public Pair<T, Integer> getMax() {
+		if (_counters.isEmpty()) {
+			return Pair.pair(null, UNKNOWN);
+		}
+
+		Iterator<Pair<T, Integer>> iter = iterator();
+		Pair<T, Integer> max = iter.next();
+		while (iter.hasNext()) {
+			Pair<T, Integer> current = iter.next();
+			if (current.getValue() > max.getValue()) {
+				max = current;
+			}
+		}
+		return max;
+
 	}
 }
