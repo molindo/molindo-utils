@@ -29,7 +29,7 @@ public class DirectoryUtils {
 	}
 
 	public static Map<File, InputStream> open(File directory, boolean recursive) throws FileNotFoundException,
-			IOException {
+	IOException {
 		return open(directory, Compression.NONE, recursive);
 	}
 
@@ -42,7 +42,7 @@ public class DirectoryUtils {
 		} else {
 			for (File f : directory.listFiles()) {
 				if (!f.isDirectory()) {
-					map.put(f, FileUtils.in(directory, compression));
+					map.put(f, FileUtils.in(f, compression));
 				} else if (recursive) {
 					open(f, compression, true);
 				}
