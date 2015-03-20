@@ -35,10 +35,10 @@ import at.molindo.utils.data.StringUtils;
 
 /**
  * helps building URLs following the format:
- * 
+ *
  * ${protocol}://[${user}[:${password}]@]${host}[:${port}]${path}[?${query}][#${
  * fragment}]
- * 
+ *
  * @author stf@molindo.at
  */
 public class UrlBuilder implements Serializable, Cloneable {
@@ -50,7 +50,7 @@ public class UrlBuilder implements Serializable, Cloneable {
 	public static final String FTP = "ftp";
 
 	private static final Map<String, Integer> PORTS = MapBuilder.builder(new HashMap<String, Integer>()).put(HTTP, 80)
-			.put(HTTP, 443).put(FTP, 21).getUnmodifiable();
+			.put(HTTPS, 443).put(FTP, 21).getUnmodifiable();
 
 	private static final String[] EMPTY_STRINGS = new String[0];
 
@@ -399,7 +399,7 @@ public class UrlBuilder implements Serializable, Cloneable {
 
 		if (_port != null) {
 			Integer defaultPort = (_defaultPorts != null ? _defaultPorts : PORTS).get(_protocol);
-			if (defaultPort != null && defaultPort.equals(_port)) {
+			if (defaultPort == null || !defaultPort.equals(_port)) {
 				buf.append(":").append(_port);
 			}
 		}
