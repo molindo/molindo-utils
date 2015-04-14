@@ -193,6 +193,16 @@ public class StringUtilsTest {
 	}
 
 	@Test
+	public void testEqualsIgnoreCase() {
+		assertTrue(StringUtils.equalsIgnoreCase(null, null));
+		assertFalse(StringUtils.equalsIgnoreCase(null, "foo"));
+		assertFalse(StringUtils.equalsIgnoreCase("foo", null));
+		assertFalse(StringUtils.equalsIgnoreCase("foo", "bar"));
+		assertTrue(StringUtils.equalsIgnoreCase("foo", "foo"));
+		assertTrue(StringUtils.equalsIgnoreCase("Foo", "foo"));
+	}
+
+	@Test
 	public void testLeading() {
 		assertNull(StringUtils.leading(null, "foo"));
 		assertEquals("foo", StringUtils.leading("foo", null));

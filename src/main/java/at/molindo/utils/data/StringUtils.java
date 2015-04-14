@@ -264,6 +264,21 @@ public class StringUtils {
 		return ObjectUtils.equals(s1, s2);
 	}
 
+	/**
+	 * null-safe equalsIgnoreCase
+	 *
+	 * @param s1
+	 * @param s2
+	 * @return
+	 */
+	public static boolean equalsIgnoreCase(String s1, String s2) {
+		if (s1 == null) {
+			return s2 == null;
+		} else {
+			return s1.equalsIgnoreCase(s2);
+		}
+	}
+
 	public static String upper(String s) {
 		return upper(s, Locale.getDefault());
 	}
@@ -448,4 +463,5 @@ public class StringUtils {
 		}
 		return length;
 	}
+
 }
