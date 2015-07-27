@@ -30,6 +30,7 @@ import java.util.TreeMap;
 import java.util.regex.Pattern;
 
 import at.molindo.thirdparty.org.apache.http.client.utils.URIUtils;
+import at.molindo.utils.collections.CollectionUtils;
 import at.molindo.utils.collections.MapBuilder;
 import at.molindo.utils.data.StringUtils;
 
@@ -253,10 +254,6 @@ public class UrlBuilder implements Serializable, Cloneable {
 		}
 		path = path.trim();
 
-		if (!path.startsWith("/")) {
-			throw new IllegalArgumentException("path must start with '/': " + path);
-		}
-
 		if (!PATH.matcher(path).matches()) {
 			throw new IllegalArgumentException("path not allowed: " + path);
 		}
@@ -387,26 +384,35 @@ public class UrlBuilder implements Serializable, Cloneable {
 		StringBuilder buf = new StringBuilder();
 		buf.append(_protocol).append("://");
 
-		if (!StringUtils.empty(_user)) {
-			buf.append(_user);
-			if (!StringUtils.empty(_password)) {
-				buf.append(":").append(_password);
+		if (!StringUtils.empty(_host)) {
+			// according to RFC3986 3.2, host is required for userinfo and port
+
+			if (!StringUtils.empty(_user)) {
+				buf.append(_user);
+				if (!StringUtils.empty(_password)) {
+					buf.append(":").append(_password);
+				}
+				buf.append("@");
 			}
-			buf.append("@");
-		}
 
-		buf.append(_host);
+			buf.append(_host);
 
-		if (_port != null) {
-			Integer defaultPort = (_defaultPorts != null ? _defaultPorts : PORTS).get(_protocol);
-			if (defaultPort == null || !defaultPort.equals(_port)) {
-				buf.append(":").append(_port);
+			if (_port != null) {
+				Integer defaultPort = (_defaultPorts != null ? _defaultPorts : PORTS).get(_protocol);
+				if (defaultPort == null || !defaultPort.equals(_port)) {
+					buf.append(":").append(_port);
+				}
+			}
+
+			if (!StringUtils.empty(_path) && !_path.startsWith("/")) {
+				// if host is present, path must start with /
+				buf.append("/");
 			}
 		}
 
 		buf.append(_path);
 
-		if (_params != null && !_params.isEmpty()) {
+		if (!CollectionUtils.empty(_params)) {
 			buf.append("?");
 
 			Map<String, List<String>> params = _params;

@@ -19,6 +19,7 @@ package at.molindo.utils.tools;
 import static org.junit.Assert.assertEquals;
 
 import java.net.MalformedURLException;
+import java.net.URL;
 
 import org.junit.Test;
 
@@ -77,5 +78,13 @@ public class UrlBuilderTest {
 		assertEquals(host + "/foo/bar?a=b", b.clone().resolve("?a=b").toUrlString());
 		assertEquals(host + "/foo/qux?a=b", b.clone().resolve("qux?a=b").toUrlString());
 		assertEquals("http://example.org/", b.clone().resolve("http://example.org:80").toUrlString());
+	}
+
+	@Test
+	public void jar() throws MalformedURLException {
+		UrlBuilder b = new UrlBuilder(new URL("jar:file:/some/dir/some.jar!/META-INF/resources/webjars/icon.png"));
+		assertEquals("jar", b.getProtocol());
+		assertEquals("", b.getHost());
+		assertEquals("file:/some/dir/some.jar!/META-INF/resources/webjars/icon.png", b.getPath());
 	}
 }
