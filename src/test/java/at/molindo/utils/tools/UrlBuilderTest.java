@@ -82,9 +82,14 @@ public class UrlBuilderTest {
 
 	@Test
 	public void jar() throws MalformedURLException {
-		UrlBuilder b = new UrlBuilder(new URL("jar:file:/some/dir/some.jar!/META-INF/resources/webjars/icon.png"));
+		final String urlString = "jar:file:/some/dir/some.jar!/META-INF/resources/webjars/icon.png";
+		UrlBuilder b = new UrlBuilder(new URL(urlString));
 		assertEquals("jar", b.getProtocol());
 		assertEquals("", b.getHost());
 		assertEquals("file:/some/dir/some.jar!/META-INF/resources/webjars/icon.png", b.getPath());
+
+		assertEquals(urlString, b.toUrlString());
+
 	}
+
 }
