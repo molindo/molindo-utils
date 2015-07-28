@@ -190,6 +190,7 @@ public class UrlBuilder implements Serializable, Cloneable {
 		setPath(StringUtils.empty(path) ? "/" : path);
 		setQuery(url.getQuery());
 		setFragment(url.getRef());
+
 		return this;
 	}
 
@@ -382,9 +383,12 @@ public class UrlBuilder implements Serializable, Cloneable {
 
 	public String toUrlString(boolean sortParams) {
 		StringBuilder buf = new StringBuilder();
-		buf.append(_protocol).append("://");
+		buf.append(_protocol).append(":");
 
 		if (!StringUtils.empty(_host)) {
+
+			buf.append("//");
+
 			// according to RFC3986 3.2, host is required for userinfo and port
 
 			if (!StringUtils.empty(_user)) {
