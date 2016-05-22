@@ -17,6 +17,7 @@
 package at.molindo.utils.tools;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -35,7 +36,7 @@ public class UrlBuilderTest {
 	@Test
 	public void url() throws MalformedURLException {
 		String[] urls = { "http://www.google.com/#q=url", "ftp://foo:bar@example.org/files",
-				"https://example.org/?foo=bar&baz=" };
+		"https://example.org/?foo=bar&baz=" };
 		for (String url : urls) {
 			assertEquals(url, UrlBuilder.parse(url).toString());
 		}
@@ -90,6 +91,29 @@ public class UrlBuilderTest {
 
 		assertEquals(urlString, b.toUrlString());
 
+	}
+
+	@Test
+	public void customEncoder() throws MalformedURLException {
+		final String urlString = "http://www.local.setlist.fm:8082/search";
+		final String paramKey = "query";
+		final String paramValue = "frank+turner";
+
+		final String expected = urlString + "?" + paramKey + "=" + paramValue;
+
+		{
+			UrlBuilder defaultEncoder = new UrlBuilder(new URL(urlString));
+			defaultEncoder.addParam(paramKey, paramValue);
+			// plus sign encoded
+			assertNotEquals(expected, defaultEncoder.toUrlString());
+		}
+
+		{
+			UrlBuilder defaultEncoder = new UrlBuilder(new URL(urlString));
+			defaultEncoder.addParam(URLCoder.QUERY, paramKey, paramValue);
+			// plus sign not encoded
+			assertEquals(expected, defaultEncoder.toUrlString());
+		}
 	}
 
 }

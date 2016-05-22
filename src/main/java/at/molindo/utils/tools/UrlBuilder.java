@@ -289,8 +289,20 @@ public class UrlBuilder implements Serializable, Cloneable {
 		return this;
 	}
 
+	public UrlBuilder addParams(URLCoder coder, LinkedHashMap<String, List<String>> params) {
+		for (Map.Entry<String, List<String>> e : params.entrySet()) {
+			addParams(coder, e.getKey(), e.getValue());
+		}
+		return this;
+	}
+
 	public UrlBuilder setParam(String key, String value) {
 		setParams(key, value);
+		return this;
+	}
+
+	public UrlBuilder setParam(URLCoder coder, String key, String value) {
+		setParams(coder, key, value);
 		return this;
 	}
 
@@ -299,13 +311,23 @@ public class UrlBuilder implements Serializable, Cloneable {
 		return this;
 	}
 
+	public UrlBuilder setParams(URLCoder coder, String key, String... values) {
+		setParams(key, Arrays.asList(values));
+		return this;
+	}
+
 	public UrlBuilder setParams(String key, List<String> values) {
+		setParams(URLCoder.QUERY_PARAM, key, values);
+		return this;
+	}
+
+	public UrlBuilder setParams(URLCoder coder, String key, List<String> values) {
 		key = normalizeKey(key);
 		LinkedHashMap<String, List<String>> params = params();
 		if (values == null || values.size() == 0) {
 			params.remove(key);
 		} else {
-			params.put(key, encodeAll(URLCoder.QUERY_PARAM, values));
+			params.put(key, encodeAll(coder, values));
 		}
 
 		return this;
@@ -316,19 +338,34 @@ public class UrlBuilder implements Serializable, Cloneable {
 		return this;
 	}
 
+	public UrlBuilder addParam(URLCoder coder, String key, String value) {
+		addParams(coder, key, value);
+		return this;
+	}
+
+	public UrlBuilder addParams(URLCoder coder, String key, String... values) {
+		addParams(coder, key, Arrays.asList(values));
+		return this;
+	}
+
 	public UrlBuilder addParams(String key, String... values) {
 		addParams(key, Arrays.asList(values));
 		return this;
 	}
 
 	public UrlBuilder addParams(String key, List<String> values) {
+		addParams(URLCoder.QUERY_PARAM, key, values);
+		return this;
+	}
+
+	public UrlBuilder addParams(URLCoder coder, String key, List<String> values) {
 		key = normalizeKey(key);
 		LinkedHashMap<String, List<String>> params = params();
 		List<String> current = params.get(key);
 		if (current == null) {
-			params.put(key, encodeAll(URLCoder.QUERY_PARAM, values));
+			params.put(key, encodeAll(coder, values));
 		} else {
-			current.addAll(encodeAll(URLCoder.QUERY_PARAM, values));
+			current.addAll(encodeAll(coder, values));
 		}
 		return this;
 	}
