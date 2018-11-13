@@ -22,6 +22,7 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -425,7 +426,14 @@ public class UrlBuilder implements Serializable, Cloneable {
 			}
 
 			for (Map.Entry<String, List<String>> e : params.entrySet()) {
-				for (String value : e.getValue()) {
+
+				List<String> list = e.getValue();
+
+				if (sortParams && list.size() > 1) {
+					Collections.sort(list);
+				}
+
+				for (String value : list) {
 					buf.append(e.getKey()).append("=");
 					if (!StringUtils.empty(value)) {
 						buf.append(value);
