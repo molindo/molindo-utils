@@ -28,8 +28,8 @@ public class UrlBuilderTest {
 	@Test
 	public void simple() {
 		assertEquals("http://example.com/", new UrlBuilder().toString());
-		assertEquals("https://example.org/", new UrlBuilder("example.org").setProtocol(UrlBuilder.HTTPS).setPort(443)
-				.toString());
+		assertEquals("https://example.org/",
+				new UrlBuilder("example.org").setProtocol(UrlBuilder.HTTPS).setPort(443).toString());
 	}
 
 	@Test
@@ -90,6 +90,39 @@ public class UrlBuilderTest {
 
 		assertEquals(urlString, b.toUrlString());
 
+	}
+
+	@Test
+	public void sort() {
+		UrlBuilder b = new UrlBuilder();
+
+		String path = "/foo/bar";
+		String host = "http://example.com";
+		b.setPath("/foo/bar");
+
+		// no sort
+		{
+			b.setQuery("b=2&a=1");
+			assertEquals(host + path + "?b=2&a=1", b.toUrlString(false));
+		}
+
+		// simple sort
+		{
+			b.setQuery("b=2&a=1");
+			assertEquals(host + path + "?a=1&b=2", b.toUrlString(true));
+		}
+
+		// multiple params sorted by value
+		{
+			b.setQuery("b=2&b=1&a=1");
+			assertEquals(host + path + "?a=1&b=1&b=2", b.toUrlString(true, true));
+		}
+
+		// multiple params not sorted by value
+		{
+			b.setQuery("b=2&b=1&a=1");
+			assertEquals(host + path + "?a=1&b=2&b=1", b.toUrlString(true));
+		}
 	}
 
 }
