@@ -383,6 +383,10 @@ public class UrlBuilder implements Serializable, Cloneable {
 	}
 
 	public String toUrlString(boolean sortParams) {
+		return toUrlString(sortParams, false);
+	}
+
+	public String toUrlString(boolean sortParams, boolean sortValues) {
 		StringBuilder buf = new StringBuilder();
 		buf.append(_protocol).append(":");
 
@@ -429,7 +433,7 @@ public class UrlBuilder implements Serializable, Cloneable {
 
 				List<String> list = e.getValue();
 
-				if (sortParams && list.size() > 1) {
+				if (sortValues && list.size() > 1) {
 					Collections.sort(list);
 				}
 

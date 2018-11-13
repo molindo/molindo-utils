@@ -115,7 +115,13 @@ public class UrlBuilderTest {
 		// multiple params sorted by value
 		{
 			b.setQuery("b=2&b=1&a=1");
-			assertEquals(host + path + "?a=1&b=1&b=2", b.toUrlString(true));
+			assertEquals(host + path + "?a=1&b=1&b=2", b.toUrlString(true, true));
+		}
+
+		// multiple params not sorted by value
+		{
+			b.setQuery("b=2&b=1&a=1");
+			assertEquals(host + path + "?a=1&b=2&b=1", b.toUrlString(true));
 		}
 	}
 
