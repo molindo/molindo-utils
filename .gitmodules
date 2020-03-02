@@ -1,4 +1,4 @@
 [submodule ".settings"]
 	path = .settings
 	url = https://bitbucket.org/molindo/molindo-eclipse-settings.git
-	branch = java6
+	branch = java7

@@ -1,5 +1,5 @@
 /**
- * Copyright 2010 Molindo GmbH
+ * Copyright 2016 Molindo GmbH
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,13 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package at.molindo.utils.collections;
 
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.Iterator;
 
-class BusinessKeySet<K, V extends IBusinessKey<K>> implements IBusinessKeySet<K, V> {
+class BusinessKeySet<K, V extends IBusinessKey<K>> implements IBusinessKeySet<K, V>, Serializable {
 
 	private final IBusinessKeyMap<K, V> _map;
 
@@ -34,6 +34,7 @@ class BusinessKeySet<K, V extends IBusinessKey<K>> implements IBusinessKeySet<K,
 		_map = map;
 	}
 
+	@Override
 	public IBusinessKeyMap<K, V> getMap() {
 		return _map;
 	}

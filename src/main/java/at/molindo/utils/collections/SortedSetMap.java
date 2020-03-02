@@ -1,5 +1,5 @@
 /**
- * Copyright 2010 Molindo GmbH
+ * Copyright 2016 Molindo GmbH
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,12 +15,13 @@
  */
 package at.molindo.utils.collections;
 
+import java.io.Serializable;
 import java.util.Comparator;
 import java.util.Set;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
-public class SortedSetMap<T, E> extends SetMap<T, E> implements SortedMap<T, Set<E>> {
+public class SortedSetMap<T, E> extends SetMap<T, E> implements SortedMap<T, Set<E>>, Serializable {
 
 	@Override
 	protected SortedMap<T, Set<E>> newMap() {

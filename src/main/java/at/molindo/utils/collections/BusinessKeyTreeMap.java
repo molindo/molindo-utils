@@ -1,5 +1,5 @@
 /**
- * Copyright 2010 Molindo GmbH
+ * Copyright 2016 Molindo GmbH
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,15 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package at.molindo.utils.collections;
 
+import java.io.Serializable;
 import java.util.Iterator;
 import java.util.TreeMap;
 
-public class BusinessKeyTreeMap<K, V extends IBusinessKey<K>> extends TreeMap<K, V> implements IBusinessKeyMap<K, V> {
-
-	private static final long serialVersionUID = 1L;
+public class BusinessKeyTreeMap<K, V extends IBusinessKey<K>> extends TreeMap<K, V>
+		implements IBusinessKeyMap<K, V>, Serializable {
 
 	private transient IBusinessKeySet<K, V> _valueSet;
 

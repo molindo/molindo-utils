@@ -1,5 +1,5 @@
 /**
- * Copyright 2010 Molindo GmbH
+ * Copyright 2016 Molindo GmbH
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,6 +15,7 @@
  */
 package at.molindo.utils.collections;
 
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
@@ -24,7 +25,7 @@ import org.omg.CORBA.UNKNOWN;
 
 import at.molindo.utils.data.Pair;
 
-public class CounterMap<T> implements Iterable<Pair<T, Integer>> {
+public class CounterMap<T> implements Iterable<Pair<T, Integer>>, Serializable {
 
 	public static final int UNKNOWN = -1;
 	private final Map<T, Counter> _counters = new LinkedHashMap<T, Counter>();
@@ -89,7 +90,7 @@ public class CounterMap<T> implements Iterable<Pair<T, Integer>> {
 		return "[CounterMap: " + _counters + "]";
 	}
 
-	private static class Counter {
+	private static class Counter implements Serializable {
 		private int _val;
 
 		protected Counter(final int val) {
