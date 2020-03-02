@@ -16,12 +16,12 @@
 
 package at.molindo.utils.collections;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Iterator;
 
-public class BusinessKeyHashMap<K, V extends IBusinessKey<K>> extends HashMap<K, V> implements IBusinessKeyMap<K, V> {
-
-	private static final long serialVersionUID = 1L;
+public class BusinessKeyHashMap<K, V extends IBusinessKey<K>> extends HashMap<K, V>
+		implements IBusinessKeyMap<K, V>, Serializable {
 
 	private transient IBusinessKeySet<K, V> _valueSet;
 

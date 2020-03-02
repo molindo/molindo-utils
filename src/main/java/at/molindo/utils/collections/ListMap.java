@@ -16,6 +16,7 @@
 
 package at.molindo.utils.collections;
 
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -25,7 +26,7 @@ import java.util.Set;
 
 import at.molindo.utils.data.Function;
 
-public class ListMap<T, E> implements Map<T, List<E>> {
+public class ListMap<T, E> implements Map<T, List<E>>, Serializable {
 
 	private final Map<T, List<E>> _map;
 

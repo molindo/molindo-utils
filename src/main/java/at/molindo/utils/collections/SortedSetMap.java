@@ -15,12 +15,13 @@
  */
 package at.molindo.utils.collections;
 
+import java.io.Serializable;
 import java.util.Comparator;
 import java.util.Set;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
-public class SortedSetMap<T, E> extends SetMap<T, E> implements SortedMap<T, Set<E>> {
+public class SortedSetMap<T, E> extends SetMap<T, E> implements SortedMap<T, Set<E>>, Serializable {
 
 	@Override
 	protected SortedMap<T, Set<E>> newMap() {

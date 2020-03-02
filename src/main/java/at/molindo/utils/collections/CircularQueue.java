@@ -15,6 +15,7 @@
  */
 package at.molindo.utils.collections;
 
+import java.io.Serializable;
 import java.util.AbstractCollection;
 import java.util.Arrays;
 import java.util.Collection;
@@ -27,7 +28,7 @@ import java.util.Queue;
  * were connected end-to-end. This structure lends itself easily to buffering
  * data streams.
  */
-public class CircularQueue<T> extends AbstractCollection<T> implements Queue<T> {
+public class CircularQueue<T> extends AbstractCollection<T> implements Queue<T>, Serializable {
 
 	private static final int EMPTY = -1;
 
@@ -61,7 +62,7 @@ public class CircularQueue<T> extends AbstractCollection<T> implements Queue<T> 
 
 	/**
 	 * overrides first element in queue if queue is full
-	 * 
+	 *
 	 * @see Queue#add(Object)
 	 */
 	@Override

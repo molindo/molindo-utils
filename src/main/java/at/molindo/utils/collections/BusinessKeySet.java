@@ -16,10 +16,11 @@
 
 package at.molindo.utils.collections;
 
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.Iterator;
 
-class BusinessKeySet<K, V extends IBusinessKey<K>> implements IBusinessKeySet<K, V> {
+class BusinessKeySet<K, V extends IBusinessKey<K>> implements IBusinessKeySet<K, V>, Serializable {
 
 	private final IBusinessKeyMap<K, V> _map;
 
@@ -34,6 +35,7 @@ class BusinessKeySet<K, V extends IBusinessKey<K>> implements IBusinessKeySet<K,
 		_map = map;
 	}
 
+	@Override
 	public IBusinessKeyMap<K, V> getMap() {
 		return _map;
 	}

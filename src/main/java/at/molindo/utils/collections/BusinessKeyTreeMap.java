@@ -16,12 +16,12 @@
 
 package at.molindo.utils.collections;
 
+import java.io.Serializable;
 import java.util.Iterator;
 import java.util.TreeMap;
 
-public class BusinessKeyTreeMap<K, V extends IBusinessKey<K>> extends TreeMap<K, V> implements IBusinessKeyMap<K, V> {
-
-	private static final long serialVersionUID = 1L;
+public class BusinessKeyTreeMap<K, V extends IBusinessKey<K>> extends TreeMap<K, V>
+		implements IBusinessKeyMap<K, V>, Serializable {
 
 	private transient IBusinessKeySet<K, V> _valueSet;
 

@@ -16,13 +16,14 @@
 
 package at.molindo.utils.collections;
 
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
 
-public class SetMap<T, E> implements Map<T, Set<E>> {
+public class SetMap<T, E> implements Map<T, Set<E>>, Serializable {
 
 	private final Map<T, Set<E>> _map;
 
