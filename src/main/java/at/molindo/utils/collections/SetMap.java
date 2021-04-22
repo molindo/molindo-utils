@@ -38,6 +38,10 @@ public class SetMap<T, E> implements Map<T, Set<E>>, Serializable {
 		return new HashMap<T, Set<E>>();
 	}
 
+	protected Set<E> newSet() {
+		return new LinkedHashSet<E>();
+	}
+
 	protected Map<T, Set<E>> getMap() {
 		return _map;
 	}
@@ -138,7 +142,7 @@ public class SetMap<T, E> implements Map<T, Set<E>>, Serializable {
 	public Set<E> getSet(final T key) {
 		Set<E> set = _map.get(key);
 		if (set == null) {
-			set = new LinkedHashSet<E>();
+			set = newSet();
 			_map.put(key, set);
 		}
 		return set;
